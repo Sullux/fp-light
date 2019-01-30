@@ -1,108 +1,31 @@
-# Pipette
---------------------------------------------------------------------------------
+# fp-light
 
-This library facilitates functional programming in JavaScript.
+This is a collection of lightweight utilities for javascript. Many of these utilities are made with functional programming in mind, but functional programming is not required.
 
-## Chain
+## Philosophy
 
-The chain function starts a chain by creating the first link resolving to a given value. In that sense, the `chain` function is very similar to the `Promise.resolve` function.
+> As much as possible, a utility function should be able to be copy/pasted directly into another project rather than creating a new module dependency.
 
-### Chain Usage
+Too often, we add large dependencies for small pieces of functionality. The [left pad debacle](https://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/) exemplifies how problematic dependencies can be, and people are continually shocked by the [clutter of modern libraries](https://medium.com/s/silicon-satire/i-peeked-into-my-node-modules-directory-and-you-wont-believe-what-happened-next-b89f63d21558).
 
-`chain(value?: any): link`
+"But copying source into your own project adds maintainability debt." Yes, and this debt is _smaller_ than the debt of depending on another library. Additionally, debugging your application is easier when you can easily step through your dependencies or add `console.log` statements to them.
 
-Conceptually, a chain is a sequence of `link` monads. Since links implement a `then` method, they can be used interchangeably with Promises. Here is an example of a chain within a unit test:
+"But you are publishing to NPM too. Aren't you just another dependency?" Yes, and this is why a copy/paste option is a top priority. This is also why:
 
-```javascript
-const { chain } = require('pipette')
-const assert = require('assert')
+> Our published modules must NEVER have dependencies.
 
-const theNumberOfThineCounting = 3
+Every module stands alone. If we ever create a module for use with another package, we will indicate a peer dependency rather than unilaterally dumping that package into your `node_modules`. _Reduced coupling equals reduced complexity._
 
-describe('chain', () => {
-  it('should resolve to 3', () => {
-    return chain(theNumberOfThineCounting)
-      .then(v => v + 2)
-      .tap(v => console.log('Five!', v)) // Five! 5
-      .then(v => Promise.resolve(v - 2))
-      .tap(v => console.log('Three, sir!', v)) // Three, sir! 3
-      .then(v => assert.strictEqual(v, theNumberOfThineCounting))
-  })
-})
-```
-Notice that because a chain can slide easily from synchronous to asynchronous, and because each link is a thennable, returning a chain from a test is no different from returning an actual `Promise`: Mocha will wait for the promise-like-object to resolve or reject.
+> Our code is only published when it has unit test coverage for 100% of statements, branches, functions and lines.
 
-A chain is said to be synchronous if the starting value is not a promise and no link in the chain returns a promise. Note the following examples of synchronous and asynchronous chains:
+When integrating with the outside world, 100% test coverage is not an effective goal. Unit testing integration points requires a great deal of mocking and delivers no real value. These libraries, however, do not integrate with systems. This is utility code, which means 100% coverage is both realistic and necessary.
 
-```javascript
-const { chain } = require('pipette')
+## Libraries
 
-const increment = v => v + 1
+[function](function/README.md)
 
-// Synchronous
-chain(1)
-  .then(increment)
-  .then(increment)
-  .tap(v => console.log('Three, sir!', v)) // Three, sir! 3
+_more to come..._
 
-// Asynchronous
-chain(Promise.resolve(1))
-  .then(increment)
-  .then(increment)
-  .tap(v => console.log('Three, sir!', v)) // Three, sir! 3
-```
-In ES6 (Node.js >= 8.x), the `await` keyword can act as a unifying feature for chains. The `await` keyword can be safely used with synchronous and asynchronous chains, making it so the consuming code does not need to know implementation details to use a link. Consider the following example.
+## Contributing
 
-```javascript
-const answer = await lookItUp()
-```
-We know that the `lookItUp` function returns a chain, but we do not need to know if it is a synchronous or asynchronous chain. All links implement the `then` method, so the `await` keyword will work regardless of the underlying implementation.
-
-### Chain API
-
-Since the `chain` function returns a `link`, see [link](#link) below for the full API.
-
-## Link
-
-The link is the monad of which chains are constructed.
-
-### Link Usage
-
-`link(value?: any, err?: Error): link`
-
-For readability, the preferred way to create a link is with the `chain` method or from one of the continuation methods in the [link API](#link-api). In practice, all the following usages are equivalent. The preferred patterns are marked as `GOOD`.
-
-```javascript
-const { chain, link } = require('pipette')
-
-// GOOD
-chain(3)
-  .tap(console.log) // 3
-
-// BAD
-link(3)
-  .tap(console.log) // 3
-
-// GOOD
-chain()
-  .then(() => throw new Error('Not happy!'))
-  .catch(console.log) // Error: Not happy!
-
-// BAD
-link(undefined, new Error('Is this really what you want?'))
-  .catch(console.log) // Error: Is this really what you want?
-```
-### Link API
-
-This is the API of a `link` object.
-
-| name | type | description |
-| ---- | ---- | ----------- |
-| then | `(onResolved?: (any): any, onRejected?: (Error): any): link` | Create a link that will resolve to the return value of the `onResolved` or `onRejected` function. |
-| first | | |
-| all | | |
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
+_to do..._
