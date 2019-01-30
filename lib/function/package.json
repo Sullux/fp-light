@@ -1,0 +1,13 @@
+{
+  "name": "@sullux/fp-light/function",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.min.js",
+  "unpkg": "index.min.js",
+  "scripts": {
+    "package": "node-minify --compressor terser --input 'index.js' --output 'dist/index.min.js'"
+  },
+  "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
+  "license": "MIT",
+  "repository": "sullux/fp-light"
+}
