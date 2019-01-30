@@ -2,7 +2,7 @@
 
 From the [fp-light library](https://github.com/sullux/fp-light).
 
-`npm i @sullux/fp-light/function`
+`npm i @sullux/fp-light-function`
 
 ## curry
 
@@ -23,7 +23,7 @@ curry(fn: Function, arity?: number = fn.length): Function
 Uncurried vs curried:
 
 ```javascript
-const { curry } = require('@sullux/fp-light/function')
+const { curry } = require('@sullux/fp-light-function')
 const { log } = console
 
 // uncurried
@@ -47,7 +47,7 @@ log(addToFirstValue(40)) // 42
 With explicit arity:
 
 ```javascript
-const { curry } = require('@sullux/fp-light/function')
+const { curry } = require('@sullux/fp-light-function')
 
 const log = curry(console.log, 2) // wait for at least 2 args before executing
 log('something') // [Function]
@@ -90,7 +90,7 @@ memoize(fn: Function): Function
 This example is intentionally bad, but illustrates the caching properties of memoization.
 
 ```javascript
-const { memoize } = require('@sullux/fp-light/function')
+const { memoize } = require('@sullux/fp-light-function')
 
 const mutableThing = 1
 const increaseMutableThing = memoize(count => (mutableThing += count))
@@ -137,7 +137,7 @@ pipe(...steps: Function | Array<Function | Array<Function>>): Function
 Saving a record to DynamoDB:
 
 ```javascript
-const { pipe, curry } = require('@sullux/fp-light/function')
+const { pipe, curry } = require('@sullux/fp-light-function')
 const dynamodb = new require('aws-sdk').DynamoDB()
 
 const ddbParams = (record) => ({

@@ -1,13 +1,20 @@
 {
-  "name": "@sullux/fp-light/function",
+  "name": "@sullux/fp-light-function",
   "version": "0.0.1",
-  "description": "",
+  "engines": { "node": ">=8.*" },
+  "description": "A lightweight functional library containing function helpers such as curry, memoize and pipe.",
   "main": "index.min.js",
   "unpkg": "index.min.js",
   "scripts": {
-    "package": "node-minify --compressor terser --input 'index.js' --output 'dist/index.min.js'"
+    "build": "node-minify --compressor terser --input 'index.js' --output 'dist/index.min.js'",
+    "package": "npm run build && node ../../package.js && cp README.md dist/",
+    "unit": "../node_modules/.bin/mocha index.js",
+    "lint": "../node_modules/.bin/eslint *.js",
+    "test": "npm run lint && npm run unit",
+    "deploy": "npm run build && cd dist && npm publish"
   },
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
   "license": "MIT",
-  "repository": "sullux/fp-light"
+  "repository": "sullux/fp-light",
+  "homepage": "https://github.com/sullux/fp-light/function"
 }
