@@ -1,13 +1,13 @@
 {
-  "name": "@sullux/fp-light-compose",
+  "name": "@sullux/fp-light-curry",
   "version": "0.0.1",
   "engines": { "node": ">=8.*" },
   "description": "A lightweight functional library for functional composition and object composition.",
-  "keywords": ["fp", "functional", "compose", "composition"],
+  "keywords": ["fp", "functional", "curry"],
   "main": "index.min.js",
   "unpkg": "index.min.js",
   "scripts": {
-    "build": "node-minify --compressor terser --input 'compose.js' --output 'dist/index.min.js'",
+    "build": "node-minify --compressor terser --input 'curry.js' --output 'dist/index.min.js'",
     "package": "npm run build && node ../../package.js && cp README.md dist/",
     "unit": "../../node_modules/.bin/mocha *.spec.js",
     "lint": "../../node_modules/.bin/eslint *.js",
@@ -17,5 +17,5 @@
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
   "license": "MIT",
   "repository": "sullux/fp-light",
-  "homepage": "https://github.com/Sullux/fp-light/blob/master/lib/compose/README.md"
+  "homepage": "https://github.com/Sullux/fp-light/blob/master/lib/curry/README.md"
 }

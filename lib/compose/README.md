@@ -1,10 +1,12 @@
+[home](https://github.com/Sullux/fp-light/blob/master/README.md)
+
 ## fp-light-compose
 
 `npm i @sullux/fp-light-compose`
 [source](https://github.com/Sullux/fp-light/blob/master/lib/compose/compose.js)
 [test](https://github.com/Sullux/fp-light/blob/master/lib/compose/compose.spec.js)
 
-Compose has different meanings for objects as for functions. Functional composition is the inverse of [piping](../pipe/README.md). Object composition is the recursive combination of the fields of multiple input objects into a single output object.
+Compose has different meanings for objects than for functions. Functional composition is the inverse of [piping](../pipe/README.md). Object composition is the recursive combination of the fields of multiple input objects into a single output object.
 
 * [compose](#compose)
 * [composeObjects](#composeobjects)
