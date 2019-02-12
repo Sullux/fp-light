@@ -20,7 +20,7 @@ The `type` function supplements the scattered and inconsistent type functionalit
 `  jstype: string, `
 `  name: string, `
 `  factory: Function, `
-`  inheritence: Array<string> `
+`  inheritance: Array<string> `
 `}`
 
 Returns a map of information about the type of the given value.
@@ -28,7 +28,7 @@ Returns a map of information about the type of the given value.
 * `jstype`: the native type as reported by `typeof value`.
 * `name`: the name of the factory function for this type.
 * `factory`: the factory function for this type.
-* `inheritence`: an array of all factory functions within the prototype chain from the factory of the given value through the final factory `Object`.
+* `inheritance`: an array of all factory functions within the prototype chain from the factory of the given value through the final factory `Object`.
 
 Example:
 
@@ -40,7 +40,7 @@ console.log(type(true))
 { jstype: 'boolean',
   name: 'Boolean',
   factory: [Function: Boolean],
-  inheritence: [ [Function: Boolean], [Function: Object] ] }
+  inheritance: [ [Function: Boolean], [Function: Object] ] }
 */
 ```
 
