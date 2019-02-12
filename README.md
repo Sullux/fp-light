@@ -4,6 +4,60 @@ This is a collection of lightweight utilities for javascript. Many of these util
 
 This is also a work in progress. Version 1.0.0 should be available by 2019-02-25.
 
+## Libraries
+
+_Coming soon: an all-in-one library to be installed with `npm i @sullux/fp-light`. For now, each module is installed separately._
+
+### Compose
+[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/compose/README.md)
+```bash
+npm i --save @sullux/fp-light-compose
+yarn add @sullux/fp-light-compose
+```
+Provides both async-aware functional composition and immutable, deep object composition.
+
+### Curry
+[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/curry/README.md)
+```bash
+npm i --save @sullux/fp-light-curry
+yarn add @sullux/fp-light-curry
+```
+A utility to create a curried wrapper for any function.
+
+### Hash
+[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/hash/README.md)
+```bash
+npm i --save @sullux/fp-light-hash
+yarn add @sullux/fp-light-hash
+```
+A simple hash implementation suitable for deterministic, highly distributed key generation. NOT SUITABLE FOR CRYPTOGRAPHIC FUNCTIONS.
+
+### Memoize
+[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/memoize/README.md)
+```bash
+npm i --save @sullux/fp-light-memoize
+yarn add @sullux/fp-light-memoize
+```
+A memoizer for any function. Memoization caches function results for a given set of arguments.
+
+### Pipe
+[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/pipe/README.md)
+```bash
+npm i --save @sullux/fp-light-pipe
+yarn add @sullux/fp-light-pipe
+```
+An async-aware pipe implementation.
+
+### Type
+[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/type/README.md)
+```bash
+npm i --save @sullux/fp-light-type
+yarn add @sullux/fp-light-type
+```
+Provides supplemental type information such as constructor name, factory function, prototype heirarchy, type equality testing, etc.
+
+_more to come..._
+
 ## Philosophy
 
 > A utility should be able to be copy/pasted directly into another project rather than creating a new module dependency.
@@ -21,42 +75,6 @@ Every module stands alone. If we ever create a module for use with another packa
 > Our code is only published when it has unit test coverage for 100% of statements, branches, functions and lines.
 
 When integrating with the outside world, 100% test coverage is not an effective goal. Unit testing integration points requires a great deal of mocking and delivers little value. The FP libraries, however, do not integrate with real-world systems. This is utility code, which means 100% coverage is both realistic and necessary.
-
-## Libraries
-
-_Coming soon: an all-in-one library to be installed with `npm i @sullux/fp-light`. For now, each module is installed separately._
-
-[compose](https://github.com/Sullux/fp-light/blob/master/lib/compose/README.md)
-`npm i --save @sullux/fp-light-compose`
-`yarn add @sullux/fp-light-compose`
-Provides both async-aware functional composition and immutable, deep object composition.
-
-[curry](https://github.com/Sullux/fp-light/blob/master/lib/curry/README.md)
-`npm i --save @sullux/fp-light-curry`
-`yarn add @sullux/fp-light-curry`
-A utility to create a curried wrapper for any function.
-
-[hash](https://github.com/Sullux/fp-light/blob/master/lib/hash/README.md)
-`npm i --save @sullux/fp-light-hash`
-`yarn add @sullux/fp-light-hash`
-A simple hash implementation suitable for deterministic, highly distributed key generation. NOT SUITABLE FOR CRYPTOGRAPHIC FUNCTIONS.
-
-[memoize](https://github.com/Sullux/fp-light/blob/master/lib/memoize/README.md)
-`npm i --save @sullux/fp-light-memoize`
-`yarn add @sullux/fp-light-memoize`
-A memoizer for any function. Memoization caches function results for a given set of arguments.
-
-[pipe](https://github.com/Sullux/fp-light/blob/master/lib/pipe/README.md)
-`npm i --save @sullux/fp-light-pipe`
-`yarn add @sullux/fp-light-pipe`
-An async-aware pipe implementation.
-
-[type](https://github.com/Sullux/fp-light/blob/master/lib/type/README.md)
-`npm i --save @sullux/fp-light-type`
-`yarn add @sullux/fp-light-type`
-Provides supplemental type information such as constructor name, factory function, prototype heirarchy, type equality testing, etc.
-
-_more to come..._
 
 ## Contributing
 
