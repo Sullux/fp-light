@@ -12,7 +12,7 @@ Concatenates values into a single iterable.
 
 ### concat
 
-`concat(...iterables: Array<mixed>): { @@iterator(): Iterator<mixed> }`
+`concat(...iterables: Array<mixed>): Iterator<mixed>`
 
 This function does a shallow concatenation of iterables, objects and values and returns the concatenated iterable. The unit test for the concat function demonstrates how it handles various types of inputs:
 

@@ -21,6 +21,7 @@ Following is an example that uses error trapping. This example exports a functio
 The reason error trapping is so important in this example is that file systems are inconsistent. Instead of checking for the existence or type of a file, recommended practice is to try to read the file and ignore errors. Note that this example will still resolve to an error if the file data cannot be parsed as JSON.
 
 ```javascript
+const { filter } = require('@sullux/fp-light-filter')
 const { get } = require('@sullux/fp-light-get')
 const { pipe } = require('@sullux/fp-light-pipe')
 const { trap } = require('@sullux/fp-light-trap')
