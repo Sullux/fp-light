@@ -140,7 +140,133 @@ describe('bindAll', () => {
 
 ### define
 
-to do
+`define(name: string, options: ?{`
+  `extend: ?Function,`
+  `construct: ?(...args: mixed[]) => Object,`
+  `enumerable: ?{ [name: String | Symbol]: mixed },`
+  `hidden: ?{ [name: String | Symbol]: mixed },`
+  `properties: ?{ [name: String | Symbol]: Descriptor },`
+  `describe,`
+`}): Function`
+
+At the most basic level, the define utiliy defines a function that will behave the same whether called as a factory or as a constructor.
+
+```javascript
+const Foo = define('Foo')
+const foo1 = Foo()
+const foo2 = new Foo()
+```
+
+is equivalent to
+
+```javascript
+function Foo () {
+  return new.target
+    ? this
+    : Object.setPrototypeOf({}, Foo.prototype)
+const foo1 = bindAll(Foo())
+const foo2 = bindAll(new Foo())
+}
+```
+
+While this removes much of the underlying complexity of constructors and factories, defining a type would not be useful without the various options.
+
+#### extend
+
+Sets the parent constructor of the given type. The following example demonstrates defining a custom error.
+
+```javascript
+const FooError = define('FooError', { extend: Error })
+const error = FooError()
+error instanceof FooError // true
+error instanceof Error // true
+```
+
+#### construct
+
+Allows a custom-constructed base object for a new instance of the type. The construct function's `this` is the new instance and the return value of the construct function will be also be composed onto the new instance.
+
+```javascript
+const FooError = define('FooError', {
+  extend: Error,
+  construct(message) {
+    this.id = 'Foo123'
+    return Error(message)
+  },
+})
+const error = new FooError('reasons')
+error.id // Foo123
+error.message // reasons
+error.stack
+/*
+Error: reasons
+    at FooError.construct (repl:1:76)
+    ...etc.
+*/
+```
+
+#### enumerable
+
+Defines enumerable properties to be added to the defined prototype. Defining a property as _enumerable_ is similar to making it public in the sense that it is discoverable by looping structures and functions that iterate enumerable properties such as `Object.keys`.
+
+Note that the following is the same example as for [construct](#construct) except that instead of modifying each instance during construction, the `id` property is now an enumerable property of the prototype.
+
+```javascript
+const FooError = define('FooError', {
+  extend: Error,
+  construct: Error,
+  enumerable: { id: 'Foo123' },
+})
+const error = new FooError('reasons')
+error.id // Foo123
+error.message // reasons
+error.stack
+/*
+Error: reasons
+    at FooError.construct (repl:1:76)
+    ...etc.
+*/
+```
+
+#### hidden
+
+Defines hidden (non-enumerable) properties on the defined prototype. Note that a hidden property is not private in the traditional sense because it can still be accessed externally. It is only hidden from discovery by looping structures and functions that iterate enumerable properties.
+
+```javascript
+const Foo = define('Foo', { hidden: { secret: 42 } })
+const foo = new Foo()
+Object.keys(foo).includes('secret') // false
+foo.secret // 42
+```
+
+#### properties
+
+Defines [property descriptors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#Description) for the defined prototype. This allows the definition of properties with getters and setters, non-configurable properties, etc.
+
+```javascript
+const Foo = define('Foo', {
+  properties: {
+    answer: { get() { return 42 } },
+  },
+})
+const foo = new Foo()
+Object.keys(foo).includes('answer') // false
+foo.answer = 1
+foo.answer // 42
+```
+
+#### describe
+
+The describe function is a special helper that is called by the [Node.js utility function](https://nodejs.org/api/util.html#util_util_inspect_object_options) `util.inspect()` to generate a string representation of an object. This is called by the REPL to provide console output.
+
+```javascript
+const Foo = define('Foo', { describe: () => 'instance of Foo' })
+const Bar = define('Bar')
+console.log(new Foo())
+// instance of Foo
+console.log(new Bar())
+// [Object Bar]
+```
 
 ### factoryOf
 
