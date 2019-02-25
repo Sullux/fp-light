@@ -12,7 +12,7 @@ Creates an iterable that takes the first _n_ items of the given iterable.
 
 ### skip
 
-`skip<T>(count: number, iterable: Iterable<T>): Iterable<T>`
+`take<T>(count: number, iterable: Iterable<T>): Iterable<T>`
 
 If `count` is less than 1, yields no items; otherwise, yields `count` items. If count is greater than the number of items in the iterable, yields all items.
 
