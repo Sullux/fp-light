@@ -12,7 +12,7 @@ A pipe is a function comprised of a sequence of functions where the initial argu
 
 ### pipe
 
-`pipe(...steps: Function[]): Function`
+`pipe(...steps: Array<Function>): Function`
 
 This is an example of a synchronous pipe:
 
@@ -28,19 +28,20 @@ productOfDouble(3) // 36
 And this is an example of an asynchronous pipe. This example also uses `curry`, `compose`, and the AWS SDK, and is a more practical example of the power of functional pipes.
 
 ```javascript
+const { always } = require('@sullux/fp-light-always')
+const { compose } = require('@sullux/fp-light-compose')
 const { curry } = require('@sullux/fp-light-curry')
 const { pipe } = require('@sullux/fp-light-pipe')
-const { compose } = require('@sullux/fp-light-compose')
 const AWS = require('aws-sdk')
 
 const s3 = new AWS.s3()
 
-const saveObject = curry((key, o) =>
+const saveObject = curry((key, object) =>
   s3.putObject({
-    Body: JSON.stringify(o),
+    Body: JSON.stringify(object),
     Bucket: process.env.BUCKET,
     Key: key,
-  }).promise())
+  }).promise().then(always(object)))
 
 const readObject = key =>
   s3.getObject({
