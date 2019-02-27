@@ -1,25 +1,29 @@
 {
   "name": "@sullux/fp-light",
   "version": "0.0.1",
-  "description": "",
+  "engines": {
+    "node": ">=8.*"
+  },
+  "description": "A lightweight functional library for functional composition and object composition.",
+  "keywords": [
+    "fp",
+    "functional"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "npm run lint && npm run unit",
-    "unit": "./node_modules/.bin/mocha **/*.spec.js",
+    "unit": "./node_modules/.bin/mocha test/**/*.spec.js",
     "lint": "./node_modules/.bin/eslint **/*.js"
   },
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
   "license": "MIT",
   "repository": "sullux/fp-light",
+  "homepage": "https://github.com/Sullux/fp-light/blob/master/README.md",
+  "dependencies": {},
   "devDependencies": {
     "@node-minify/uglify-js": "^4.0.5",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.0.1",
-    "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-jsx-a11y": "^5.0.3",
-    "eslint-plugin-react": "^7.0.1",
-    "mocha": "^5.0.0",
-    "nyc": "^11.4.1"
-  },
-  "dependencies": {}
+    "eslint": "^5.14.1",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0"
+  }
 }
