@@ -1,4 +1,10 @@
 root: true
+parser: babel-eslint
+parserOptions:
+  ecmaVersion: 6
+  sourceType: module
+  ecmaFeatures:
+    impliedStrict: true
 rules:
   no-console: off
   no-plusplus: error
@@ -30,7 +36,7 @@ rules:
       message: try catch blocks are not allowed
     - selector: ClassDeclaration
       message: classes are not allowed
-    - selector: AssignmentExpression
+    - selector: AssignmentExpression[left.property.name!='exports']
       message: mutations are not allowed
   max-len:
     - error
