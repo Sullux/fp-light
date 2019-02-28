@@ -1,10 +1,6 @@
 # fp-light (WIP)
 
-This is a collection of lightweight utilities for javascript. Many of these utilities are made with functional programming in mind, but functional programming is not required.
-
-## Functions
-
-This is a library of functions. Each function is a [pure function](https://en.wikipedia.org/wiki/Pure_function), and no function has any dependencies. To install the whole library:
+This is a collection of lightweight javascript utility functions made with functional programming in mind. Each function is a [pure function](https://en.wikipedia.org/wiki/Pure_function), and no function has any dependencies. To install the whole library:
 
 ```bash
 npm install --save @sullux/fp-light
@@ -21,6 +17,9 @@ npm install --save @sullux/fp-light-map
 yarn add @sullux/fp-light-pipe
 yarn add @sullux/fp-light-map
 ```
+
+## Functions
+
 Every function in this library is safe to use by itself. None of these functions has dependencies of any sort. Every library -- including the complete `fp-light` library -- is 100% unit tested and is published as a single, minified source file.
 
 | Function | Description |
@@ -32,7 +31,7 @@ Every function in this library is safe to use by itself. None of these functions
 | [concat](https://github.com/Sullux/fp-light/tree/master/lib/concat) | Concatenates values into a single iterable. |
 | [curry](https://github.com/Sullux/fp-light/tree/master/lib/curry) | To _curry_ a function is to make it so that arguments can be progressively applied. |
 | [filter](https://github.com/Sullux/fp-light/tree/master/lib/filter) | The filter function works similarly to the built in `Array.prototype.filter` function except that the iterable is the most significant (last) argument. |
-| [get](https://github.com/Sullux/fp-light/tree/master/lib/get) | The purpose of the `get` helper is to |
+| [get](https://github.com/Sullux/fp-light/tree/master/lib/get) | The `get` function is useful for traversing a property path. The path parts can be strings or numbers. This supports retrieving properties and array elements. |
 | [hash](https://github.com/Sullux/fp-light/tree/master/lib/hash) | This is a quick hashing algorithm for use in hash maps and other implementations that demand deterministic but well-distributed values based on not-well-distributed input values. |
 | [map](https://github.com/Sullux/fp-light/tree/master/lib/map) | Similar to the [built-in Javascript function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) `Array.prototype.map`, but accepts the iterable as the second argument. |
 | [memoize](https://github.com/Sullux/fp-light/tree/master/lib/memoize) | Memoization is the caching of results for a given set of arguments. Memoization is useful for pure functions that have a high computational cost or asynchronous latency. |
