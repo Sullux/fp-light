@@ -23,8 +23,8 @@ yarn add @sullux/fp-light-map
 ```
 Every function in this library is safe to use by itself. None of these functions has dependencies of any sort. Every library -- including the complete `fp-light` library -- is 100% unit tested and is published as a single, minified source file.
 
-| Function | Installation | Description |
-| -------- | ------------ | ----------- |
+| Function | Description |
+| -------- | ----------- |
 | [always](https://github.com/Sullux/fp-light/tree/master/lib/always) | The always utility wraps a static value in a function. While simple as far as utilities go, it can add readability to functional code. |
 | [call](https://github.com/Sullux/fp-light/tree/master/lib/call) | The purpose of the `call` helper is to allow the function to be passed as the most significant argument. |
 | [collect](https://github.com/Sullux/fp-light/tree/master/lib/collect) | The collect utility creates a function that accepts _n_ arguments and passes them to the wrapped function in a single array argument. |
