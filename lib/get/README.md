@@ -6,62 +6,38 @@
 [source](https://github.com/Sullux/fp-light/blob/master/lib/get/get.js)
 [test](https://github.com/Sullux/fp-light/blob/master/lib/get/get.spec.js)
 
-The purpose of the `get` helper is to
+The purpose of the `get` helper is to provide a functional way to retrieve properties from an input object.
 
 * [get](#get)
 
 ### get
 
-`get(...steps: Function[]): Function`
+`get(pathParts: (string | number) | (string | number)[], source: any): any`
 
-This is an example of a synchronous get:
+The `get` function is useful for traversing a property path. The path parts can be strings or numbers. This supports retrieving properties and array elements.
 
 ```javascript
-const productOfDouble = get(
-  value => value + value,
-  value => value * value
-)
+const { get } = require('@sullux/fp-light-get')
 
-productOfDouble(3) // 36
+const object = { foo: [41, 42] }
+
+get(['foo', 1], object) // 42
 ```
 
-And this is an example of an asynchronous get. This example also uses `curry`, `compose`, and the AWS SDK, and is a more practical example of the power of functional gets.
+The `get` helper can be useful in functional composition. The following is a more complete example of the `get`function.
 
 ```javascript
-const { curry } = require('@sullux/fp-light-curry')
+const { call } = require('@sullux/fp-light-call')
 const { get } = require('@sullux/fp-light-get')
-const { compose } = require('@sullux/fp-light-compose')
-const AWS = require('aws-sdk')
 
-const s3 = new AWS.s3()
+const random0To31 = () =>
+  Math.floor(Math.random() * 36)
 
-const saveObject = curry((key, o) =>
-  s3.putObject({
-    Body: JSON.stringify(o),
-    Bucket: process.env.BUCKET,
-    Key: key,
-  }).promise())
-
-const readObject = key =>
-  s3.getObject({
-    Bucket: process.env.BUCKET,
-    Key: key,
-  }).promise()
-
-const decodeObject = ({ Body }) =>
-  JSON.parse(Body)
-
-const composeWith = curry(compose, 2)
-
-const extendObject = (key, added) =>
-  get(
-    readObject,
-    decodeObject,
-    composeWith(added),
-    saveObject(key)
-  )(key)
-
-module.exports = {
-  extendObject
-}
+const randomString = length =>
+  Array(length)
+    .fill()
+    .map(random0To31)
+    .map(get('toString'))
+    .map(call(36))
+    .join('')
 ```
