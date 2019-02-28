@@ -25,26 +25,26 @@ Every function in this library is safe to use by itself. None of these functions
 
 | Function | Installation | Description |
 | -------- | ------------ | ----------- |
-| [always](https://github.com/Sullux/fp-light/tree/master/lib/always) | `npm i -P @sullux/fp-light-always` `yarn add @sullux/fp-light-always` | The always utility wraps a static value in a function. While simple as far as utilities go, it can add readability to functional code. |
-| [call](https://github.com/Sullux/fp-light/tree/master/lib/call) | `npm i -P @sullux/fp-light-call` `yarn add @sullux/fp-light-call` | The purpose of the `call` helper is to allow the function to be passed as the most significant argument. |
-| [collect](https://github.com/Sullux/fp-light/tree/master/lib/collect) | `npm i -P @sullux/fp-light-collect` `yarn add @sullux/fp-light-collect` | The collect utility creates a function that accepts _n_ arguments and passes them to the wrapped function in a single array argument. |
-| [compose](https://github.com/Sullux/fp-light/tree/master/lib/compose) | `npm i -P @sullux/fp-light-compose` `yarn add @sullux/fp-light-compose` | Compose has different meanings for objects than for functions. Functional composition is the inverse of [piping](../pipe/README.md). Object composition is the recursive combination of the fields of multiple input objects into a single output object. |
-| [concat](https://github.com/Sullux/fp-light/tree/master/lib/concat) | `npm i -P @sullux/fp-light-concat` `yarn add @sullux/fp-light-concat` | Concatenates values into a single iterable. |
-| [curry](https://github.com/Sullux/fp-light/tree/master/lib/curry) | `npm i -P @sullux/fp-light-curry` `yarn add @sullux/fp-light-curry` | To _curry_ a function is to make it so that arguments can be progressively applied. |
-| [filter](https://github.com/Sullux/fp-light/tree/master/lib/filter) | `npm i -P @sullux/fp-light-filter` `yarn add @sullux/fp-light-filter` | The filter function works similarly to the built in `Array.prototype.filter` function except that the iterable is the most significant (last) argument. |
-| [get](https://github.com/Sullux/fp-light/tree/master/lib/get) | `npm i -P @sullux/fp-light-get` `yarn add @sullux/fp-light-get` | The purpose of the `get` helper is to |
-| [hash](https://github.com/Sullux/fp-light/tree/master/lib/hash) | `npm i -P @sullux/fp-light-hash` `yarn add @sullux/fp-light-hash` | This is a quick hashing algorithm for use in hash maps and other implementations that demand deterministic but well-distributed values based on not-well-distributed input values. |
-| [map](https://github.com/Sullux/fp-light/tree/master/lib/map) | `npm i -P @sullux/fp-light-map` `yarn add @sullux/fp-light-map` | Similar to the [built-in Javascript function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) `Array.prototype.map`, but accepts the iterable as the second argument. |
-| [memoize](https://github.com/Sullux/fp-light/tree/master/lib/memoize) | `npm i -P @sullux/fp-light-memoize` `yarn add @sullux/fp-light-memoize` | Memoization is the caching of results for a given set of arguments. Memoization is useful for pure functions that have a high computational cost or asynchronous latency. |
-| [pipe](https://github.com/Sullux/fp-light/tree/master/lib/pipe) | `npm i -P @sullux/fp-light-pipe` `yarn add @sullux/fp-light-pipe` | A pipe is a function comprised of a sequence of functions where the initial argument is passed to the first function, the result of that is passed to the second function and so on, and where the final result is the return value of the last function in the sequence. |
-| [range](https://github.com/Sullux/fp-light/tree/master/lib/range) | `npm i -P @sullux/fp-light-range` `yarn add @sullux/fp-light-range` | Creates an iterable of integers spanning the given range. This can be a good way to functionally implement _next n items_ logic or _repeat n times_ logic. |
-| [reduce](https://github.com/Sullux/fp-light/tree/master/lib/reduce) | `npm i -P @sullux/fp-light-reduce` `yarn add @sullux/fp-light-reduce` | Similar to the [built-in Javascript function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) `Array.prototype.reduce`, but accepts the iterable as the last argument. |
-| [skip](https://github.com/Sullux/fp-light/tree/master/lib/skip) | `npm i -P @sullux/fp-light-skip` `yarn add @sullux/fp-light-skip` | Creates an iterable that skips the first _n_ items of the given iterable. |
-| [slice](https://github.com/Sullux/fp-light/tree/master/lib/slice) | `npm i -P @sullux/fp-light-slice` `yarn add @sullux/fp-light-slice` | Creates an iterable that starts at the _start_ item and ends at the _end_ item (inclusive) of the given iterable. |
-| [spread](https://github.com/Sullux/fp-light/tree/master/lib/spread) | `npm i -P @sullux/fp-light-spread` `yarn add @sullux/fp-light-spread` | The spread utility creates a function that accepts an array and spreads the array elements as arguments to the wrapped function. |
-| [take](https://github.com/Sullux/fp-light/tree/master/lib/take) | `npm i -P @sullux/fp-light-take` `yarn add @sullux/fp-light-take` | Creates an iterable that takes the first _n_ items of the given iterable. |
-| [trap](https://github.com/Sullux/fp-light/tree/master/lib/trap) | `npm i -P @sullux/fp-light-trap` `yarn add @sullux/fp-light-trap` | The trap helper allows for a more functional approach to error handling. |
-| [type](https://github.com/Sullux/fp-light/tree/master/lib/type) | `npm i -P @sullux/fp-light-type` `yarn add @sullux/fp-light-type` | The `type` function supplements the scattered and inconsistent type-related functionality in Javascript. This includes supplying proper factory functions for `undefined` and `null`, the only values in Javascript that are missing a native factory. This also includes a utility to define new types in a consistent way. |
+| [always](https://github.com/Sullux/fp-light/tree/master/lib/always) | The always utility wraps a static value in a function. While simple as far as utilities go, it can add readability to functional code. |
+| [call](https://github.com/Sullux/fp-light/tree/master/lib/call) | The purpose of the `call` helper is to allow the function to be passed as the most significant argument. |
+| [collect](https://github.com/Sullux/fp-light/tree/master/lib/collect) | The collect utility creates a function that accepts _n_ arguments and passes them to the wrapped function in a single array argument. |
+| [compose](https://github.com/Sullux/fp-light/tree/master/lib/compose) | Compose has different meanings for objects than for functions. Functional composition is the inverse of [piping](../pipe/README.md). Object composition is the recursive combination of the fields of multiple input objects into a single output object. |
+| [concat](https://github.com/Sullux/fp-light/tree/master/lib/concat) | Concatenates values into a single iterable. |
+| [curry](https://github.com/Sullux/fp-light/tree/master/lib/curry) | To _curry_ a function is to make it so that arguments can be progressively applied. |
+| [filter](https://github.com/Sullux/fp-light/tree/master/lib/filter) | The filter function works similarly to the built in `Array.prototype.filter` function except that the iterable is the most significant (last) argument. |
+| [get](https://github.com/Sullux/fp-light/tree/master/lib/get) | The purpose of the `get` helper is to |
+| [hash](https://github.com/Sullux/fp-light/tree/master/lib/hash) | This is a quick hashing algorithm for use in hash maps and other implementations that demand deterministic but well-distributed values based on not-well-distributed input values. |
+| [map](https://github.com/Sullux/fp-light/tree/master/lib/map) | Similar to the [built-in Javascript function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) `Array.prototype.map`, but accepts the iterable as the second argument. |
+| [memoize](https://github.com/Sullux/fp-light/tree/master/lib/memoize) | Memoization is the caching of results for a given set of arguments. Memoization is useful for pure functions that have a high computational cost or asynchronous latency. |
+| [pipe](https://github.com/Sullux/fp-light/tree/master/lib/pipe) | A pipe is a function comprised of a sequence of functions where the initial argument is passed to the first function, the result of that is passed to the second function and so on, and where the final result is the return value of the last function in the sequence. |
+| [range](https://github.com/Sullux/fp-light/tree/master/lib/range) | Creates an iterable of integers spanning the given range. This can be a good way to functionally implement _next n items_ logic or _repeat n times_ logic. |
+| [reduce](https://github.com/Sullux/fp-light/tree/master/lib/reduce) | Similar to the [built-in Javascript function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) `Array.prototype.reduce`, but accepts the iterable as the last argument. |
+| [skip](https://github.com/Sullux/fp-light/tree/master/lib/skip) | Creates an iterable that skips the first _n_ items of the given iterable. |
+| [slice](https://github.com/Sullux/fp-light/tree/master/lib/slice) | Creates an iterable that starts at the _start_ item and ends at the _end_ item (inclusive) of the given iterable. |
+| [spread](https://github.com/Sullux/fp-light/tree/master/lib/spread) | The spread utility creates a function that accepts an array and spreads the array elements as arguments to the wrapped function. |
+| [take](https://github.com/Sullux/fp-light/tree/master/lib/take) | Creates an iterable that takes the first _n_ items of the given iterable. |
+| [trap](https://github.com/Sullux/fp-light/tree/master/lib/trap) | The trap helper allows for a more functional approach to error handling. |
+| [type](https://github.com/Sullux/fp-light/tree/master/lib/type) | The `type` function supplements the scattered and inconsistent type-related functionality in Javascript. This includes supplying proper factory functions for `undefined` and `null`, the only values in Javascript that are missing a native factory. This also includes a utility to define new types in a consistent way. |
 
 ## Philosophy
 
@@ -52,7 +52,7 @@ Every function in this library is safe to use by itself. None of these functions
 
 Too often, we add large dependencies for small pieces of functionality. The [left pad debacle](https://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/) exemplifies how problematic dependencies can be, and people are continually shocked by the [clutter of modern libraries](https://medium.com/s/silicon-satire/i-peeked-into-my-node-modules-directory-and-you-wont-believe-what-happened-next-b89f63d21558).
 
-"But copying source into your own project adds maintainability debt." Yes, and this debt is _smaller_ than the debt of depending on another library. Additionally, debugging your application is easier when you can easily step through your dependencies or add `console.log` statements to them.
+"But copying source into your own project adds maintainability debt." Yes, and this debt is often _smaller_ than the debt of depending on another library. Additionally, debugging your application is easier when you can easily step through your dependencies or add `console.log` statements to them.
 
 "But you are publishing to NPM too. Aren't you just another dependency?" Yes, and this is why a copy/paste option is a top priority. This is also why:
 
@@ -62,7 +62,7 @@ Every module stands alone. If we ever create a module for use with another packa
 
 > Our code is only published when it has unit test coverage for 100% of statements, branches, functions and lines.
 
-When integrating with the outside world, 100% test coverage is not an effective goal. Unit testing integration points requires a great deal of mocking and delivers little value. The FP libraries, however, do not integrate with real-world systems. This is utility code, which means 100% coverage is both realistic and necessary.
+When integrating with external systems, 100% test coverage is not an effective goal. Unit testing integration points requires a great deal of mocking and delivers little value. The FP libraries, however, do not integrate with real-world systems. This is utility code, which means 100% coverage is both realistic and necessary.
 
 ## Contributing
 
