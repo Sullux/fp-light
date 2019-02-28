@@ -33,8 +33,7 @@ Every function in this library is safe to use by itself. None of these functions
 | [curry](https://github.com/Sullux/fp-light/tree/master/lib/curry) | `npm i -P @sullux/fp-light-curry` `yarn add @sullux/fp-light-curry` | To _curry_ a function is to make it so that arguments can be progressively applied. |
 | [filter](https://github.com/Sullux/fp-light/tree/master/lib/filter) | `npm i -P @sullux/fp-light-filter` `yarn add @sullux/fp-light-filter` | The filter function works similarly to the built in `Array.prototype.filter` function except that the iterable is the most significant (last) argument. |
 | [get](https://github.com/Sullux/fp-light/tree/master/lib/get) | `npm i -P @sullux/fp-light-get` `yarn add @sullux/fp-light-get` | The purpose of the `get` helper is to |
-| [hash](https://github.com/Sullux/fp-light/tree/master/lib/hash) | `npm i -P @sullux/fp-light-hash` `yarn add @sullux/fp-light-hash` | This is a quick hashing algorithm for use in hash maps and other implementations that demand deterministic but well-distributed values based on not-well-distributed input values.
-WARNING: THIS ALGORITHM IS NOT SUITABLE FOR CRYPTOGRAPHIC OPERATIONS. A password hashed with this algorithm could be easily reverse-engineered. This algorithm is for _distribution_, not _obfuscation_. The benefit of this algorithm for distribution scenarios is that it has far better performance than cryptographic hashing. |
+| [hash](https://github.com/Sullux/fp-light/tree/master/lib/hash) | `npm i -P @sullux/fp-light-hash` `yarn add @sullux/fp-light-hash` | This is a quick hashing algorithm for use in hash maps and other implementations that demand deterministic but well-distributed values based on not-well-distributed input values. |
 | [map](https://github.com/Sullux/fp-light/tree/master/lib/map) | `npm i -P @sullux/fp-light-map` `yarn add @sullux/fp-light-map` | Similar to the [built-in Javascript function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) `Array.prototype.map`, but accepts the iterable as the second argument. |
 | [memoize](https://github.com/Sullux/fp-light/tree/master/lib/memoize) | `npm i -P @sullux/fp-light-memoize` `yarn add @sullux/fp-light-memoize` | Memoization is the caching of results for a given set of arguments. Memoization is useful for pure functions that have a high computational cost or asynchronous latency. |
 | [pipe](https://github.com/Sullux/fp-light/tree/master/lib/pipe) | `npm i -P @sullux/fp-light-pipe` `yarn add @sullux/fp-light-pipe` | A pipe is a function comprised of a sequence of functions where the initial argument is passed to the first function, the result of that is passed to the second function and so on, and where the final result is the return value of the last function in the sequence. |
@@ -46,55 +45,6 @@ WARNING: THIS ALGORITHM IS NOT SUITABLE FOR CRYPTOGRAPHIC OPERATIONS. A password
 | [take](https://github.com/Sullux/fp-light/tree/master/lib/take) | `npm i -P @sullux/fp-light-take` `yarn add @sullux/fp-light-take` | Creates an iterable that takes the first _n_ items of the given iterable. |
 | [trap](https://github.com/Sullux/fp-light/tree/master/lib/trap) | `npm i -P @sullux/fp-light-trap` `yarn add @sullux/fp-light-trap` | The trap helper allows for a more functional approach to error handling. |
 | [type](https://github.com/Sullux/fp-light/tree/master/lib/type) | `npm i -P @sullux/fp-light-type` `yarn add @sullux/fp-light-type` | The `type` function supplements the scattered and inconsistent type-related functionality in Javascript. This includes supplying proper factory functions for `undefined` and `null`, the only values in Javascript that are missing a native factory. This also includes a utility to define new types in a consistent way. |
-### Compose
-[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/compose/README.md)
-```bash
-npm i --save @sullux/fp-light-compose
-yarn add @sullux/fp-light-compose
-```
-Provides both async-aware functional composition and immutable, deep object composition.
-
-### Curry
-[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/curry/README.md)
-```bash
-npm i --save @sullux/fp-light-curry
-yarn add @sullux/fp-light-curry
-```
-A utility to create a curried wrapper for any function.
-
-### Hash
-[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/hash/README.md)
-```bash
-npm i --save @sullux/fp-light-hash
-yarn add @sullux/fp-light-hash
-```
-A simple hash implementation suitable for deterministic, highly distributed key generation. NOT SUITABLE FOR CRYPTOGRAPHIC FUNCTIONS.
-
-### Memoize
-[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/memoize/README.md)
-```bash
-npm i --save @sullux/fp-light-memoize
-yarn add @sullux/fp-light-memoize
-```
-A memoizer for any function. Memoization caches function results for a given set of arguments.
-
-### Pipe
-[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/pipe/README.md)
-```bash
-npm i --save @sullux/fp-light-pipe
-yarn add @sullux/fp-light-pipe
-```
-An async-aware pipe implementation.
-
-### Type
-[Documentation](https://github.com/Sullux/fp-light/blob/master/lib/type/README.md)
-```bash
-npm i --save @sullux/fp-light-type
-yarn add @sullux/fp-light-type
-```
-Provides supplemental type information such as constructor name, factory function, prototype heirarchy, type equality testing, etc.
-
-_more to come..._
 
 ## Philosophy
 
