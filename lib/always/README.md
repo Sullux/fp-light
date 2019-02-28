@@ -2,9 +2,9 @@
 
 ## fp-light-always
 
-`npm i @sullux/fp-light-always`&#10
-[source](https://github.com/Sullux/fp-light/blob/master/lib/always/always.js)&#10
-[test](https://github.com/Sullux/fp-light/blob/master/lib/always/always.spec.js)
+`npm i @sullux/fp-light-always`  
+[source](https://github.com/Sullux/fp-light/blob/master/lib/always/always.js)  
+[test](https://github.com/Sullux/fp-light/blob/master/lib/always/always.spec.js)  
 
 The always utility wraps a static value in a function. While simple as far as utilities go, it can add readability to functional code.
 
