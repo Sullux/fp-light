@@ -1,6 +1,6 @@
 {
   "name": "@sullux/fp-light-call",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": { "node": ">=8.*" },
   "description": "A lightweight functional library for functional composition and object composition.",
   "keywords": ["fp", "functional", "call"],
