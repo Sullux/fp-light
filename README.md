@@ -1,9 +1,11 @@
-# fp-light (WIP)
+# fp-light
 
 This is a collection of lightweight javascript utility functions made with functional programming in mind. Each function is a [pure function](https://en.wikipedia.org/wiki/Pure_function), and no function has any dependencies. To install the whole library:
 
+## Installation
+
 ```bash
-npm install --save @sullux/fp-light
+npm i -P @sullux/fp-light
 # or
 yarn add @sullux/fp-light
 ```
@@ -66,3 +68,7 @@ When integrating with external systems, 100% test coverage is not an effective g
 ## Contributing
 
 _to do..._
+
+* awaitAll
+* put
+* ...
