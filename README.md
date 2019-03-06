@@ -27,6 +27,7 @@ Every function in this library is safe to use by itself. None of these functions
 | Function | Description |
 | -------- | ----------- |
 | [always](https://github.com/Sullux/fp-light/tree/master/lib/always) | The always utility wraps a static value in a function. While simple as far as utilities go, it can add readability to functional code. |
+| [async](https://github.com/Sullux/fp-light/tree/master/lib/async) | This module provides various asynchronous helpers such as `awaitAll` and `awaitChain`. |
 | [call](https://github.com/Sullux/fp-light/tree/master/lib/call) | The purpose of the `call` helper is to allow the function to be passed as the most significant argument. |
 | [collect](https://github.com/Sullux/fp-light/tree/master/lib/collect) | The collect utility creates a function that accepts _n_ arguments and passes them to the wrapped function in a single array argument. |
 | [compose](https://github.com/Sullux/fp-light/tree/master/lib/compose) | Compose has different meanings for objects than for functions. Functional composition is the inverse of [piping](../pipe/README.md). Object composition is the recursive combination of the fields of multiple input objects into a single output object. |
@@ -71,7 +72,3 @@ When integrating with external systems, 100% test coverage is not an effective g
 ## Contributing
 
 _to do..._
-
-* awaitAll
-* set
-* ...

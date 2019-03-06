@@ -1,0 +1,126 @@
+[home](https://github.com/Sullux/fp-light/blob/master/README.md)
+
+## fp-light-async
+
+`npm i @sullux/fp-light-async`  
+[source](https://github.com/Sullux/fp-light/blob/master/lib/async/async.js)  
+[test](https://github.com/Sullux/fp-light/blob/master/lib/async/async.spec.js)  
+
+This module provides various asynchronous helpers.
+
+* [awaitAll](#awaitall)
+* [awaitAny](#awaitany)
+* [awaitChain](#awaitchain)
+* [awaitDelay](#awaitdelay)
+* [resolves](#resolves)
+* [rejects](#rejects)
+
+### awaitAll
+
+`awaitAll(promises)`
+
+Similar to `Promise.all()`.
+
+```javascript
+describe('awaitAll', () => {
+  it('should resolve when all promises have resolved', () => 
+    awaitAll([Promise.resolve('foo'), Promise.resolve(42)])
+      .then(result => deepStrictEqual(result, ['foo', 42])))
+  it('should reject when any promise rejects', () => {
+    const error = new Error('reasons')
+    return awaitAll([Promise.resolve('foo'), Promise.reject(error)])
+      .then(value => ([undefined, value]), error => [error])
+      .then(result => deepStrictEqual(result, [error]))
+  })
+})
+```
+
+### awaitAny
+
+`awaitAny(promises)`
+
+Similar to `Promise.race()`.
+
+```javascript
+describe('awaitAny', () => {
+  it('should resolve when the first promise resolves', () => 
+    awaitAny([awaitDelay(5).then(() => 'foo'), Promise.resolve(42)])
+      .then(result => strictEqual(result, 42)))
+  it('should reject when the first promise rejects', () => {
+    const error = new Error('reasons')
+    return awaitAny([awaitDelay(5), Promise.reject(error)])
+      .then(value => ([undefined, value]), error => [error])
+      .then(result => deepStrictEqual(result, [error]))
+  })
+})
+```
+
+### awaitChain
+
+`awaitChain(functions)`
+
+Similar to the `waterfall()` function from the pre-promise era _Async_ library. This function calls each function and awaits the resolution of the result before passing the result to the next function. The result of the final function is the return value.
+
+```javascript
+describe('awaitChain', () => {
+  it('should chain all functions', () =>
+    awaitChain([() => awaitDelay(5), () => Promise.resolve(42)])
+      .then(result => strictEqual(result, 42)))
+  it('should chain non-function values', () =>
+    awaitChain([() => awaitDelay(5), 42])
+      .then(result => strictEqual(result, 42)))
+  it('should reject when any promise rejects', () => {
+    const error = new Error('reasons')
+    return awaitChain([Promise.resolve('foo'), Promise.reject(error)])
+      .then(value => ([undefined, value]), error => [error])
+      .then(result => deepStrictEqual(result, [error]))
+  })
+})
+```
+
+### awaitDelay
+
+`awaitDelay(ms)`
+
+Returns a promise that will resolve after the given number of milliseconds.
+
+```javascript
+describe('awaitDelay', () => {
+  it('should delay the given milliseconds', () => {
+    const start = Date.now()
+    return awaitDelay(5)
+      .then(() => ok((Date.now() - start) > 4))
+  })
+})
+```
+
+### resolves
+
+`resolves(value)`
+
+Returns a function whose result is a promise that resolves to the given value. `resolves(42)` is equivalent to `() => Promise.resolve(42)`.
+
+```javascript
+describe('resolves', () => {
+  it('should create a function that returns a resolved promise', () =>
+    resolves(42)()
+      .then(result => strictEqual(result, 42)))
+})
+```
+
+### rejects
+
+`rejects(error)`
+
+Returns a function whose result is a promise that rejects with the given error. `rejects(myError)` is equivalent to `() => Promise.reject(myError)`.
+
+```javascript
+describe('rejects', () => {
+  it('should create a function that returns a rejected promise', () => {
+    const error = new Error('reasons')
+    return rejects(error)()
+      .then(value => ([undefined, value]), error => [error])
+      .then(result => deepStrictEqual(result, [error]))
+  })
+})
+```
