@@ -14,9 +14,9 @@ A tap is a function that wraps a side-effect such that the return value of the t
 
 `tap<T>((aside: any) => T): (T) => T`
 
-Alias: `aside`
+Aliases: `aside`, `dispatch`
 
-Creates a function that calls the wrapped function but always returns the original argument. The return value of the wrapped function is ignored.
+Creates a function that calls the wrapped function but always returns the original argument. The return value of the wrapped function is ignored. NOTE: if the return value of the wrapped function is thennable, `tap` will return a promise that awaits the thennable and resolves to the original value.
 
 ```javascript
 const { tap } = require('@sullux/fp-light-tap')
@@ -30,6 +30,9 @@ describe('tap', () => {
   })
   it('should return the input value', () =>
     strictEqual(tap(() => 7)(42), 42))
+  it('should return a promise resolving to the input value', () =>
+    tap(v => Promise.resolve(7))(42)
+      .then(v => strictEqual(v, 42)))
 })
 ```
 
