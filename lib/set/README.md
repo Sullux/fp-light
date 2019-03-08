@@ -9,6 +9,7 @@
 The `set` function returns a newly-composed object or array with the given deep property set to the given value.
 
 * [set](#set)
+* [setOn](#seton)
 * [setValue](#setvalue)
 * [setObjectValue](#setobjectvalue)
 * [setArrayValue](#setarrayvalue)
@@ -44,6 +45,32 @@ inactive(people)
   { name: 'jamal', active: false },
   { name: 'xing', active: false },
 ]
+*/
+```
+
+### setOn
+
+`setOn(input, path, value)`
+
+Same functionality as [set](#set), but with the arguments rearranged so that the value is the most significant (last) argument.
+
+```javascript
+const records = pipe(
+  map(setOn({}, 'value'))
+  map(set('createTime', Date.now())),
+  Array.from,
+  setOn({}, 'records')
+)
+
+console.log(records([1, 2, 3]))
+/*
+{
+  Records: [
+    { value: 1, createTime: 1552058411957 },
+    { value: 2, createTime: 1552058411958 },
+    { value: 3, createTime: 1552058411959 },
+  ]
+}
 */
 ```
 
