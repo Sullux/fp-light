@@ -12,15 +12,13 @@ Similar to the [built-in Javascript function](https://developer.mozilla.org/en-U
 
 ### reduce
 
-`reduce<T, U, V>(`
-`  reducer: (U, T, Number, Iterable<T>) => U ,`
-`  initialState,`
-`  iterable: Iterable<T>`
-`): V`
+`reduce(reducer, initialState, iterable)`
 
-Reduces an iterable to a single value. The reducer function has the following signature:
+Reduces an iterable to a single value by combining (reducing) the previous (or initial) state with the current value.
 
-`reducer<T, U>(state: U, value: T, index: Number, iterable: Iterable<T>)`
+The reducer function has the following signature:
+
+`reducer(state, value, index, iterable)`
 
 * `state`: the return value of the previous iteration, or the `initialState` if this is the first iteration.
 * `value`: the current value of the iteration.
@@ -49,36 +47,4 @@ console.log(composedObject)
 // { foo: 'bar', baz: 42 }
 ```
 
-The next example is a reference implementation of a waterfall function. This takes a list of asynchronous functions and executes them sequentially, with each waiting to begin until the previous asynchronous function has completed. Note that since the reduce function is curried, passing two of the three arguments returns a function that accepts the single, third argument (the iterable of asynchronous functions).
-
-```javascript
-const { reduce } = require('@sullux/fp-light-reduce')
-const { readFile, writeFile } = require('fs')
-const { promisify } = require('util')
-const { safeDump } = require('js-yaml')
-
-// a general-purpose waterfall function using reduce
-const waterfall = reduce(
-  (working, next) => working.then(next),
-  Promise.resolve()
-)
-
-// read a json file and write it back to disk as a yml file
-waterfall([
-  async () => {
-    console.log('reading file')
-    const data = await promisify(readFile)('foo.json')
-    console.log('done reading file')
-    return JSON.parse(data)
-  },
-  async data => {
-    console.log('writing file')
-    await promisify(writeFile)('foo.yaml', safeDump(data))
-    console.log('done writing file')
-  }
-])
-// reading file
-// done reading file
-// writing file
-// done writing file
-```
+Because the `reduce` function is async aware, promises are resolved between calls to the reducer. This makes the reduce function an ideal implementation of the classic _waterfall_ pattern.

@@ -8,12 +8,48 @@
 
 This module provides various asynchronous helpers.
 
+* [asyncMap](#asyncmap)
 * [awaitAll](#awaitall)
 * [awaitAny](#awaitany)
 * [awaitChain](#awaitchain)
 * [awaitDelay](#awaitdelay)
 * [resolves](#resolves)
 * [rejects](#rejects)
+
+### asyncMap
+
+`asyncMap(mapper, iterable)`
+
+Given a mapper and an input iterable, returns an iterable of promises. This is subtly different from the standard `map` function in a few ways. First, the `map` function will quietly await the resolution of the prior iteration before continuing while `asyncMap` will produce a standalone promise for each iteration. Second, while `map` will only produce a promise after receiving a promise as input, `asyncMap` will return a promise for all iterations.
+
+```javascript
+const { map } = require('@sullux/fp-light-map')
+const { asyncMap } = require('@sullux/fp-light-async')
+
+const a = 1
+const b = 2
+const c = 3
+
+const mapExample = () => {
+  const mapped = map(v => v + 1, [Promise.resolve(a), b, c])
+  
+  const longhand = Promise.resolve(a)
+    .then(a => a + 1)
+    .then(a => [a, b + 1])
+    .then([a, b] => [a, b, c + 1])
+}
+
+const asyncMapExample = () => {
+  const asyncMapped = asyncMap(v => v + 1, [a, b, c]])
+  
+  const longhand = [
+    Promise.resolve(a + 1),
+    Promise.resolve(b + 1),
+    Promise.resolve(c + 1),
+  ]
+}
+
+```
 
 ### awaitAll
 
