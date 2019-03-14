@@ -1,6 +1,6 @@
 {
   "name": "@sullux/fp-light-hash",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": { "node": ">=8.*" },
   "description": "A lightweight functional library for functional composition and object composition.",
   "keywords": ["fp", "functional", "hash"],
@@ -12,7 +12,7 @@
     "unit": "../../node_modules/.bin/mocha *.spec.js",
     "lint": "../../node_modules/.bin/eslint *.js",
     "test": "npm run lint && npm run unit",
-    "deploy": "npm test && npm run package && cd dist && npm publish --access public"
+    "deploy": "npm run unit && npm run package && cd dist && npm publish --access public"
   },
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
   "license": "MIT",
