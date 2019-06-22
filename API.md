@@ -14,6 +14,7 @@
 * [composeObjects](#composeobjects)
 * [composeFunctions](#composefunctions)
 * [concat](#concat)
+* [constant](#always) aka `always`
 * [curry](#curry)
 * [filter](#filter)
 * [get](#get)
@@ -27,6 +28,7 @@
 * [memoize](#memoize)
 * [defaultMemoizeArgsEqual](#defaultmemoizeargsequal)
 * [pipe](#pipe)
+* [pipeWith](#pipewith)
 * [range](#range)
 * [reduce](#reduce)
 * [resolve](#resolve)
@@ -55,7 +57,7 @@
 
 ## always
 
-`always<T>(value: T): T`
+`always(value)` or `constant(value)`
 
 The following example uses `always` to return a pre-determined value from a thennable.
 
@@ -712,6 +714,29 @@ const extendObject = (key, added) =>
 module.exports = {
   extendObject
 }
+```
+
+## pipeWith
+
+`pipeWith(resolver)`
+
+This implements the base logic of the pipe.
+
+```javascript
+const { pipeWith, resolve } = require('@sullux/fp-light')
+
+// this is the actual implementation of pipe
+const pipe = pipeWith(resolve)
+
+// a simple pipe that does not resolve objects, arrays or promises
+const simplePipe = pipeWith((fn, value) => fn(value))
+
+const squareOfDouble = simplePipe(
+  x => x * 2,
+  x => x * x,
+)
+
+squareOfDouble(3) // 36
 ```
 
 ## range
