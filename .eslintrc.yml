@@ -9,7 +9,7 @@ rules:
   no-console: off
   no-plusplus: error
   no-nested-ternary: off
-  no-unexpected-multiline: error
+  no-unexpected-multiline: off
   comma-dangle:
     - error
     - always-multiline
