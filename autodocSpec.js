@@ -138,7 +138,7 @@ const errorFromObject = ({ message, ...rest }) => {
   return error
 }
 
-const testSpec = async ({ fn, context, test }) => {
+const testSpec = async ({ fn, context, test, lib }) => {
 
   const references = {
     '$resolve': value => Promise.resolve(value),
@@ -147,9 +147,14 @@ const testSpec = async ({ fn, context, test }) => {
     '$Map': value => new Map(value),
     '$Set': value => new Set(value),
     '$Date': value => new Date(value),
+    '$awaitDelay': value => new Promise((resolve) => setTimeout(resolve, value)),
+    '$pipe': ([argument, ...steps]) => lib.pipe(...steps)(argument),
   }
 
   const resolveValue = (value) => {
+    if (isThennable(value)) {
+      return value.then(resolveValue)
+    }
     if (Array.isArray(value)) {
       return value.map(resolveValue)
     }
@@ -158,21 +163,20 @@ const testSpec = async ({ fn, context, test }) => {
       const [key, ref] = entries[0] || ['']
       if (key.startsWith('$')) {
         return key === '$'
-          ? resolveValue(context[ref])
-          : references[key](resolveValue(ref))
+          ? resolveKey(ref) //resolveValue(context[ref])
+          : references[key](resolveArgument(ref))
       }
     }
     return value
   }
 
-  const resolve = (key) => {
-    if (!(key in context)) {
-      throw new Error(`Could not find ${pretty(key)} in context: ${pretty(context)}`)
-    }
-    return resolveValue(context[key])
-  }
-
   const resolveArgument = (argument) => {
+    if (argument === 'undefined') {
+      return undefined
+    }
+    if (argument === 'null') {
+      return null
+    }
     if (argument === 'true') {
       return true
     }
@@ -186,7 +190,33 @@ const testSpec = async ({ fn, context, test }) => {
     if (!isNaN(number)) {
       return number
     }
-    return resolve(argument)
+    return resolveValue(argument)
+  }
+
+  const resolveKey = (key) => {
+    if (key === 'undefined') {
+      return undefined
+    }
+    if (key === 'null') {
+      return null
+    }
+    if (key === 'true') {
+      return true
+    }
+    if (key === 'false') {
+      return false
+    }
+    if (key === 'NaN') {
+      return NaN
+    }
+    const number = Number(key)
+    if (!isNaN(number)) {
+      return number
+    }
+    if (!(key in context)) {
+      throw new Error(`Could not find ${pretty(key)} in context: ${pretty(context)}`)
+    }
+    return resolveArgument(context[key])
   }
 
   const call = async (impl, text) => {
@@ -194,7 +224,7 @@ const testSpec = async ({ fn, context, test }) => {
     const args = text.substring(0, index)
       .split(',')
       .map(arg => arg.trim())
-      .map(arg => arg ? resolveArgument(arg) : undefined)
+      .map(arg => arg ? resolveKey(arg) : undefined)
     const resultText = text.substring(index + 2).trim()
     let actual
     try {
@@ -207,8 +237,8 @@ const testSpec = async ({ fn, context, test }) => {
     }
     const expected = resultText
       ? resultText.startsWith('!')
-        ? { '!': resolve(resultText.substring(1)) }
-        : resolveArgument(resultText)
+        ? { '!': resolveKey(resultText.substring(1)) }
+        : resolveKey(resultText)
       : undefined
     const awaitedValue = async value => {
       try {
@@ -218,12 +248,12 @@ const testSpec = async ({ fn, context, test }) => {
       }
     }
     const testEquality = async (v1, v2) =>
-      v1 === v2 ||
+      v1 === v2 || (v1 && v2 &&
         (isThennable(v1)
           ? isThennable(v2) && testEquality(await awaitedValue(v1), await awaitedValue(v2))
-          : v1 && v1['!']
+          : v1['!'] && v2['!']
             ? areErrorsEqual(v1['!'], v2['!'])
-            : isDeepStrictEqual(v1, v2))
+            : isDeepStrictEqual(v1, v2)))
     const areEqual = await testEquality(actual, expected)
     return areEqual || `EXPECTED ${pretty(expected)} GOT ${pretty(actual)}`
   }

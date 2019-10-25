@@ -61,7 +61,7 @@ const validateAliases = (lib, { name, aliases }) =>
 const spec = async (lib, { name, definition: { types, context, specs } }) => {
   const fn = lib[name]
   const specResults = await Promise.all(specs
-    .map(({ signature, tests }) => tests.map(test => ({ fn, context, test })))
+    .map(({ signature, tests }) => tests.map(test => ({ fn, context, test, lib })))
     .reduce(flatReducer)
     .map(testSpec))
   // return specResults.map(reportTestResult)
@@ -109,6 +109,7 @@ const compileSource = (source) => {
     global,
     Promise,
     module,
+    setTimeout,
   }
   runInNewContext(source, sandbox)
   return module.exports
