@@ -77,24 +77,33 @@ const processAutodoc = lib =>
     only,
   })
 
-const processFile = lib =>
-  async (file) => {
-    const fileData = readFileSync(file).toString()
-    if (!fileData.includes(AUTODOC)) {
-      return
-    }
-    const comments = parseModule(fileData).comments
+const processFile = (file) => {
+  const fileData = readFileSync(file).toString()
+  if (!fileData.includes(AUTODOC)) {
+    return
+  }
+  const comments = parseModule(fileData).comments
+  const autodocComments = comments
+    .filter(comment => comment.value.includes(AUTODOC))
+    .map(({ value, loc }) => ({
+      value: safeLoad(value),
+      loc,
+      only: value.includes(ONLY)
+    }))
+  const filteredCommentsToProcess =
+    autodocComments.filter(({ only }) => only)
+  return filteredCommentsToProcess.length
+    ? { comments: filteredCommentsToProcess, only: true }
+    : { comments: autodocComments }
+}
+
+const processComments = lib =>
+  async (comments) => {
     const process = processAutodoc(lib)
-    const commentsToProcess = comments.filter(comment => comment.value.includes(AUTODOC))
-      .map(({ value, loc }) => ({
-        value: safeLoad(value),
-        loc,
-        only: value.includes(ONLY)
-      }))
     const results = []
     // I hate everything about this.
-    while (commentsToProcess.length) {
-      const result = await process(commentsToProcess.shift())
+    while (comments.length) {
+      const result = await process(comments.shift())
       reportTestSuite(result.title)
       result.tests.map(reportTestResult)
       results.push(result)
@@ -110,6 +119,16 @@ const compileSource = (source) => {
     Promise,
     module,
     setTimeout,
+    console,
+    Date,
+    RegExp,
+    String,
+    Number,
+    Object,
+    Array,
+    Map,
+    Set,
+    JSON,
   }
   runInNewContext(source, sandbox)
   return module.exports
@@ -143,16 +162,17 @@ const autodoc = async (compilation) => {
   const source = compilation.assets[entryPoint].children[0]._value
   const lib = compileSource(source)
   const dependencies =  [...compilation.fileDependencies]
-  const asyncResults = dependencies.map(processFile(lib))
-  const allDependencyResults =
-    await Promise.all(asyncResults)
-  const flattenedResults = allDependencyResults
-    .filter(v => v)
+  const allComments = dependencies.map(processFile).filter(v => !!v)
+  const filteredComments = allComments.filter(({ only }) => only)
+  const commentsToTest = filteredComments.length
+    ? filteredComments
+    : allComments
+  const sortedComments = commentsToTest.sort(({ value: v1 }, { value: v2 }) =>
+    ((v1 || '').name || '').localeCompare((v2 || '').name || ''))
+  const flattenedComments = sortedComments
+    .map(({ comments }) => comments)
     .reduce(flatReducer)
-  const results = flattenedResults.some(({ only }) => only)
-    ? flattenedResults.filter(({ only }) => only)
-    : flattenedResults
-  // why isn't this working???
+  const results = await processComments(lib)(flattenedComments)
   assertTestsPassed(results)
   const docSections = results
     .map(({ title, body, sections }) =>

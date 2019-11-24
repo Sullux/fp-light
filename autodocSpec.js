@@ -1,7 +1,9 @@
-const { inspect, isDeepStrictEqual } = require('util')
+const { inspect } = require('util')
 
 const isThennable = value =>
   value && value.then && (typeof value.then === 'function')
+
+const flatReducer = (all = [], parts) => ([...all, ...parts])
 
 function Undefined () { return undefined }
 function Null () { return null }
@@ -60,6 +62,14 @@ const validateExactType = expected =>
         expected: expected.name,
         actual: factoryOf(actual).name
       }]
+
+// Unfortunately, we can't use the one from util because it requires
+//  constructors to have reference equality. Since the system under test is
+//  built in a sandbox, it's Object is a completely different function from our
+//  Object.
+const isDeepStrictEqual = (v1, v2) =>
+  inspect(v1, { colors: true, depth: 64 }) ===
+    inspect(v2, { colors: true, depth: 64 })
 
 const defaultValidators = [
   String,
@@ -140,6 +150,28 @@ const errorFromObject = ({ message, ...rest }) => {
 
 const testSpec = async ({ fn, context, test, lib }) => {
 
+  const mock = (patterns, key) => {
+    const compiled = patterns
+      .map(pattern => pattern.split('=>').map(v => v.trim()))
+      .map(([input, output]) => ([
+        input.split(',').map(resolveKey),
+        resolveKey(output),
+      ]))
+    return (...input) => {
+      const index = compiled.findIndex(([expectedInput]) =>
+        isDeepStrictEqual(input, expectedInput))
+      if (index < 0) {
+        const expected = compiled.map(([expectedInput]) => expectedInput.map(JSON.stringify).join(','))
+          .join(')|(')
+        const error = new Error(
+          `Mock ${key} expected to be called with (${expected}) but was called with (${input}).`)
+        error.code = 'ERR_BAD_MOCK_CALL'
+        throw error
+      }
+      return (compiled[index][1])
+    }
+  }
+
   const references = {
     '$resolve': value => Promise.resolve(value),
     '$reject': value => Promise.reject(errorFromObject(value)),
@@ -147,16 +179,19 @@ const testSpec = async ({ fn, context, test, lib }) => {
     '$Map': value => new Map(value),
     '$Set': value => new Set(value),
     '$Date': value => new Date(value),
-    '$awaitDelay': value => new Promise((resolve) => setTimeout(resolve, value)),
-    '$pipe': ([argument, ...steps]) => lib.pipe(...steps)(argument),
+    '$afterDelay': ([delay, value]) =>
+      new Promise((resolve) => setTimeout(resolve, delay))
+        .then(() => value),
+    '$mock': mock,
+    '$lib': value => lib[value],
   }
 
-  const resolveValue = (value) => {
+  const resolveValue = (value, originalKey) => {
     if (isThennable(value)) {
-      return value.then(resolveValue)
+      return value.then(v => resolveValue(v, originalKey))
     }
     if (Array.isArray(value)) {
-      return value.map(resolveValue)
+      return value.map(v => resolveValue(v, originalKey))
     }
     if (value && value.constructor === Object) {
       const entries = Object.entries(value)
@@ -164,13 +199,18 @@ const testSpec = async ({ fn, context, test, lib }) => {
       if (key.startsWith('$')) {
         return key === '$'
           ? resolveKey(ref) //resolveValue(context[ref])
-          : references[key](resolveArgument(ref))
+          : references[key](resolveArgument(ref), originalKey)
       }
+      return entries.map(([key, ref]) => ([key, resolveArgument(ref)]))
+        .reduce(
+          (obj, [key, ref]) => ({ ...obj, [key]: ref }),
+          {}
+        )
     }
     return value
   }
 
-  const resolveArgument = (argument) => {
+  const resolveArgument = (argument, key) => {
     if (argument === 'undefined') {
       return undefined
     }
@@ -190,7 +230,7 @@ const testSpec = async ({ fn, context, test, lib }) => {
     if (!isNaN(number)) {
       return number
     }
-    return resolveValue(argument)
+    return resolveValue(argument, key)
   }
 
   const resolveKey = (key) => {
@@ -213,23 +253,38 @@ const testSpec = async ({ fn, context, test, lib }) => {
     if (!isNaN(number)) {
       return number
     }
+    if (key.includes('.')) {
+      return lib.get(key)(context)
+    }
     if (!(key in context)) {
       throw new Error(`Could not find ${pretty(key)} in context: ${pretty(context)}`)
     }
-    return resolveArgument(context[key])
+    return resolveArgument(context[key], key)
   }
 
   const call = async (impl, text) => {
+    if (typeof impl !== 'function') {
+      console.log('!!!', text, impl)
+      throw new Error('NOT A FUNCTION')
+    }
     const index = text.indexOf('=>')
-    const args = text.substring(0, index)
+    const unexpandedArgs = text.substring(0, index)
       .split(',')
       .map(arg => arg.trim())
-      .map(arg => arg ? resolveKey(arg) : undefined)
+    const args = unexpandedArgs
+      .map(arg =>
+        (arg && arg.startsWith('...'))
+          ? resolveKey(arg.substring(3))
+          : arg ? [resolveKey(arg)] : [undefined])
+      .reduce(flatReducer)
     const resultText = text.substring(index + 2).trim()
     let actual
     try {
       actual = impl(...args)
     } catch(err) {
+      if (resultText && resultText.includes('=>')) {
+        return `EXPECTED ${resultText} THREW ${err.message}`
+      }
       actual = { '!': { code: err.code, message: err.message } }
     }
     if (resultText && resultText.includes('=>')) {
