@@ -66,7 +66,9 @@ awaitDelay
 binary
 bind
 call
+callable (toCallable)
 chain
+chainable (toChainable)
 compare
 compareTypes
 compareWith
@@ -80,7 +82,7 @@ def (define)
 defineError
 descriptor (getDescriptor, getPropertyDescriptor)
 entries
-equal
+equal (eq, deepEqual)
 error
 every
 exists
@@ -105,11 +107,12 @@ has (isIn, hasProp, hasProperty)
 hash
 hashToString
 indexOf
-is (isType, isTypeOf)
+is (isExactly, same)
 isBoolean (isBool)
 isAny (isOne, isSome)
 isArray
 isAsync (isPromise, isThennable)
+isCallable
 isDate
 isError
 isErrorOf
@@ -128,6 +131,7 @@ isSet
 isSpreadable
 isString
 isTruthy (truthy)
+isType (isTypeOf)
 isUndefined
 isValue
 isValid
@@ -136,6 +140,7 @@ key
 keys
 last
 lastIndexOf
+lazable (toLazable)
 lazy
 makeSpreadable
 map
@@ -164,7 +169,9 @@ push
 range
 reduce
 reject
+required
 reverse
+rest
 select
 set
 setPrototype (setPrototypeOf)
@@ -183,7 +190,6 @@ ternary
 toArray
 toAsync (toPromise, resolve, toThennable)
 toBuffer
-toCallable
 toDate
 toFixed (toDecimal)
 toFloat (parseFloat)
@@ -197,6 +203,7 @@ toPrecision
 toSet
 toSpreadable
 toString
+trace
 trap
 truthy (toBoolean)
 type
@@ -204,6 +211,7 @@ types
 unary
 uncurry
 unshift (enqueue)
+validate
 value
 values
 with (set, defineProperty)

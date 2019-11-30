@@ -116,6 +116,7 @@ const compileSource = (source) => {
   const sandbox = {
     require,
     global,
+    process,
     Promise,
     module,
     setTimeout,
