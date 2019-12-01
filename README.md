@@ -13,9 +13,6 @@ yarn add @sullux/fp-light
 ## API
 
 _math_
-equal (eq)
-add
-subtract (sub)
 multiply (mul)
 divide (div)
 exponent (exp)
@@ -56,6 +53,7 @@ match
 matchAll
 test (testMatch, matches)
 
+add
 and
 apply
 argument (identity, _)
@@ -107,7 +105,7 @@ has (isIn, hasProp, hasProperty)
 hash
 hashToString
 indexOf
-is (isExactly, same)
+is (isExactly, same, strictEqual)
 isBoolean (isBool)
 isAny (isOne, isSome)
 isArray
@@ -184,6 +182,7 @@ sortBy
 split
 spread
 spreadable
+subtract (sub)
 take
 tap (aside, sideEffect)
 ternary
