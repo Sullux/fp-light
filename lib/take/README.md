@@ -1,16 +1,16 @@
 [home](https://github.com/Sullux/fp-light/blob/master/README.md)
 
-## fp-light-skip
+## fp-light-take
 
-`npm i @sullux/fp-light-skip`
-[source](https://github.com/Sullux/fp-light/blob/master/lib/skip/skip.js)
-[test](https://github.com/Sullux/fp-light/blob/master/lib/skip/skip.spec.js)
+`npm i @sullux/fp-light-take`
+[source](https://github.com/Sullux/fp-light/blob/master/lib/take/take.js)
+[test](https://github.com/Sullux/fp-light/blob/master/lib/take/take.spec.js)
 
 Creates an iterable that takes the first _n_ items of the given iterable.
 
-* [skip](#skip)
+* [take](#take)
 
-### skip
+### take
 
 `take<T>(count: number, iterable: Iterable<T>): Iterable<T>`
 
