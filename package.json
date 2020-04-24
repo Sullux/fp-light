@@ -1,6 +1,6 @@
 {
   "name": "@sullux/fp-light",
-  "version": "0.0.16",
+  "version": "1.0.0-beta.0",
   "engines": {
     "node": ">=8.*"
   },
@@ -12,12 +12,12 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "package": "npm run build && node ./package.js && cp README.md dist/",
+    "package": "yarn build && node ./package.js && cp README.md dist/",
     "unit": "./node_modules/.bin/mocha ./lib/**/*.spec.js",
     "lint": "./node_modules/.bin/eslint *.js ./lib/**/*.js",
     "fix": "./node_modules/.bin/eslint *.js ./lib/**/*.js --fix",
-    "test": "npm run lint && npm run unit",
-    "deploy": "npm run unit && npm run package && cd dist && npm publish --access public"
+    "test": "yarn lint && yarn unit",
+    "deploy": "yarn unit && yarn package && cd dist && npm publish --access public"
   },
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
   "license": "MIT",
@@ -26,9 +26,11 @@
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "chalk": "^2.4.2",
     "eslint": "^5.14.1",
-    "mocha": "^6.0.2",
-    "nyc": "^13.3.0",
+    "esprima": "^4.0.1",
+    "js-yaml": "^3.13.1",
+    "vlq": "^1.0.1",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   }

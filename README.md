@@ -1,6 +1,6 @@
 # fp-light
 
-This is a collection of lightweight javascript utility functions made with functional programming in mind. Each function is a [pure function](https://en.wikipedia.org/wiki/Pure_function), and no function has any dependencies. To install the whole library:
+This is a collection of lightweight javascript utility functions made with functional programming in mind. Each function is a [pure function](https://en.wikipedia.org/wiki/Pure_function) unless explicitly stated otherwise. To install the whole library:
 
 ## Installation
 
@@ -10,66 +10,216 @@ npm i -P @sullux/fp-light
 yarn add @sullux/fp-light
 ```
 
-If you only want a subset of functions, each function can be installed individually. For example, if you only want the `pipe` and `map` functions, use this:
+## API
 
-```bash
-npm install --save @sullux/fp-light-pipe
-npm install --save @sullux/fp-light-map
-# or
-yarn add @sullux/fp-light-pipe
-yarn add @sullux/fp-light-map
-```
+_math_
+multiply (mul)
+divide (div)
+exponent (exp)
+modulo (mod, remainder, rem)
+increment (inc)
+decrement (dec)
+greater (gt)
+greaterOrEqual (gte)
+less (lt)
+lessOrEqual (lte)
+positive (pos, plus)
+negative (neg)
+bitand (band)
+bitor (bor)
+bitxor (bxor)
+bitnot (bnot)
+leftShift (lshift)
+rightShift (rshift)
+rightShiftZero (rshift0)
 
-## Functions
+_string_
+substring
+padStart
+padEnd
+startsWith
+endsWith
+charCodeAt
+codePointAt
+fromCharCode
+fromCodePoint
+includes
+trim
+trimStart
+trimEnd
+repeat
+replace
+match
+matchAll
+test (testMatch, matches)
 
-Every function in this library is safe to use by itself. None of these functions has dependencies of any sort. Every library -- including the complete `fp-light` library -- is 100% unit tested and is published as a single, minified source file.
-
-| Function | Description |
-| -------- | ----------- |
-| [always](https://github.com/Sullux/fp-light/tree/master/lib/always) | The always utility wraps a static value in a function. While simple as far as utilities go, it can add readability to functional code. |
-| [async](https://github.com/Sullux/fp-light/tree/master/lib/async) | This module provides various asynchronous helpers such as `awaitAll` and `awaitChain`. |
-| [call](https://github.com/Sullux/fp-light/tree/master/lib/call) | The purpose of the `call` helper is to allow the function to be passed as the most significant argument. |
-| [collect](https://github.com/Sullux/fp-light/tree/master/lib/collect) | The collect utility creates a function that accepts _n_ arguments and passes them to the wrapped function in a single array argument. |
-| [compose](https://github.com/Sullux/fp-light/tree/master/lib/compose) | Compose has different meanings for objects than for functions. Functional composition is the inverse of [piping](../pipe/README.md). Object composition is the recursive combination of the fields of multiple input objects into a single output object. |
-| [concat](https://github.com/Sullux/fp-light/tree/master/lib/concat) | Concatenates values into a single iterable. |
-| [curry](https://github.com/Sullux/fp-light/tree/master/lib/curry) | To _curry_ a function is to make it so that arguments can be progressively applied. |
-| [filter](https://github.com/Sullux/fp-light/tree/master/lib/filter) | The filter function works similarly to the built in `Array.prototype.filter` function except that the iterable is the most significant (last) argument. |
-| [get](https://github.com/Sullux/fp-light/tree/master/lib/get) | The `get` function is useful for traversing a property path. The path parts can be strings or numbers. This supports retrieving properties and array elements. |
-| [hash](https://github.com/Sullux/fp-light/tree/master/lib/hash) | This is a quick hashing algorithm for use in hash maps and other implementations that demand deterministic but well-distributed values based on not-well-distributed input values. |
-| [map](https://github.com/Sullux/fp-light/tree/master/lib/map) | Similar to the [built-in Javascript function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) `Array.prototype.map`, but accepts the iterable as the second argument. |
-| [memoize](https://github.com/Sullux/fp-light/tree/master/lib/memoize) | Memoization is the caching of results for a given set of arguments. Memoization is useful for pure functions that have a high computational cost or asynchronous latency. |
-| [pipe](https://github.com/Sullux/fp-light/tree/master/lib/pipe) | A pipe is a function comprised of a sequence of functions where the initial argument is passed to the first function, the result of that is passed to the second function and so on, and where the final result is the return value of the last function in the sequence. |
-| [range](https://github.com/Sullux/fp-light/tree/master/lib/range) | Creates an iterable of integers spanning the given range. This can be a good way to functionally implement _next n items_ logic or _repeat n times_ logic. |
-| [reduce](https://github.com/Sullux/fp-light/tree/master/lib/reduce) | Similar to the [built-in Javascript function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) `Array.prototype.reduce`, but accepts the iterable as the last argument. |
-| [resolve](https://github.com/Sullux/fp-light/tree/master/lib/resolve) | Resolves to a result by applying an input argument to the target function or to the member functions of the target while simultaneously collapsing all thenables (if found). |
-| [set](https://github.com/Sullux/fp-light/tree/master/lib/set) | The `set` function returns a newly-composed object or array with the given deep property set to the given value. |
-| [skip](https://github.com/Sullux/fp-light/tree/master/lib/skip) | Creates an iterable that skips the first _n_ items of the given iterable. |
-| [slice](https://github.com/Sullux/fp-light/tree/master/lib/slice) | Creates an iterable that starts at the _start_ item and ends at the _end_ item (inclusive) of the given iterable. |
-| [spread](https://github.com/Sullux/fp-light/tree/master/lib/spread) | The spread utility creates a function that accepts an array and spreads the array elements as arguments to the wrapped function. |
-| [take](https://github.com/Sullux/fp-light/tree/master/lib/take) | Creates an iterable that takes the first _n_ items of the given iterable. |
-| [tap](https://github.com/Sullux/fp-light/tree/master/lib/tap) | Creates a function that calls the wrapped function but always returns the original argument. The return value of the wrapped function is ignored. |
-| [toArray](https://github.com/Sullux/fp-light/tree/master/lib/to-array) | Produces an array from any input. |
-| [toObject](https://github.com/Sullux/fp-light/tree/master/lib/to-object) | Produces an object from any input. If the input is iterable, the object is assembled from the given key/value pairs. |
-| [trap](https://github.com/Sullux/fp-light/tree/master/lib/trap) | The trap helper allows for a more functional approach to error handling. |
-| [type](https://github.com/Sullux/fp-light/tree/master/lib/type) | The `type` function supplements the scattered and inconsistent type-related functionality in Javascript. This includes supplying proper factory functions for `undefined` and `null`, the only values in Javascript that are missing a native factory. This also includes a utility to define new types in a consistent way. |
+add
+and
+apply
+argument (identity, _)
+arity (nary)
+awaitAll
+awaitAny
+awaitDelay
+binary
+bind
+call
+callable (toCallable)
+chain
+chainable (toChainable)
+compare
+compareTypes
+compareWith
+compose (f)
+concat
+conditional (ternary, when)
+constant ($, always, just, scalar)
+construct
+curry
+def (define)
+defineError
+descriptor (getDescriptor, getPropertyDescriptor)
+entries
+equal (eq, deepEqual)
+error
+every
+exists
+fallback
+falsy
+filter
+find
+findIndex
+findLast
+findLastIndex
+flat (flatten)
+flatMap
+fromHex
+fromJson (parse)
+fromYaml (fromYml)
+gather
+get (pick, prop, property)
+getOwn (getOwnProp, getOwnProperty)
+group
+groupBy
+has (isIn, hasProp, hasProperty)
+hash
+hashToString
+indexOf
+is (isExactly, same, strictEqual)
+isBoolean (isBool)
+isAny (isOne, isSome)
+isArray
+isAsync (isPromise, isThennable)
+isCallable
+isDate
+isError
+isErrorOf
+isExactly
+isFalsy (falsy)
+isInt (isInteger)
+isIterable
+isMap
+isMissing (isUndefined)
+isNull
+isNumber (isDouble)
+isObject (isDefined)
+isPlainObject (isPojo)
+isRegExp (isRegex)
+isSet
+isSpreadable
+isString
+isTruthy (truthy)
+isType (isTypeOf)
+isUndefined
+isValue
+isValid
+join
+key
+keys
+last
+lastIndexOf
+lazable (toLazable)
+lazy
+makeSpreadable
+map
+maybe
+memoize
+memoizeIf
+merge (mergeProps, mergeProperties)
+mergeConcat
+mergeInto (assign)
+mergeUnique
+mergeWith
+not
+nullary
+offsetFromEnd
+or
+over (mapOver)
+ownDescriptor (getOwnDescriptor, getOwnPropertyDescriptor)
+ownEntries
+ownKeys
+ownValues
+pipe (I)
+pop
+prototype (getPrototype, getPrototypeOf)
+proxy (bindAll)
+push
+range
+reduce
+reject
+required
+reverse
+rest
+select
+set
+setPrototype (setPrototypeOf)
+shift (dequeue)
+slice
+skip
+some
+sort
+sortBy
+split
+spread
+spreadable
+subtract (sub)
+take
+tap (aside, sideEffect)
+ternary
+toArray
+toAsync (toPromise, resolve, toThennable)
+toBuffer
+toDate
+toFixed (toDecimal)
+toFloat (parseFloat)
+toHex
+toInt (toInteger, parseInt)
+toJson (stringify)
+toLocaleString (toLocale, format)
+toMap
+toObject
+toPrecision
+toSet
+toSpreadable
+toString
+trace
+trap
+truthy (toBoolean)
+type
+types
+unary
+uncurry
+unshift (enqueue)
+validate
+value
+values
+with (set, defineProperty)
+without (deleteProperty)
+xor
 
 ## Philosophy
 
-> A utility should be able to be copy/pasted directly into another project rather than creating a new module dependency.
-
-Too often, we add large dependencies for small pieces of functionality. The [left pad debacle](https://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/) exemplifies how problematic dependencies can be, and people are continually shocked by the [clutter of modern libraries](https://medium.com/s/silicon-satire/i-peeked-into-my-node-modules-directory-and-you-wont-believe-what-happened-next-b89f63d21558).
-
-"But copying source into your own project adds maintainability debt." Yes, and this debt is often _smaller_ than the debt of depending on another library. Additionally, debugging your application is easier when you can easily step through your dependencies or add `console.log` statements to them.
-
-"But you are publishing to NPM too. Aren't you just another dependency?" Yes, and this is why a copy/paste option is a top priority. This is also why:
-
-> Our published modules must NEVER have dependencies.
-
-Every module stands alone. If we ever create a module for use with another package, we will indicate a peer dependency rather than unilaterally dumping that package into your `node_modules`. _Reduced coupling equals reduced complexity._ Our modules don't even depend on each other: every source file can be copy/pasted directly into your code. No exceptions.
-
-> Our code is only published when it has unit test coverage for 100% of statements, branches, functions and lines.
-
-When integrating with external systems, 100% test coverage is not an effective goal. Unit testing integration points requires a great deal of mocking and delivers little value. The FP libraries, however, do not integrate with real-world systems. This is utility code, which means 100% coverage is both realistic and necessary.
+_to do..._
 
 ## Contributing
 
