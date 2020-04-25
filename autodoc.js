@@ -75,8 +75,8 @@ const processAutodoc = lib =>
   async ({ value, loc, only }) => ({
     tests: [...validateAliases(lib, value), ...(await spec(lib, value))],
     title: value.name,
-    body: `\n_Aliases: \`${value.aliases ? value.aliases.join('`, `') : '(none)'}\`_\n\n_Description_\n\n${value.description}\n_Examples_\n\n${value.examples}`,
-    sections: [value.module || 'README', ...(value.tags || [])],
+    body: `\n_Aliases: \`${value.aliases ? value.aliases.join('`, `') : '(none)'}\`_\n\n_Description_\n\n${value.description}\n_Examples_\n\n${value.examples || 'to do...'}`,
+    sections: [value.module || 'API', ...(value.tags || [])],
     only,
   })
 
@@ -160,6 +160,19 @@ const assertTestsPassed = (results) => {
   console.log(`\n${message}`)
 }
 
+const readme = (docSections) => {
+  const sections = Object.entries(docSections)
+    .filter(([name]) => name !== 'API')
+    .map(([name]) =>`* [${name}](${toDocFileName(name)})`)
+    .sort()
+    .join('\n')
+  const api = `[API](${toDocFileName('api')})`
+  const template = readFileSync('README.template.md').toString()
+  return [template
+    .replace(/\{\{API\}\}/g, api)
+    .replace(/\{\{sections\}\}/g, sections)]
+}
+
 const autodoc = async (compilation) => {
   console.log('\n=== AUTODOC ============\n')
   const entryPoint = main || 'index.js'
@@ -191,6 +204,7 @@ const autodoc = async (compilation) => {
       }),
       {},
     )
+  docSections.readme = readme(docSections)
   Object.entries(docSections)
     .map(([section, markdown]) =>
       appendToFile(compilation, toDocFileName(section), `# ${section}\n\n${markdown.join('\n')}`))

@@ -11,13 +11,12 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "package": "yarn build && node ./package.js",
+    "build": "./node_modules/.bin/webpack --config webpack.config.js && cp dist/*.md ./ && node ./package.js",
     "unit": "./node_modules/.bin/mocha ./lib/**/*.spec.js",
     "lint": "./node_modules/.bin/eslint *.js ./lib/**/*.js",
     "fix": "./node_modules/.bin/eslint *.js ./lib/**/*.js --fix",
     "test": "yarn lint && yarn unit",
-    "deploy": "yarn unit && yarn package && cd dist && npm publish --access public"
+    "deploy": "yarn unit && yarn build && cd dist && npm publish --access public"
   },
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
   "license": "MIT",
