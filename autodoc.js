@@ -58,8 +58,11 @@ const validateAliases = (lib, { name, aliases }) =>
       ]))
     : []
 
-const spec = async (lib, { name, definition: { types, context, specs } }) => {
+const spec = async (lib, { name, definition: { types, context, specs } = {} }) => {
   const fn = lib[name]
+  if (!specs) {
+    return [['(no tests defined)', true]]
+  }
   const specResults = await Promise.all(specs
     .map(({ signature, tests }) => tests.map(test => ({ fn, context, test, lib })))
     .reduce(flatReducer)

@@ -2,7 +2,7 @@
   "name": "@sullux/fp-light",
   "version": "1.0.0-beta.0",
   "engines": {
-    "node": ">=8.*"
+    "node": ">=10.*"
   },
   "description": "A lightweight library to support functional programming in javascript.",
   "keywords": [
@@ -12,7 +12,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "package": "yarn build && node ./package.js && cp README.md dist/",
+    "package": "yarn build && node ./package.js",
     "unit": "./node_modules/.bin/mocha ./lib/**/*.spec.js",
     "lint": "./node_modules/.bin/eslint *.js ./lib/**/*.js",
     "fix": "./node_modules/.bin/eslint *.js ./lib/**/*.js --fix",
