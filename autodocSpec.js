@@ -149,7 +149,6 @@ const errorFromObject = ({ message, ...rest }) => {
 }
 
 const testSpec = async ({ fn, context, test, lib }) => {
-
   const mock = (patterns, key) => {
     const compiled = patterns
       .map(pattern => pattern.split('=>').map(v => v.trim()))
@@ -173,7 +172,7 @@ const testSpec = async ({ fn, context, test, lib }) => {
   }
 
   const references = {
-    '$resolve': value => Promise.resolve(value),
+    '$async': value => Promise.resolve(value),
     '$reject': value => Promise.reject(errorFromObject(value)),
     '$Error': errorFromObject,
     '$Map': value => new Map(value),
@@ -264,7 +263,7 @@ const testSpec = async ({ fn, context, test, lib }) => {
 
   const call = async (impl, text) => {
     if (typeof impl !== 'function') {
-      console.log('!!!', text, impl)
+      console.log('!!!', text, impl, test)
       throw new Error('NOT A FUNCTION')
     }
     const index = text.indexOf('=>')
