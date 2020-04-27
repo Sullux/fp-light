@@ -6,7 +6,7 @@ _Aliases: `(none)`_
 
 _Description_
 
-A stand-in constructor for the value `null`.
+A stand-in constructor for the value `undefined`.
 
 _Examples_
 
@@ -17,7 +17,7 @@ _Aliases: `(none)`_
 
 _Description_
 
-A stand-in constructor for the value `undefined`.
+A stand-in constructor for the value `null`.
 
 _Examples_
 
