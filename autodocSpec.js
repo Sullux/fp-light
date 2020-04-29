@@ -60,7 +60,7 @@ const validateExactType = expected =>
       ? []
       : [{
         expected: expected.name,
-        actual: factoryOf(actual).name
+        actual: factoryOf(actual).name,
       }]
 
 // Unfortunately, we can't use the one from util because it requires
@@ -127,7 +127,7 @@ const typesToValidators = lib => {
             ? validatorForArray(validators, type)
             : type.constructor === Object
               ? validatorForObject(validators, type)
-              : validatorForString(validators, type)
+              : validatorForString(validators, type),
         }),
         libTypes
       )
@@ -298,7 +298,7 @@ const testSpec = async ({ fn, context, test, lib }) => {
       try {
         return await value
       } catch(err) {
-        return  { '!': { code: err.code, message: err.message } }
+        return { '!': { code: err.code, message: err.message } }
       }
     }
     const testEquality = async (v1, v2) =>

@@ -16,28 +16,28 @@ rules:
   semi:
     - error
     - never
-  no-restricted-syntax:
-    - error
-    - selector: VariableDeclaration[kind!='const']
-      message: var and let are not allowed
-    - selector: FunctionExpression
-      message: function statements are not allowed
-    - selector: FunctionDeclaration
-      message: function statements are not allowed
-    - selector: IfStatement
-      message: if statements are not allowed
-    - selector: WhileStatement
-      message: while statements are not allowed
-    - selector: ForStatement
-      message: for statements are not allowed
-    - selector: switch
-      message: switch statements are not allowed
-    - selector: TryStatement
-      message: try catch blocks are not allowed
-    - selector: ClassDeclaration
-      message: classes are not allowed
-    - selector: AssignmentExpression[left.property.name!='exports']
-      message: mutations are not allowed
+  # no-restricted-syntax:
+  #   - error
+  #   - selector: VariableDeclaration[kind!='const']
+  #     message: var and let are not allowed
+  #   - selector: FunctionExpression
+  #     message: function statements are not allowed
+  #   - selector: FunctionDeclaration
+  #     message: function statements are not allowed
+  #   - selector: IfStatement
+  #     message: if statements are not allowed
+  #   - selector: WhileStatement
+  #     message: while statements are not allowed
+  #   - selector: ForStatement
+  #     message: for statements are not allowed
+  #   - selector: switch
+  #     message: switch statements are not allowed
+  #   - selector: TryStatement
+  #     message: try catch blocks are not allowed
+  #   - selector: ClassDeclaration
+  #     message: classes are not allowed
+  #   - selector: AssignmentExpression[left.property.name!='exports']
+  #     message: mutations are not allowed
   max-len:
     - error
     - code: 80

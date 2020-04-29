@@ -91,7 +91,7 @@ const processFile = (file) => {
     .map(({ value, loc }) => ({
       value: safeLoad(value),
       loc,
-      only: value.includes(ONLY)
+      only: value.includes(ONLY),
     }))
   const filteredCommentsToProcess =
     autodocComments.filter(({ only }) => only)
@@ -178,7 +178,7 @@ const autodoc = async (compilation) => {
   const entryPoint = main || 'index.js'
   const source = compilation.assets[entryPoint].children[0]._value
   const lib = compileSource(source)
-  const dependencies =  [...compilation.fileDependencies]
+  const dependencies = [...compilation.fileDependencies]
   const allComments = dependencies.map(processFile).filter(v => !!v)
   const filteredComments = allComments.filter(({ only }) => only)
   const commentsToTest = filteredComments.length
