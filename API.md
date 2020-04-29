@@ -371,6 +371,17 @@ Returns true if the value is a function.
 _Examples_
 
 to do...
+## isIterable
+
+_Aliases: `(none)`_
+
+_Description_
+
+Returns true if the value is an iterable.
+
+_Examples_
+
+to do...
 ## isMap
 
 _Aliases: `(none)`_
@@ -483,13 +494,7 @@ constructor is the given type or if the value is an instance of the type.
 
 _Examples_
 
-```javascript
-isExactType.$(Number, 3) // true
-isExactType.$(String, 'foo') // true
-isExactType.$(Object, { x: 42 }) // true
-isExactType.$(Object, new Map()) // true
-```
-
+to do...
 ## isUndefined
 
 _Aliases: `(none)`_
