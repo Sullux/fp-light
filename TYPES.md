@@ -1,6 +1,6 @@
 # Types
 
-## compareTypes
+## Undefined
 
 _Aliases: `(none)`_
 
@@ -11,7 +11,7 @@ A stand-in constructor for the value `undefined`.
 _Examples_
 
 to do...
-## compareTypes
+## Undefined
 
 _Aliases: `(none)`_
 

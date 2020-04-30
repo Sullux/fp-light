@@ -117,28 +117,6 @@ comparison.
 _Examples_
 
 to do...
-## compareTypes
-
-_Aliases: `(none)`_
-
-_Description_
-
-A stand-in constructor for the value `undefined`.
-
-_Examples_
-
-to do...
-## compareTypes
-
-_Aliases: `(none)`_
-
-_Description_
-
-A stand-in constructor for the value `null`.
-
-_Examples_
-
-to do...
 ## constant
 
 _Aliases: `$`, `always`, `just`, `scalar`_
@@ -725,3 +703,26 @@ toAsync(asyncValue).then(console.log) // 42
 toAsync(value).then(console.log) // 42
 isThennable(toAsync(value)) // true
 ```
+
+## Undefined
+
+_Aliases: `(none)`_
+
+_Description_
+
+A stand-in constructor for the value `undefined`.
+
+_Examples_
+
+to do...
+## Undefined
+
+_Aliases: `(none)`_
+
+_Description_
+
+A stand-in constructor for the value `null`.
+
+_Examples_
+
+to do...

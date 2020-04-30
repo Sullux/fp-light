@@ -1,27 +1,5 @@
 # Convenience Functions
 
-## compareTypes
-
-_Aliases: `(none)`_
-
-_Description_
-
-A stand-in constructor for the value `undefined`.
-
-_Examples_
-
-to do...
-## compareTypes
-
-_Aliases: `(none)`_
-
-_Description_
-
-A stand-in constructor for the value `null`.
-
-_Examples_
-
-to do...
 ## constant
 
 _Aliases: `$`, `always`, `just`, `scalar`_
@@ -134,3 +112,26 @@ outputs:
 { x: 'foo', y: 'bar' }
 first foo then bar
 ```
+
+## Undefined
+
+_Aliases: `(none)`_
+
+_Description_
+
+A stand-in constructor for the value `undefined`.
+
+_Examples_
+
+to do...
+## Undefined
+
+_Aliases: `(none)`_
+
+_Description_
+
+A stand-in constructor for the value `null`.
+
+_Examples_
+
+to do...
