@@ -13,9 +13,8 @@ _resolve predicate_ is one of:
 * a function;
 * an object that will be treated as an unordered list of key/value pairs where
   the values are themselves resolvables;
-* an iterable that will be treated as an ordered list of resolvables;
-* a literal value to pass through; or
-* a promise resolving to any of the above.
+* an iterable that will be treated as an ordered list of resolvables; or
+* a literal value to pass through;
 
 Additionally, a resolve predicate can include or return a promise or a value that
 includes promises such as an array of promises or an object with a property
