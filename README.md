@@ -30,10 +30,11 @@ quickly find what you're looking for.
 
 * [Async](ASYNC.md)
 * [Comparison](COMPARISON.md)
+* [Compilable](COMPILABLE.md)
 * [Composition](COMPOSITION.md)
 * [Convenience Functions](CONVENIENCE-FUNCTIONS.md)
+* [Error](ERROR.md)
 * [Foundational](FOUNDATIONAL.md)
-* [Resolvable](RESOLVABLE.md)
 * [Spreadable](SPREADABLE.md)
 * [Strings](STRINGS.md)
 * [Types](TYPES.md)

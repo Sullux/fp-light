@@ -35,6 +35,19 @@ const third = Promise.resolve(43)
 awaitAny([first, second, third]) // 42
 ```
 
+## awaitArray
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given an iterable, deep awaits each value and then resolves to an array of the
+resolved values in original input order.
+```
+
+_Examples_
+
+to do...
 ## awaitDelay
 
 _Aliases: `(none)`_

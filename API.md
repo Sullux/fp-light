@@ -1,5 +1,19 @@
 # API
 
+## appendedName
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given a function, returns the function with its name overridden. If no name is
+given and the function has a `name` property, the original function is
+returned. If the function has no `name` property and no name is given, the
+name is overridden with the output of the `functionName` function.
+
+_Examples_
+
+to do...
 ## awaitAll
 
 _Aliases: `(none)`_
@@ -35,6 +49,19 @@ const third = Promise.resolve(43)
 awaitAny([first, second, third]) // 42
 ```
 
+## awaitArray
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given an iterable, deep awaits each value and then resolves to an array of the
+resolved values in original input order.
+```
+
+_Examples_
+
+to do...
 ## awaitDelay
 
 _Aliases: `(none)`_
@@ -117,6 +144,17 @@ comparison.
 _Examples_
 
 to do...
+## compose
+
+_Aliases: `f`_
+
+_Description_
+
+This is the inverse of {{pipe}}.
+
+_Examples_
+
+to do...
 ## constant
 
 _Aliases: `$`, `always`, `just`, `scalar`_
@@ -153,6 +191,19 @@ _Description_
 Using the same rules as the `compare` function, compares two values and
 returns true if the two values are comparable. This function is suitable for
 deep equality.
+
+_Examples_
+
+to do...
+## functionName
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given a function, returns a human-readable name. This is either the name
+property of the function or the first line of its `toString()` value limited
+to a maximum of 12 characters.
 
 _Examples_
 
@@ -480,6 +531,30 @@ _Aliases: `(none)`_
 _Description_
 
 Returns true if the value is `undefined`.
+
+_Examples_
+
+to do...
+## MissingPipeArgumentError
+
+_Aliases: `(none)`_
+
+_Description_
+
+undefined
+_Examples_
+
+to do...
+## named
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given a function, returns the function with its name overridden. If no name is
+given and the function has a `name` property, the original function is
+returned. If the function has no `name` property and no name is given, the
+name is overridden with the output of the `functionName` function.
 
 _Examples_
 

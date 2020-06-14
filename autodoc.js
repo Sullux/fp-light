@@ -1,11 +1,10 @@
 const { readFileSync } = require('fs')
-const esprima = require('esprima')
-const { safeLoad } = require('js-yaml')
+const { parse } = require('espree')
 const { runInNewContext } = require('vm')
 const { green, red, yellow, bgCyan, gray } = require('chalk')
-
+const { loadYamlSpec } = require('./yamlSpec')
 const { main } = require('./package.json')
-const { testSpec } = require('./autodocSpec.js')
+const { inspect } = require('util')
 
 // const { decode } = require('vlq')
 // todo: track down compiled version of original source for testing
@@ -24,7 +23,12 @@ const appendToFile = (compilation, fileName, text) => {
 }
 
 const parseModule = fileData =>
-  esprima.parseModule(fileData, { loc:true, comment: true })
+  parse(fileData, {
+    loc:true,
+    comment: true,
+    ecmaVersion: 2020,
+    sourceType: 'module',
+  })
 
 const indentLines = (indentSpaces, lines) => {
   const indent = ' '.repeat(indentSpaces)
@@ -45,9 +49,7 @@ const reportTestResult = ([description, result]) => {
 }
 
 const reportTestSuite = name =>
-  console.log(`${yellow('test')} ${bgCyan(name)}`) // ||
-    // (results =>
-    //   results.forEach(reportTestResult) || results)
+  console.log(`${yellow('spec')} ${bgCyan(name)}`)
 
 const validateAliases = (lib, { name, aliases }) =>
   aliases
@@ -58,22 +60,29 @@ const validateAliases = (lib, { name, aliases }) =>
       ]))
     : []
 
-const spec = async (lib, { name, definition: { types, context, specs } = {} }) => {
-  const fn = lib[name]
-  if (!specs) {
-    return [['(no tests defined)', true]]
-  }
-  const specResults = await Promise.all(specs
-    .map(({ signature, tests }) => tests.map(test => ({ fn, context, test, lib })))
-    .reduce(flatReducer)
-    .map(testSpec))
-  // return specResults.map(reportTestResult)
-  return specResults
-}
+const pretty = value =>
+  inspect(value, { colors: true, depth: 7 })
+
+const prettyInvalidResult = ({ validator, input }) =>
+  `expected ${pretty(validator)}; got ${pretty(input)}`
+
+const prettyFailure = ({ failureType, error: { trace, ...error } }) =>
+  `${yellow(failureType)}\n${failureType === 'invalid result' ? prettyInvalidResult(error) : pretty(error)}`
+
+const prettyFailures = failures =>
+  failures.length > 1
+    ? failures.map(prettyFailure).join('\n')
+    : prettyFailure(failures[0])
+
+const validateSpecs = ({ specs = [] }) =>
+  specs.map(spec => spec.map(test => ([
+    `${test.fn.name} (${test.input.map(pretty).join(', ')}) => ${pretty(test.output)}`,
+    test.ok || prettyFailures(test.failures),
+  ]))).flat()
 
 const processAutodoc = lib =>
   async ({ value, loc, only }) => ({
-    tests: [...validateAliases(lib, value), ...(await spec(lib, value))],
+    tests: [...validateAliases(lib, value), ...(validateSpecs(await deepAwait(value)))],
     title: value.name,
     body: `\n_Aliases: \`${value.aliases ? value.aliases.join('`, `') : '(none)'}\`_\n\n_Description_\n\n${value.description}\n_Examples_\n\n${value.examples || 'to do...'}`,
     sections: [value.module || 'API', ...(value.tags || [])],
@@ -85,19 +94,23 @@ const processFile = (file) => {
   if (!fileData.includes(AUTODOC)) {
     return
   }
-  const comments = parseModule(fileData).comments
-  const autodocComments = comments
-    .filter(comment => comment.value.includes(AUTODOC))
-    .map(({ value, loc }) => ({
-      value: safeLoad(value),
-      loc,
-      only: value.includes(ONLY),
-    }))
-  const filteredCommentsToProcess =
-    autodocComments.filter(({ only }) => only)
-  return filteredCommentsToProcess.length
-    ? { comments: filteredCommentsToProcess, only: true }
-    : { comments: autodocComments }
+  try {
+    const comments = parseModule(fileData).comments
+    const autodocComments = comments
+      .filter(comment => comment.value.includes(AUTODOC))
+      .map(({ value, loc }) => ({
+        value: loadYamlSpec(value),
+        loc,
+        only: value.includes(ONLY),
+      }))
+    const filteredCommentsToProcess =
+      autodocComments.filter(({ only }) => only)
+    return filteredCommentsToProcess.length
+      ? { comments: filteredCommentsToProcess, only: true }
+      : { comments: autodocComments }
+  } catch (err) {
+    throw new Error(`Failed to parse ${file}: ${err.message}`)
+  }
 }
 
 const processComments = lib =>
