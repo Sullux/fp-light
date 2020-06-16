@@ -1,8 +1,8 @@
 {
   "name": "@sullux/fp-light",
-  "version": "0.0.16",
+  "version": "1.0.0-beta.29",
   "engines": {
-    "node": ">=8.*"
+    "node": ">=10.*"
   },
   "description": "A lightweight library to support functional programming in javascript.",
   "keywords": [
@@ -11,13 +11,10 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "package": "npm run build && node ./package.js && cp README.md dist/",
-    "unit": "./node_modules/.bin/mocha ./lib/**/*.spec.js",
+    "build": "./node_modules/.bin/webpack --config webpack.config.js && cp dist/*.md ./ && node ./package.js",
     "lint": "./node_modules/.bin/eslint *.js ./lib/**/*.js",
     "fix": "./node_modules/.bin/eslint *.js ./lib/**/*.js --fix",
-    "test": "npm run lint && npm run unit",
-    "deploy": "npm run unit && npm run package && cd dist && npm publish --access public"
+    "deploy": "yarn build && cd dist && npm publish --access public"
   },
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
   "license": "MIT",
@@ -26,9 +23,11 @@
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "chalk": "^2.4.2",
     "eslint": "^5.14.1",
-    "mocha": "^6.0.2",
-    "nyc": "^13.3.0",
+    "espree": "^7.1.0",
+    "js-yaml": "^3.13.1",
+    "vlq": "^1.0.1",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   }
