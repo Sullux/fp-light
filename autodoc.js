@@ -84,7 +84,22 @@ const processAutodoc = lib =>
   async ({ value, loc, only }) => ({
     tests: [...validateAliases(lib, value), ...(validateSpecs(await deepAwait(value)))],
     title: value.name,
-    body: `\n_Aliases: \`${value.aliases ? value.aliases.join('`, `') : '(none)'}\`_\n\n_Description_\n\n${value.description}\n_Examples_\n\n${value.examples || 'to do...'}`,
+    body: `
+      \`\`\`typescript
+      ${(value.ts || '// todo: typescript declaration').trim()}
+      \`\`\`
+
+      _Tags: \`${value.tags ? `{{${value.tags.join('}}`, `{{')}}}` : '(none)'}\`_
+
+      _Aliases: \`${value.aliases ? value.aliases.join('`, `') : '(none)'}\`_
+
+      _Description_
+
+      ${value.description}
+      _Examples_
+
+      ${value.examples || 'to do...'}
+    `.split('\n').map(l => l.trim()).join('\n'),
     sections: [value.module || 'API', ...(value.tags || [])],
     only,
   })

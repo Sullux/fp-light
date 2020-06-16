@@ -14,7 +14,12 @@ yarn add @sullux/fp-light@beta
 
 ## Basic Usage
 
-to do...
+Coming soon!
+
+These docs are in the process of being built. We will be using the common
+pattern of even numbered releases for LTS, so we are treating this 1.0 release
+as a beta. While most of this library is relatively stable, some things might
+change before we get to our first LTS candidate.
 
 ## API
 

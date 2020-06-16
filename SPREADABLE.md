@@ -2,6 +2,12 @@
 
 ## identity
 
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Convenience Functions}}`, `{{Spreadable}}`_
+
 _Aliases: `argument`, `_`_
 
 _Description_
@@ -27,8 +33,8 @@ the `logObject` function uses the JSON serializer.
 
 ```javascript
 const logWith = serialize =>
-  value =>
-    console.log(serialize(value))
+value =>
+console.log(serialize(value))
 
 // log plain values
 const log = logWith(identity)
@@ -53,9 +59,10 @@ undefined values.
 const inners = map(_.nums[0])
 
 inners([
-  { nums: [42, 43] },
-  {}, // this would throw if accessing literally with v => v.nums[0]
-  { nums: [44] },
+{ nums: [42, 43] },
+{}, // this would throw if accessing literally with v => v.nums[0]
+{ nums: [44] },
 ])
 // [42, undefined, 44]
 ```
+

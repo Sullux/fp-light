@@ -2,6 +2,12 @@
 
 ## compare
 
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
+
 _Aliases: `(none)`_
 
 _Description_
@@ -23,7 +29,14 @@ the above rules.
 _Examples_
 
 to do...
+
 ## comparer
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -35,14 +48,14 @@ _Examples_
 
 ```javascript
 const compareColors = ({r: r1, g: g1, b: b1}, {r: r2, g: g2, b: b2}) =>
-  (r1 - r2) || (g1 - g2) || (b1 - b2)
+(r1 - r2) || (g1 - g2) || (b1 - b2)
 
 Color.prototype[comparer] = compareColors
 
 const colors = [
-  new Color(50, 40, 60),
-  new Color(40, 50, 60),
-  new Color(60, 50, 40),
+new Color(50, 40, 60),
+new Color(40, 50, 60),
+new Color(60, 50, 40),
 ]
 
 console.log(colors.sort(compare))
@@ -53,7 +66,14 @@ console.log(colors.sort(compare))
 // ]
 ```
 
+
 ## compareTypes
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -65,7 +85,14 @@ comparison.
 _Examples_
 
 to do...
+
 ## equal
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `deepEqual`, `eq`_
 
@@ -78,7 +105,14 @@ deep equality.
 _Examples_
 
 to do...
+
 ## is
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `isExactly`, `same`, `strictEqual`_
 
@@ -98,7 +132,14 @@ const y = x
 is.$(x, y) // true
 ```
 
+
 ## isArray
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -109,7 +150,14 @@ Returns true if the value is an array.
 _Examples_
 
 to do...
+
 ## isBoolean
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -120,7 +168,14 @@ Returns true if the value is a boolean.
 _Examples_
 
 to do...
+
 ## isDate
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -131,7 +186,14 @@ Returns true if the value is a date.
 _Examples_
 
 to do...
+
 ## isDefined
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `exists`_
 
@@ -142,7 +204,14 @@ Returns true if the value is neither `undefined` nor `null`.
 _Examples_
 
 to do...
+
 ## isError
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -153,7 +222,14 @@ Returns true if the value is an error.
 _Examples_
 
 to do...
+
 ## isExactType
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `sameType`, `strictEqualType`_
 
@@ -171,7 +247,14 @@ isExactType.$(Object, { x: 42 }) // true
 isExactType.$(Object, new Map()) // false
 ```
 
+
 ## isFalsy
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `falsy`_
 
@@ -182,7 +265,14 @@ Returns true if the value is `undefined`, `null`, `0`, `NaN`, `''` or `false`.
 _Examples_
 
 to do...
+
 ## isFunction
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -193,7 +283,14 @@ Returns true if the value is a function.
 _Examples_
 
 to do...
+
 ## isIterable
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -204,7 +301,14 @@ Returns true if the value is an iterable.
 _Examples_
 
 to do...
+
 ## isMap
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -215,7 +319,14 @@ Returns true if the value is a map.
 _Examples_
 
 to do...
+
 ## isMissing
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `notExists`_
 
@@ -226,7 +337,14 @@ Returns true if the value is `undefined` or `null`.
 _Examples_
 
 to do...
+
 ## isNull
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -237,7 +355,14 @@ Returns true if the value is `null`.
 _Examples_
 
 to do...
+
 ## isNumber
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -249,7 +374,14 @@ value `NaN`.
 _Examples_
 
 to do...
+
 ## isObject
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -260,7 +392,14 @@ Returns true if the value is a plain object.
 _Examples_
 
 to do...
+
 ## isSet
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -271,7 +410,14 @@ Returns true if the value is a set.
 _Examples_
 
 to do...
+
 ## isString
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -282,7 +428,14 @@ Returns true if the value is a string.
 _Examples_
 
 to do...
+
 ## isSymbol
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -293,7 +446,14 @@ Returns true if the value is a symbol.
 _Examples_
 
 to do...
+
 ## isTruthy
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `truthy`_
 
@@ -305,7 +465,14 @@ Returns true if the value is not `undefined`, `null`, `0`, `NaN`, `''` or
 _Examples_
 
 to do...
+
 ## isType
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 
@@ -317,7 +484,14 @@ constructor is the given type or if the value is an instance of the type.
 _Examples_
 
 to do...
+
 ## isUndefined
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Comparison}}`_
 
 _Aliases: `(none)`_
 

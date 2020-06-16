@@ -2,6 +2,12 @@
 
 ## tag
 
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Convenience Functions}}`, `{{Strings}}`_
+
 _Aliases: `template`_
 
 _Description_
@@ -13,9 +19,9 @@ _Examples_
 
 ```javascript
 pipe(
-  tap(console.log),
-  tag`first ${_.x} then ${_.y}`,
-  tap(console.log),
+tap(console.log),
+tag`first ${_.x} then ${_.y}`,
+tap(console.log),
 )({ x: 'foo', y: 'bar' })
 ```
 
@@ -25,3 +31,4 @@ outputs:
 { x: 'foo', y: 'bar' }
 first foo then bar
 ```
+

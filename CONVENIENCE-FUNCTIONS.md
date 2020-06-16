@@ -2,6 +2,12 @@
 
 ## constant
 
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Convenience Functions}}`_
+
 _Aliases: `$`, `always`, `just`, `scalar`_
 
 _Description_
@@ -27,7 +33,14 @@ meaning() // 42
 meaning('foo') // 42
 ```
 
+
 ## identity
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Convenience Functions}}`, `{{Spreadable}}`_
 
 _Aliases: `argument`, `_`_
 
@@ -54,8 +67,8 @@ the `logObject` function uses the JSON serializer.
 
 ```javascript
 const logWith = serialize =>
-  value =>
-    console.log(serialize(value))
+value =>
+console.log(serialize(value))
 
 // log plain values
 const log = logWith(identity)
@@ -80,14 +93,21 @@ undefined values.
 const inners = map(_.nums[0])
 
 inners([
-  { nums: [42, 43] },
-  {}, // this would throw if accessing literally with v => v.nums[0]
-  { nums: [44] },
+{ nums: [42, 43] },
+{}, // this would throw if accessing literally with v => v.nums[0]
+{ nums: [44] },
 ])
 // [42, undefined, 44]
 ```
 
+
 ## tag
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Convenience Functions}}`, `{{Strings}}`_
 
 _Aliases: `template`_
 
@@ -100,9 +120,9 @@ _Examples_
 
 ```javascript
 pipe(
-  tap(console.log),
-  tag`first ${_.x} then ${_.y}`,
-  tap(console.log),
+tap(console.log),
+tag`first ${_.x} then ${_.y}`,
+tap(console.log),
 )({ x: 'foo', y: 'bar' })
 ```
 
@@ -113,7 +133,14 @@ outputs:
 first foo then bar
 ```
 
+
 ## Undefined
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Convenience Functions}}`, `{{Types}}`_
 
 _Aliases: `(none)`_
 
@@ -124,7 +151,14 @@ A stand-in constructor for the value `undefined`.
 _Examples_
 
 to do...
+
 ## Undefined
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Convenience Functions}}`, `{{Types}}`_
 
 _Aliases: `(none)`_
 
