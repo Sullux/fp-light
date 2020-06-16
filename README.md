@@ -9,9 +9,9 @@ dependencies, so adding it to your project does not introduce a lot of bloat.
 ## Installation
 
 ```bash
-npm i -P @sullux/fp-light@beta
+npm i -P @sullux/fp-light
 # or
-yarn add @sullux/fp-light@beta
+yarn add @sullux/fp-light
 ```
 
 ## Basic Usage
