@@ -1269,6 +1269,25 @@ _Examples_
 
 to do...
 
+## typeName
+
+```typescript
+// todo: typescript declaration
+```
+
+_Tags: `{{Foundational}}`_
+
+_Aliases: `(none)`_
+
+_Description_
+
+Returns the name of the type as a string. For `null` and `undefined` returns
+`'Null'` and `'Undefined'` respectively.
+
+_Examples_
+
+to do...
+
 ## unary
 
 ```typescript
