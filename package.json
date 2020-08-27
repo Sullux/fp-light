@@ -1,6 +1,6 @@
 {
   "name": "@sullux/fp-light",
-  "version": "1.0.42",
+  "version": "1.0.43",
   "engines": {
     "node": ">=10.*"
   },
