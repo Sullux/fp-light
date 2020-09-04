@@ -1,4 +1,3 @@
-Object.assign(global, require('./dist'))
 const { load, Schema, Type } = require('js-yaml')
 const { inspect } = require('util')
 
@@ -209,6 +208,9 @@ const JsType = new Type('!js', {
 //   }
 
 const loadYamlSpec = (yaml) => {
+  if (!global.pipe) {
+    Object.assign(global, require('./dist'))
+  }
   const schema = Schema.create([JsType, SpecType])
   return load(yaml, { schema })
     // .then(() => console.log('\n--- fin ---\n'))

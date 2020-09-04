@@ -15,7 +15,7 @@ module.exports = {
   plugins: [
     {
       apply: compiler => {
-        compiler.hooks.afterCompile.tapAsync('AUTODOC', autodocPlugin)
+        compiler.hooks.afterEmit.tapAsync('AUTODOC', autodocPlugin)
       },
     },
   ],
