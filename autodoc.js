@@ -1,4 +1,4 @@
-const { readFileSync } = require('fs')
+const { readFileSync, writeFileSync } = require('fs')
 const { parse } = require('espree')
 const { runInNewContext } = require('vm')
 const { green, red, yellow, bgCyan, gray } = require('chalk')
@@ -169,6 +169,9 @@ const compileSource = (source) => {
 const toDocFileName = name =>
   `${name.replace(/ /g, '-').toUpperCase()}.md`
 
+const toDocFilePath = name =>
+  `https://github.com/Sullux/fp-light/blob/master/${toDocFileName(name)}`
+
 const assertTestsPassed = (results) => {
   const tests = results
     .map(({ title, tests }) => tests.map(test => ({ title, test })))
@@ -191,10 +194,10 @@ const assertTestsPassed = (results) => {
 const readme = (docSections) => {
   const sections = Object.entries(docSections)
     .filter(([name]) => name !== 'API')
-    .map(([name]) =>`* [${name}](${toDocFileName(name)})`)
+    .map(([name]) =>`* [${name}](${toDocFilePath(name)})`)
     .sort()
     .join('\n')
-  const api = `[API](${toDocFileName('api')})`
+  const api = `[API](${toDocFilePath('api')})`
   const template = readFileSync('README.template.md').toString()
   return [template
     .replace(/\{\{API\}\}/g, api)
@@ -236,6 +239,11 @@ const autodoc = async (compilation) => {
   Object.entries(docSections)
     .map(([section, markdown]) =>
       appendToFile(compilation, toDocFileName(section), `# ${section}\n\n${markdown.join('\n')}`))
+  Object.keys(compilation.assets)
+    .filter(key => key.endsWith('.md'))
+    .forEach(key => {
+      writeFileSync(key, compilation.assets[key].source())
+    })
 }
 
 const autodocPlugin = (compilation, callback) => {

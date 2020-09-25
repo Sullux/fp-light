@@ -25,22 +25,22 @@ change before we get to our first LTS candidate.
 
 ## API
 
-[API](API.md)
+[API](https://github.com/Sullux/fp-light/blob/master/API.md)
 
-The full [API](API.md) includes all exports from this library. While the source code
+The full [API](https://github.com/Sullux/fp-light/blob/master/API.md) includes all exports from this library. While the source code
 is light, the list of exported function is long. To make it easier to navigate,
 here are the same exports broken into categories. Some functions will be found
 in multiple categories. We just wanted to make it as easy as possible for you to
 quickly find what you're looking for.
 
-* [Async](ASYNC.md)
-* [Comparison](COMPARISON.md)
-* [Compilable](COMPILABLE.md)
-* [Composition](COMPOSITION.md)
-* [Convenience Functions](CONVENIENCE-FUNCTIONS.md)
-* [Environment](ENVIRONMENT.md)
-* [Error](ERROR.md)
-* [Foundational](FOUNDATIONAL.md)
-* [Spreadable](SPREADABLE.md)
-* [Strings](STRINGS.md)
-* [Types](TYPES.md)
+* [Async](https://github.com/Sullux/fp-light/blob/master/ASYNC.md)
+* [Comparison](https://github.com/Sullux/fp-light/blob/master/COMPARISON.md)
+* [Compilable](https://github.com/Sullux/fp-light/blob/master/COMPILABLE.md)
+* [Composition](https://github.com/Sullux/fp-light/blob/master/COMPOSITION.md)
+* [Convenience Functions](https://github.com/Sullux/fp-light/blob/master/CONVENIENCE-FUNCTIONS.md)
+* [Environment](https://github.com/Sullux/fp-light/blob/master/ENVIRONMENT.md)
+* [Error](https://github.com/Sullux/fp-light/blob/master/ERROR.md)
+* [Foundational](https://github.com/Sullux/fp-light/blob/master/FOUNDATIONAL.md)
+* [Spreadable](https://github.com/Sullux/fp-light/blob/master/SPREADABLE.md)
+* [Strings](https://github.com/Sullux/fp-light/blob/master/STRINGS.md)
+* [Types](https://github.com/Sullux/fp-light/blob/master/TYPES.md)
