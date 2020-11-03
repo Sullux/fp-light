@@ -256,7 +256,8 @@ _Aliases: `isPromise`, `isThennable`_
 
 _Description_
 
-Given any value, returns true if the value is thennable; otherwise, returns false.
+Given any value, returns true if the value is thennable; otherwise, returns
+false.
 
 _Examples_
 

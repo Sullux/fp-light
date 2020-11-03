@@ -17,16 +17,19 @@ const toJs = input =>
     ? `'${input && input.replace(/'/g, '\'')}'`
   : toRawJs(input)
 
+const pretty = value =>
+  inspect(value, { colors: true, depth: 7 })
+
 const getName = value =>
   isArray.$(value)
     ? `[${value.map(getName)}]`
   : isNumber.$(value)
-    ? value.toString()
+    ? pretty(value)
   : isString.$(value)
-    ? `'${value && value.replace(/'/g, '\'')}'`
+    ? pretty(`${value && value.replace(/'/g, '\\\'')}`)
   : isFunction.$(value)
     ? value.name || value.toString()
-  : `{ ${toObject(toArray(value).map(([k, v]) => `${k.includes("'") || k.length === 0 ? getName(k) : k}: ${getName(v)}`).join(','))} }`
+  : pretty(value)
 
 const mockImplementation = ({ input = [...any], output, throws } = {}) => {
   return named((...args) => {
@@ -55,6 +58,24 @@ const mock = (implementationDescription) => {
 
 global.mock = mock
 
+const softResolve = (target) => {
+  if (isFunction.$(target)) {
+    return target
+  }
+  if (isArray.$(target)) {
+    return arg => target.map((value) => softResolve(value)(arg))
+  }
+  if (isObject.$(target)) {
+    return arg => Object.entries(target)
+      .map(([key, value]) => ([key, softResolve(value)(arg)]))
+      .reduce(
+        (obj, [key, value]) => ({ ...obj, [key]: value }),
+        {},
+      )
+  }
+  return () => target
+}
+
 const SpecType = new Type('!spec', {
   kind: 'mapping',
   resolve: (data) =>
@@ -67,18 +88,20 @@ const SpecType = new Type('!spec', {
       },
       data,
     ) || true,
-  construct: async ({ name: specName, setup, fn, tests }) => {
-    const results = (await Promise.all(tests.map(async ({ name: testName, input, output, assertions = [] }) => {
+  construct: async ({ name: specName, setup = {}, fn, tests }) => {
+    const results = (await Promise.all(tests.map(async ({ name: testName, input = [], output, assertions = [] }) => {
+      const initialContext = {}
+      const [setupErr, setupContext] = await (trap(softResolve(setup))(initialContext))
+      const [sutErr, sut] = await (trap(softResolve(fn))(setupContext))
+      const [inputErr, args] = await (trap(softResolve(input))(setupContext))
       const resultBase = {
         specName: specName || fn.name,
         setup: Object.entries(setup).reduce((obj, [key, value]) => ({ ...obj, [key]: value.name }), {}),
-        testName: testName || `(${input.map(getName).join(', ')}) => ${getName(output)}`,
+        testName: testName || `(${args.map(getName).join(', ')}) => ${getName(output)}`,
         input,
         output,
         fn,
       }
-      const initialContext = {}
-      const [setupErr, setupContext] = await (trap(resolve(setup))(initialContext))
       if (setupErr) {
         return {
           ...resultBase,
@@ -88,7 +111,6 @@ const SpecType = new Type('!spec', {
           }],
         }
       }
-      const [sutErr, sut] = await (trap(fn)(setupContext))
       if (sutErr) {
         return {
           ...resultBase,
@@ -98,7 +120,16 @@ const SpecType = new Type('!spec', {
           }],
         }
       }
-      const initialResult = trap(sut)(...input)
+      if (inputErr) {
+        return {
+          ...resultBase,
+          failures: [{
+            type: 'initialize input parameters',
+            error: inputErr,
+          }]
+        }
+      }
+      const initialResult = trap(sut)(...args)
       const expectedOutput = isFunction.$(output) ? trap(output)(setupContext) : [null, output]
       const isAsyncResult = isAsync(initialResult)
       const isAsyncOutput = isAsync(expectedOutput)

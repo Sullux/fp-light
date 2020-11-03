@@ -38,11 +38,16 @@ const indentLines = (indentSpaces, lines) => {
   return `${indent}${result}`
 }
 
+const indentedDescription = (description) => {
+  const [first, ...rest] = description.split('\n')
+  return [first, ...rest.map(line => `  ${line}`)].join('\n')
+}
+
 const reportTestResult = ([description, result]) => {
   console.log(
     ' ',
     result === true ? green('OK') : red(' X'),
-    description,
+    indentedDescription(description),
     result === true ? '' : `\n${indentLines(4, result)}`,
   )
   return [description, result]
@@ -76,7 +81,7 @@ const prettyFailures = failures =>
 
 const validateSpecs = ({ specs = [] }) =>
   specs.map(spec => spec.map(test => ([
-    `${test.fn.name} (${test.input.map(pretty).join(', ')}) => ${pretty(test.output)}`,
+    `${test.fn.name} ${test.testName}`,
     test.ok || prettyFailures(test.failures),
   ]))).flat()
 

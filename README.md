@@ -41,6 +41,7 @@ quickly find what you're looking for.
 * [Environment](https://github.com/Sullux/fp-light/blob/master/ENVIRONMENT.md)
 * [Error](https://github.com/Sullux/fp-light/blob/master/ERROR.md)
 * [Foundational](https://github.com/Sullux/fp-light/blob/master/FOUNDATIONAL.md)
+* [Side Effect](https://github.com/Sullux/fp-light/blob/master/SIDE-EFFECT.md)
 * [Spreadable](https://github.com/Sullux/fp-light/blob/master/SPREADABLE.md)
 * [Strings](https://github.com/Sullux/fp-light/blob/master/STRINGS.md)
 * [Types](https://github.com/Sullux/fp-light/blob/master/TYPES.md)
