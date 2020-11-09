@@ -30,7 +30,7 @@ console.log(triple.name) // product<3>
 declare function arity(arity: number, fn: function): function
 ```
 
-_Tags: `{{Foundational}}`_
+_Tags: `{{Composition}}`, `{{Foundational}}`_
 
 _Aliases: `nary`_
 
@@ -38,8 +38,6 @@ _Description_
 
 Given a function, returns a function that invokes the original function
 passing only the first _n_ (`arity`) arguments through.
-
-TODO: fix the typescript definition
 
 _Examples_
 
@@ -166,7 +164,7 @@ fn: (arg1: A1, arg2: A2) => T
 ): (arg1: A1, arg2: A2, ...any[]) => T
 ```
 
-_Tags: `{{Foundational}}`_
+_Tags: `{{Composition}}`, `{{Foundational}}`_
 
 _Aliases: `(none)`_
 
@@ -193,9 +191,6 @@ _Aliases: `(none)`_
 _Description_
 
 Allows partial application of function arguments.
-
-TODO: use [this guide](https://www.freecodecamp.org/news/typescript-curry-ramda-types-f747e99744ab/)
-to provide a full typescript implementation.
 
 _Examples_
 
@@ -296,7 +291,7 @@ to do...
 declare function nullary<T>(fn: () => T): (...any[]) => T
 ```
 
-_Tags: `{{Foundational}}`_
+_Tags: `{{Composition}}`, `{{Foundational}}`_
 
 _Aliases: `(none)`_
 
@@ -469,7 +464,7 @@ fn: (arg1: A1, arg2: A2, arg3: A3) => T
 ): (arg1: A1, arg2: A2, arg3: A3, ...any[]) => T
 ```
 
-_Tags: `{{Foundational}}`_
+_Tags: `{{Composition}}`, `{{Foundational}}`_
 
 _Aliases: `(none)`_
 
@@ -526,8 +521,9 @@ traced function, when it throws an error, will have a different stack trace
 from an untraced function. The thrown error will also have additional
 properties to aid in debugging.
 
-Turning off tracing can improve performance. To turn off tracing in your app,
-set the environment variable FP_LIGHT_TRACE=off.
+Tracing is off by default. Turning tracing on will have a dramatic effect on
+performance (up to 10x slower than without tracing). To turn on tracing, set
+the environment variable FP_LIGHT_TRACE=on.
 
 _Examples_
 
@@ -558,7 +554,7 @@ to do...
 declare function unary<T, A>(fn: (arg: A) => T): (arg: A, ...any[]) => T
 ```
 
-_Tags: `{{Foundational}}`_
+_Tags: `{{Composition}}`, `{{Foundational}}`_
 
 _Aliases: `(none)`_
 
@@ -577,7 +573,7 @@ to do...
 declare function uncurry(fn: function): function
 ```
 
-_Tags: `{{Foundational}}`_
+_Tags: `{{Composition}}`, `{{Foundational}}`_
 
 _Aliases: `(none)`_
 

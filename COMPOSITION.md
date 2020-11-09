@@ -1,5 +1,45 @@
 # Composition
 
+## arity
+
+```typescript
+declare function arity(arity: number, fn: function): function
+```
+
+_Tags: `{{Composition}}`, `{{Foundational}}`_
+
+_Aliases: `nary`_
+
+_Description_
+
+Given a function, returns a function that invokes the original function
+passing only the first _n_ (`arity`) arguments through.
+
+_Examples_
+
+to do...
+
+## binary
+
+```typescript
+declare function binary<T, A1, A2>(
+fn: (arg1: A1, arg2: A2) => T
+): (arg1: A1, arg2: A2, ...any[]) => T
+```
+
+_Tags: `{{Composition}}`, `{{Foundational}}`_
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given a function, returns a function that invokes the original function
+passing only the first 2 arguments through.
+
+_Examples_
+
+to do...
+
 ## compose
 
 ```typescript
@@ -33,8 +73,24 @@ _Description_
 
 Allows partial application of function arguments.
 
-TODO: use [this guide](https://www.freecodecamp.org/news/typescript-curry-ramda-types-f747e99744ab/)
-to provide a full typescript implementation.
+_Examples_
+
+to do...
+
+## nullary
+
+```typescript
+declare function nullary<T>(fn: () => T): (...any[]) => T
+```
+
+_Tags: `{{Composition}}`, `{{Foundational}}`_
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given a function, returns a function that invokes the original function
+without passing any arguments through.
 
 _Examples_
 
@@ -148,6 +204,64 @@ _Aliases: `(none)`_
 _Description_
 
 undefined
+_Examples_
+
+to do...
+
+## ternary
+
+```typescript
+declare function ternary<T, A1, A2, A3>(
+fn: (arg1: A1, arg2: A2, arg3: A3) => T
+): (arg1: A1, arg2: A2, arg3: A3, ...any[]) => T
+```
+
+_Tags: `{{Composition}}`, `{{Foundational}}`_
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given a function, returns a function that invokes the original function
+passing only the first 3 arguments through.
+
+_Examples_
+
+to do...
+
+## unary
+
+```typescript
+declare function unary<T, A>(fn: (arg: A) => T): (arg: A, ...any[]) => T
+```
+
+_Tags: `{{Composition}}`, `{{Foundational}}`_
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given a function, returns a function that invokes the original function
+passing only the first argument through.
+
+_Examples_
+
+to do...
+
+## uncurry
+
+```typescript
+declare function uncurry(fn: function): function
+```
+
+_Tags: `{{Composition}}`, `{{Foundational}}`_
+
+_Aliases: `(none)`_
+
+_Description_
+
+Allows partial application of function arguments.
+
 _Examples_
 
 to do...

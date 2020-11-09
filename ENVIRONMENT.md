@@ -17,8 +17,9 @@ traced function, when it throws an error, will have a different stack trace
 from an untraced function. The thrown error will also have additional
 properties to aid in debugging.
 
-Turning off tracing can improve performance. To turn off tracing in your app,
-set the environment variable FP_LIGHT_TRACE=off.
+Tracing is off by default. Turning tracing on will have a dramatic effect on
+performance (up to 10x slower than without tracing). To turn on tracing, set
+the environment variable FP_LIGHT_TRACE=on.
 
 _Examples_
 
