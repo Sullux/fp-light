@@ -1,5 +1,77 @@
 # Compilable
 
+## bitand
+
+```typescript
+declare function bitand(x: int, y: int): int
+```
+
+_Tags: `{{Bitwise}}`, `{{Compilable}}`_
+
+_Aliases: `band`, `bitwise.and`, `bit.and`_
+
+_Description_
+
+Performs the bitwise AND operation as with the `&` operator.
+
+_Examples_
+
+to do...
+
+## bitnot
+
+```typescript
+declare function bitnot(x: int): int
+```
+
+_Tags: `{{Bitwise}}`, `{{Compilable}}`_
+
+_Aliases: `bnot`, `bitwise.not`, `bit.not`_
+
+_Description_
+
+Performs the bitwise NOT operation as with the `~` operator.
+
+_Examples_
+
+to do...
+
+## bitor
+
+```typescript
+declare function bitor(x: int, y: int): int
+```
+
+_Tags: `{{Bitwise}}`, `{{Compilable}}`_
+
+_Aliases: `bor`, `bitwise.or`, `bit.or`_
+
+_Description_
+
+Performs the bitwise OR operation as with the `|` operator.
+
+_Examples_
+
+to do...
+
+## bitxor
+
+```typescript
+declare function bitxor(x: int, y: int): int
+```
+
+_Tags: `{{Bitwise}}`, `{{Compilable}}`_
+
+_Aliases: `bxor`, `bitwise.xor`, `bit.xor`_
+
+_Description_
+
+Performs the bitwise XOR operation as with the `^` operator.
+
+_Examples_
+
+to do...
+
 ## compose
 
 ```typescript
@@ -40,6 +112,90 @@ saveRecord,
 delay(100), // wait 100 ms before loading
 loadRecord,
 )
+```
+
+
+## leftShift
+
+```typescript
+declare function leftShift(x: int, y: int): int
+```
+
+_Tags: `{{Bitwise}}`, `{{Compilable}}`_
+
+_Aliases: `lshift`_
+
+_Description_
+
+Performs the left shift operation as with the `<<` operator.
+
+_Examples_
+
+to do...
+
+## parallel
+
+```typescript
+declare function parallel(mapper: any, array: Array): Promise<Array>
+```
+
+_Tags: `{{Compilable}}`, `{{Mapping}}`_
+
+_Aliases: `concurrent`_
+
+_Description_
+
+Given an async mapper and an array, invokes the mapper for each element in the
+array concurrently. This is different from the behavior of the {{map}}
+function which ensures the resolution of each element before executing the
+mapper on the next element.
+
+_Examples_
+
+Using `map`:
+
+```javascript
+const input = [500, 100]
+
+const test = map(pipe(
+tap(delay(_)),
+console.log,
+))
+
+test(input)
+// 500
+// 100
+```
+
+Using `parallel`:
+
+```javascript
+const input = [500, 100]
+
+const test = parallel(pipe(
+tap(delay(_)),
+console.log,
+))
+
+test(input)
+// 100
+// 500
+```
+
+Note that while the `map` example prints the items in their original order,
+the `parallel` function executes concurrently and thus the smaller delay
+completes before the larger delay. Note that the output of each function is
+identical as in the following example:
+
+```javascript
+const input = [500, 100]
+
+const test = assertValid(equal(
+map(tap(delay(_))),
+parallel(tap(delay(_))),
+))
+
+test(input) // ok
 ```
 
 
@@ -103,3 +259,22 @@ documentClient.put,
 )
 ```
 
+
+## rightShift
+
+```typescript
+declare function rightShift(x: int, y: int): int
+```
+
+_Tags: `{{Bitwise}}`, `{{Compilable}}`_
+
+_Aliases: `rshift`_
+
+_Description_
+
+Performs the unsigned right shift operation as with the `>>>` operator. NOTE:
+the _signed_ right shift (the `>>` operator) is the {{shift}} function.
+
+_Examples_
+
+to do...

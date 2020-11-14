@@ -2,8 +2,8 @@ const { join } = require('path')
 const { autodocPlugin } = require('./autodoc')
 
 module.exports = {
-  // mode: 'production',
-  mode: 'development',
+  mode: 'production',
+  // mode: 'development',
   entry: './index.js',
   devtool: 'source-map',
   output: {

@@ -34,6 +34,7 @@ in multiple categories. We just wanted to make it as easy as possible for you to
 quickly find what you're looking for.
 
 * [Async](https://github.com/Sullux/fp-light/blob/master/ASYNC.md)
+* [Bitwise](https://github.com/Sullux/fp-light/blob/master/BITWISE.md)
 * [Comparison](https://github.com/Sullux/fp-light/blob/master/COMPARISON.md)
 * [Compilable](https://github.com/Sullux/fp-light/blob/master/COMPILABLE.md)
 * [Composition](https://github.com/Sullux/fp-light/blob/master/COMPOSITION.md)
@@ -41,7 +42,35 @@ quickly find what you're looking for.
 * [Environment](https://github.com/Sullux/fp-light/blob/master/ENVIRONMENT.md)
 * [Error](https://github.com/Sullux/fp-light/blob/master/ERROR.md)
 * [Foundational](https://github.com/Sullux/fp-light/blob/master/FOUNDATIONAL.md)
+* [Mapping](https://github.com/Sullux/fp-light/blob/master/MAPPING.md)
 * [Side Effect](https://github.com/Sullux/fp-light/blob/master/SIDE-EFFECT.md)
 * [Spreadable](https://github.com/Sullux/fp-light/blob/master/SPREADABLE.md)
 * [Strings](https://github.com/Sullux/fp-light/blob/master/STRINGS.md)
 * [Types](https://github.com/Sullux/fp-light/blob/master/TYPES.md)
+
+## Development
+
+To document a function in a comment, use the following YML template:
+
+```javascript
+/* #AUTODOC#
+module: API
+name: <name>
+aliases: [<name>]
+tags: [<Tag>]
+ts: |
+  declare function <name>(<arg>: <type>): <type>
+description: |
+  <add description here>
+examples: |
+  <add code blocks and explanations here>
+specs:
+  - !spec
+    name: <name>
+    fn: !js <name>
+    tests:
+      - name: should <do what>
+        input: [<value>]
+        output: <value>
+*/
+```

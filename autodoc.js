@@ -56,12 +56,17 @@ const reportTestResult = ([description, result]) => {
 const reportTestSuite = name =>
   console.log(`${yellow('spec')} ${bgCyan(name)}`)
 
+const getProperty = (obj, path) => path.split('.').reduce(
+  (obj, prop) => obj && obj[prop],
+  obj,
+)
+
 const validateAliases = (lib, { name, aliases }) =>
   aliases
     ? aliases
       .map(alias => ([
         `${gray('alias')} ${alias}`,
-        lib[alias] === lib[name] || `Missing or invalid alias '${alias}'.`,
+        getProperty(lib, alias) === lib[name] || `Missing or invalid alias '${alias}'.`,
       ]))
     : []
 

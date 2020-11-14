@@ -32,3 +32,30 @@ in multiple categories. We just wanted to make it as easy as possible for you to
 quickly find what you're looking for.
 
 {{sections}}
+
+## Development
+
+To document a function in a comment, use the following YML template:
+
+```javascript
+/* #AUTODOC#
+module: API
+name: <name>
+aliases: [<name>]
+tags: [<Tag>]
+ts: |
+  declare function <name>(<arg>: <type>): <type>
+description: |
+  <add description here>
+examples: |
+  <add code blocks and explanations here>
+specs:
+  - !spec
+    name: <name>
+    fn: !js <name>
+    tests:
+      - name: should <do what>
+        input: [<value>]
+        output: <value>
+*/
+```
