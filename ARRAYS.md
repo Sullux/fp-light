@@ -1,4 +1,4 @@
-# strings
+# arrays
 
 ## includes
 
@@ -40,39 +40,5 @@ includes('foo')(42) // false
 includes({})({}) // true
 includes({ foo: 42 })({ bar: baz }) // false
 includes({ foo: 42 })({ foo: 42, bar: baz }) // true
-```
-
-# Strings
-
-## tag
-
-```typescript
-// todo: typescript declaration
-```
-
-_Tags: `{{Convenience Functions}}`, `{{Strings}}`_
-
-_Aliases: `template`_
-
-_Description_
-
-Used as a tag for a template literal, returns a function that will resolve to
-the interpolated string.
-
-_Examples_
-
-```javascript
-pipe(
-tap(console.log),
-tag`first ${_.x} then ${_.y}`,
-tap(console.log),
-)({ x: 'foo', y: 'bar' })
-```
-
-outputs:
-
-```
-{ x: 'foo', y: 'bar' }
-first foo then bar
 ```
 

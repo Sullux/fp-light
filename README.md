@@ -47,6 +47,9 @@ quickly find what you're looking for.
 * [Spreadable](https://github.com/Sullux/fp-light/blob/master/SPREADABLE.md)
 * [Strings](https://github.com/Sullux/fp-light/blob/master/STRINGS.md)
 * [Types](https://github.com/Sullux/fp-light/blob/master/TYPES.md)
+* [arrays](https://github.com/Sullux/fp-light/blob/master/ARRAYS.md)
+* [compilable](https://github.com/Sullux/fp-light/blob/master/COMPILABLE.md)
+* [strings](https://github.com/Sullux/fp-light/blob/master/STRINGS.md)
 
 ## Development
 

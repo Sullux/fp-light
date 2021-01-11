@@ -492,6 +492,25 @@ _Examples_
 
 to do...
 
+## gather
+
+```typescript
+declare function gather(<arg>: <type>): <type>
+```
+
+_Tags: `{{Composition}}`, `{{Foundational}}`_
+
+_Aliases: `(none)`_
+
+_Description_
+
+<add description here>
+
+_Examples_
+
+<add code blocks and explanations here>
+
+
 ## identity
 
 ```typescript
@@ -556,6 +575,49 @@ inners([
 { nums: [44] },
 ])
 // [42, undefined, 44]
+```
+
+
+## includes
+
+```typescript
+declare function includes(value: any, input: any): boolean
+```
+
+_Tags: `{{compilable}}`, `{{arrays}}`, `{{strings}}`_
+
+_Aliases: `(none)`_
+
+_Description_
+
+If the input has its own `includes` method, return the result of
+calling that function with the given input; otherwise, if the input strict
+equals the value, return true; if the input or value are falsy, return false;
+or returns true if each of the values's own properties is matched by one of
+the input's own properties using strict equal logic.
+
+_Examples_
+
+Check if an array includes a value:
+
+```javascript
+includes('foo')(['foo', 'bar']) // true
+```
+
+Check if a string includes a substring:
+
+```javascript
+includes('foo')('biz foo bar') // true
+```
+
+Check other types of values:
+
+```javascript
+includes(42)(42) // true
+includes('foo')(42) // false
+includes({})({}) // true
+includes({ foo: 42 })({ bar: baz }) // false
+includes({ foo: 42 })({ foo: 42, bar: baz }) // true
 ```
 
 
@@ -1083,10 +1145,55 @@ _Aliases: `(none)`_
 
 _Description_
 
-undefined
+A helper to simplify the process of overriding properties and function call
+behavior. See the ECMA [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+documentation for details.
+
+Note that in the case of frozen, sealed or inextensible objects, the return
+value is _not_ a proxy. Javascript goes to great lengths to ensure that
+proxying such objects fails. If the target is sealed, the return object is a
+manual merge of the target with the given properties.
+
 _Examples_
 
-to do...
+Add a property to a frozen object.
+
+```javascript
+const obj = Object.freeze({ foo: 'bar' })
+const addBiz = override({ biz: 'baz' })
+const bizObj = addBiz(obj)
+console.log(bizObj)
+// { foo: 'bar', biz: 'baz' }
+```
+
+Add a property to an array.
+
+```javascript
+const array = [1, 2, 3]
+const withSum = override(
+{ properties: { sum: array.reduce((s, v) => s + v, 0) } },
+array,
+)
+console.log(withSum)
+// [ 1, 2, 3 ]
+console.log(withSum.sum)
+// 6
+```
+
+Override a function.
+
+```javascript
+const fn = n => n * 2
+console.log(fn(21))
+// 42
+const overridden = override(
+{ apply: (target, thisArg, args) => target(args[0] + 1) },
+fn,
+)
+console.log(overridden(20))
+// 42
+```
+
 
 ## parallel
 
@@ -1235,7 +1342,9 @@ _Aliases: `(none)`_
 
 _Description_
 
-undefined
+A curried implementation of proxy creation. See the ECMA [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+documentation for details.
+
 _Examples_
 
 to do...
@@ -1359,6 +1468,35 @@ the _signed_ right shift (the `>>` operator) is the {{shift}} function.
 _Examples_
 
 to do...
+
+## spread
+
+```typescript
+declare function spread<T>(fn: (...args: any) => T): (args: any[]) => T
+```
+
+_Tags: `{{Composition}}`, `{{Foundational}}`_
+
+_Aliases: `(none)`_
+
+_Description_
+
+Given a function that accepts arguments, return a function that accepts an
+array of arguments and spreads them to the underlying function on invocation.
+
+_Examples_
+
+Spreading to allow logging array elements individually:
+
+```javascript
+const logSquares = pipe(
+map(square(_)),
+spread(console.log),
+)
+logSquares([2, 3])
+// 4 8
+```
+
 
 ## tag
 
