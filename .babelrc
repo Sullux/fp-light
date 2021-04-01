@@ -1,0 +1,23 @@
+{
+  "targets": {
+    "node": 10
+  },
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": "commonjs"
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs"
+      ]
+    }
+  },
+  "plugins": [
+    ["@babel/plugin-transform-spread", { "loose": true }]
+  ]
+}
