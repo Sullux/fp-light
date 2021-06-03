@@ -256,7 +256,7 @@ isExactType.$(Object, new Map()) // false
 
 _Tags: `{{Comparison}}`_
 
-_Aliases: `falsy`_
+_Aliases: `(none)`_
 
 _Description_
 
