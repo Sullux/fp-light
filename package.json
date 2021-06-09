@@ -1,6 +1,6 @@
 {
   "name": "@sullux/fp-light",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "engines": {
     "node": ">=10.*"
   },
@@ -14,7 +14,7 @@
     "build": "./node_modules/.bin/webpack --config webpack.config.js && cp README.md dist/ && node ./package.js",
     "lint": "./node_modules/.bin/eslint *.js ./lib/**/*.js",
     "fix": "./node_modules/.bin/eslint *.js ./lib/**/*.js --fix",
-    "test": "yarn jest",
+    "test": "yarn jest --verbose",
     "deploy": "yarn build && cd dist && npm publish --access public"
   },
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
