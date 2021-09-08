@@ -78,16 +78,16 @@ const softResolve = (target) => {
 
 const SpecType = new Type('!spec', {
   kind: 'mapping',
-  resolve: (data) =>
-    assertValid.$(
-      {
-        name: anyOf(isString, isMissing),
-        setup: anyOf(isObject, isMissing),
-        'fn': isFunction,
-        tests: [any, ...any],
-      },
-      data,
-    ) || true,
+  resolve: (data) => true,
+    // assertValid.$(
+    //   {
+    //     name: anyOf(isString, isMissing),
+    //     setup: anyOf(isObject, isMissing),
+    //     'fn': isFunction,
+    //     tests: [any, ...any],
+    //   },
+    //   data,
+    // ) || true,
   construct: async ({ name: specName, setup = {}, fn, tests }) => {
     const results = (await Promise.all(tests.map(async ({ name: testName, input = [], output, assertions = [] }) => {
       const initialContext = {}
@@ -126,7 +126,7 @@ const SpecType = new Type('!spec', {
           failures: [{
             type: 'initialize input parameters',
             error: inputErr,
-          }]
+          }],
         }
       }
       const initialResult = trap(sut)(...args)
@@ -150,7 +150,7 @@ const SpecType = new Type('!spec', {
         if (isAsyncResult !== isAsyncOutput) {
           failures.push({
             failureType: 'async mismatch',
-            error: `expected ${isAsyncOutput ? 'async' : 'sync'}; got ${isAsyncOutput ? 'sync' : 'async'}`
+            error: `expected ${isAsyncOutput ? 'async' : 'sync'}; got ${isAsyncOutput ? 'sync' : 'async'}`,
           })
         }
         const [validateErr] = await (trap(assertValid.$)(output, result))

@@ -134,6 +134,7 @@ const processFile = (file) => {
       ? { comments: filteredCommentsToProcess, only: true }
       : { comments: autodocComments }
   } catch (err) {
+    console.log(err.stack)
     throw new Error(`Failed to parse ${file}: ${err.message}`)
   }
 }

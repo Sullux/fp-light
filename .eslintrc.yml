@@ -51,7 +51,7 @@ rules:
   block-scoped-var: error
   complexity:
     - error
-    - 12
+    - 20
   class-methods-use-this: error
   consistent-return: error
   curly:
