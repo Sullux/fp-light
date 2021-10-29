@@ -11,7 +11,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config webpack.config.js && cp README.md dist/ && node ./package.js",
+    "build": "rm -rf ./dist && mkdir -p dist && rollup -cm --no-treeshake && cp README.md dist/ && node ./package.js",
     "lint": "./node_modules/.bin/eslint *.js ./lib/**/*.js",
     "fix": "./node_modules/.bin/eslint *.js ./lib/**/*.js --fix",
     "test": "yarn jest --verbose",
@@ -21,9 +21,13 @@
   "license": "MIT",
   "repository": "sullux/fp-light",
   "homepage": "https://github.com/Sullux/fp-light/blob/master/README.md",
-  "dependencies": {},
+  "dependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "babel": "^6.23.0",
+    "babel-jest": "^27.3.1"
+  },
   "devDependencies": {
-    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-env": "^7.15.8",
     "babel-eslint": "^10.0.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "chalk": "^2.4.2",
@@ -31,8 +35,7 @@
     "espree": "^7.1.0",
     "jest": "^26.6.3",
     "js-yaml": "^3.13.1",
-    "vlq": "^1.0.1",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3"
+    "regenerator-runtime": "^0.13.9",
+    "vlq": "^1.0.1"
   }
 }
