@@ -1,8 +1,9 @@
 {
   "name": "@sullux/fp-light",
   "version": "1.2.24",
+  "type": "module",
   "engines": {
-    "node": ">=10.*"
+    "node": ">=14.*"
   },
   "description": "A lightweight library to support functional programming in javascript.",
   "keywords": [
@@ -11,10 +12,10 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf ./dist && mkdir -p dist && rollup -cm --no-treeshake && cp README.md dist/ && node ./package.js",
+    "build": "rm -rf ./dist && mkdir -p ./dist && rollup -cm --no-treeshake && cp README.md dist/ && node ./package.js",
     "lint": "./node_modules/.bin/eslint *.js ./lib/**/*.js",
     "fix": "./node_modules/.bin/eslint *.js ./lib/**/*.js --fix",
-    "test": "yarn jest --verbose",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' yarn jest --verbose",
     "deploy": "yarn build && cd dist && npm publish --access public"
   },
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
@@ -23,19 +24,14 @@
   "homepage": "https://github.com/Sullux/fp-light/blob/master/README.md",
   "dependencies": {
     "@rollup/plugin-node-resolve": "^13.0.6",
-    "babel": "^6.23.0",
-    "babel-jest": "^27.3.1"
+    "jest-environment-node": "^27.3.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.15.8",
-    "babel-eslint": "^10.0.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "chalk": "^2.4.2",
     "eslint": "^5.14.1",
     "espree": "^7.1.0",
     "jest": "^26.6.3",
     "js-yaml": "^3.13.1",
-    "regenerator-runtime": "^0.13.9",
     "vlq": "^1.0.1"
   }
 }
