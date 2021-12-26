@@ -10,11 +10,12 @@
     "functional"
   ],
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config webpack.config.js && cp README.md dist/ && node ./package.js",
+    "build": "yarn test && (rm -rf dist || 0) && mkdir dist && cp lib/*.js dist && rm -f ./dist/*.test.js && cp README.md dist/ && node ./scripts/package.js",
     "lint": "./node_modules/.bin/eslint *.js ./lib/**/*.js",
     "fix": "./node_modules/.bin/eslint *.js ./lib/**/*.js --fix",
-    "test": "yarn jest --verbose",
+    "test": "node scripts/test --files \"**/*.test.js\" -i \"**/node_modules/**/*\"",
     "deploy": "yarn build && cd dist && npm publish --access public"
   },
   "author": "Charles Sullivan <sullux@gmail.com> (https://github.com/Sullux)",
@@ -23,16 +24,6 @@
   "homepage": "https://github.com/Sullux/fp-light/blob/master/README.md",
   "dependencies": {},
   "devDependencies": {
-    "@babel/preset-env": "^7.13.10",
-    "babel-eslint": "^10.0.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "chalk": "^2.4.2",
-    "eslint": "^5.14.1",
-    "espree": "^7.1.0",
-    "jest": "^26.6.3",
-    "js-yaml": "^3.13.1",
-    "vlq": "^1.0.1",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3"
+    "eslint": "^8.5.0"
   }
 }
