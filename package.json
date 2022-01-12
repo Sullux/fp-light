@@ -1,6 +1,6 @@
 {
   "name": "@sullux/fp-light",
-  "version": "1.2.26",
+  "version": "1.2.27",
   "engines": {
     "node": ">=10.*"
   },
@@ -12,7 +12,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "yarn test && (rm -rf dist || 0) && mkdir dist && cp lib/*.js dist && rm -f ./dist/*.test.js && cp README.md dist/ && node ./scripts/package.js",
+    "build": "(rm -rf dist || 0) && mkdir dist && rollup -c && cp README.md dist/ && node ./scripts/package.js",
     "lint": "./node_modules/.bin/eslint *.js ./lib/**/*.js",
     "fix": "./node_modules/.bin/eslint *.js ./lib/**/*.js --fix",
     "test": "node scripts/test --files \"**/*.test.js\" -i \"**/node_modules/**/*\"",
@@ -22,8 +22,8 @@
   "license": "MIT",
   "repository": "sullux/fp-light",
   "homepage": "https://github.com/Sullux/fp-light/blob/master/README.md",
-  "dependencies": {},
   "devDependencies": {
-    "eslint": "^8.5.0"
+    "eslint": "^8.5.0",
+    "rollup": "^2.63.0"
   }
 }
