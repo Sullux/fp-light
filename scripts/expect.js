@@ -17,7 +17,24 @@ export const expect = (v1) => ({
     actual: v1,
     expected: v2,
     operator: '>',
-  })
+  }),
+  toBeTrue: () => equal(v1, true),
+  toThrow: (error) => {
+    let result
+    try {
+      result = v1()
+      // console.log('??? RESULT', result)
+    } catch (err) {
+      // console.log('??? ERROR', err)
+      return (error instanceof Error)
+        ? equal(err.name, error.name)
+        : equal(err.message, error)
+    }
+    fail({
+      actual: result,
+      expected: (error instanceof Error) ? error.name : error,
+    })
+  },
 })
 
 global.expect = expect

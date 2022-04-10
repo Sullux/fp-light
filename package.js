@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs'
+const { readFileSync, writeFileSync } = require('fs')
 
 const packageJson = JSON.parse(readFileSync('./package.json'))
 delete packageJson.scripts

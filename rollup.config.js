@@ -1,13 +1,8 @@
-module.exports = {
-  external: ['assert', 'util'],
-  input: 'lib/index.js',
+export default {
+  input: './lib/index.js',
   output: {
-    dir: 'dist',
-    format: 'umd',
-    name: 'fp',
-    globals: {
-      assert: 'assert',
-      util: 'util',
-    },
-  },
+    file: './dist/index.js',
+    format: 'es',
+    sourcemap: false,
+  }
 }
