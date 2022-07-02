@@ -1,0 +1,7 @@
+#foo bar
+
+#foo 'baz'
+
+#foo `biz`
+
+#foo { buzz: 42 }
