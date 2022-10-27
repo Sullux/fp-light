@@ -10,6 +10,8 @@
 * `scope`:
   * `...[name/index]`: a map of in-scope values by name or 1-based index
 * `stack`: the stack (array) of parsed elements
+* `operators`: the array of operator names
+* `parsers`: the array of parsers
 * `advance(length)`: return a new context with the position advanced
 * `push(element, [length])`: return a new context with the element pushed to stack and optionally advanced the given length
 * `pop()`: return a new context with the element popped from the stack
