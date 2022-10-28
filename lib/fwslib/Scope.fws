@@ -2,19 +2,19 @@
   (with "fws")
   (let i 0)
 
-  (function Element [obj]
+  (const Element ([obj]
     (assert
       (Element.isValid obj)
       "Element must have index i (non-negative integer), label l (string) and optionally value v")
     ({}
       fws.type Element.type
-      (... obj)
+      ...obj
     )
-  )
+  ))
 
   (= Element.type (Symbol "Element"))
 
-  (= Element.isValid (function [obj]
+  (= Element.isValid ([obj]
     (const isValid (&&
       (!! obj)
       (=== "number" (typeof obj.i))

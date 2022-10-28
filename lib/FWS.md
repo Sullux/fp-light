@@ -1,18 +1,97 @@
-# FWS
+# Functional Web Script
 
-## Context
+todo
 
-* `file`: the name of the file
-* `line`: the 1-based line number
-* `offset`: the 1-based character offset within the line
-* `position`: the 0-based character position within the file
-* `text`: the text being compiled
-* `scope`:
-  * `...[name/index]`: a map of in-scope values by name or 1-based index
-* `stack`: the stack (array) of parsed elements
-* `operators`: the array of operator names
-* `parsers`: the array of parsers
-* `advance(length)`: return a new context with the position advanced
-* `push(element, [length])`: return a new context with the element pushed to stack and optionally advanced the given length
-* `pop()`: return a new context with the element popped from the stack
-* `next()`: return a new context with the next element pushed
+# Basic Compiler
+
+The context that is passed to custom compilers:
+
+```javascript
+const context = {
+  utils: {
+    advanced: () => {}, // todo
+    withParser: () => {}, // todo
+    withOutput: () => {}, // todo
+    withUtil: () => {}, // todo
+    push: () => {}, // todo
+    pop: () => {}, // todo
+    parseNext: () => {}, // todo
+    bof: Symbol('bof'),
+    eof: Symbol('eof'),
+    whitespace: '\n\r\v\t\b\f \xa0',
+  },
+  input: [],
+  parsers: [],
+  stack: [],
+  outputs: [],
+}
+```
+
+The FWS code to incorporate a custom compiler:
+
+```
+#compiler foo.js
+```
+
+The JS code to implement the custom compiler:
+
+```javascript
+// foo.js
+
+const importParser = () => {
+  // todo
+}
+
+module.exports = {
+  importParser, // for unit tests
+  fws: [importParser], // for the FWS compiler
+}
+```
+
+# Core Parsers
+
+todo
+
+* label
+* comment
+* pragma
+* string
+* number
+
+# Core Operators
+
+todo
+
+## assignment
+
+`foo: 'bar'`
+
+## dot
+
+`foo.bar`
+
+## pipe
+
+`[foo bar]`
+
+## scope
+
+`{ foo: 'bar' }`
+
+## dereference
+
+`{{foo}}`
+
+## pass
+
+`foo (bar: 42)` eqivalent of `[{ bar: 42 } foo]`
+
+## spread
+
+`...foo`
+
+## ref
+
+`foo: @file.bar`
+
+`...@file`
