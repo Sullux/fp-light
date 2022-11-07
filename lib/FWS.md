@@ -52,46 +52,32 @@ module.exports = {
 
 todo
 
-* label
-* comment
-* pragma
-* string
-* number
-
 # Core Operators
 
-todo
+```
+; function call
+(fn value1 value2)
+fn < {value1 value2}
+{value1 value2} > fn
 
-## assignment
+; function declaration
+({arg1 arg2} statement1 statement2 returnValue)
 
-`foo: 'bar'`
+; scope context
+_ ; current scope
+_.foo ; foo from current scope
+_.1 ; the first argument passed to the current scope
 
-## dot
-
-`foo.bar`
-
-## pipe
-
-`[foo bar]`
-
-## scope
-
-`{ foo: 'bar' }`
-
-## dereference
-
-`{{foo}}`
-
-## pass
-
-`foo (bar: 42)` eqivalent of `[{ bar: 42 } foo]`
-
-## spread
-
-`...foo`
-
-## ref
-
-`foo: @file.bar`
-
-`...@file`
+; print every element of a list
+print: (tap ({...args} `console.log(...context[args])`))
+[
+  printAll: (printAll i:1)
+  printAll: [
+    ? i >> list.length : list
+    ?? [
+      (print (list i))
+      (printAll i: i + 1)
+    ]
+  ]
+]
+```
