@@ -56,12 +56,11 @@ todo
 
 ```
 ; function call
-(fn value1 value2)
-fn < {value1 value2}
-{value1 value2} > fn
+\fn value1 value2\
+[{value1 value2} fn]
 
 ; function declaration
-({arg1 arg2} statement1 statement2 returnValue)
+\{arg1 arg2} statement1 statement2 returnValue\
 
 ; scope context
 _ ; current scope
@@ -70,14 +69,11 @@ _.1 ; the first argument passed to the current scope
 
 ; print every element of a list
 print: (tap ({...args} `console.log(...context[args])`))
-[
-  printAll: (printAll i:1)
-  printAll: [
-    ? i >> list.length : list
-    ?? [
-      (print (list i))
-      (printAll i: i + 1)
-    ]
-  ]
-]
+i: 0
+printAll: ? i > list.length : list ?? [ \print list.(i)\ \printAll i + 1\ ]
+
+()    ; group
+[]    ; pipe
+{}    ; scope
+\ \   ; call/declare
 ```
