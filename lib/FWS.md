@@ -55,6 +55,13 @@ todo
 # Core Operators
 
 ```
+()    ; group
+[]    ; pipe
+{}    ; scope
+\...\ ; dereference
+\     ; pass
+_     ; incoming scope ref
+
 ; group: a private scope that returns the last element
 (foo + (bar - baz))
 foo.(bar) ; as in js foo[bar]
@@ -75,25 +82,98 @@ foo.(bar) ; as in js foo[bar]
 
 ; print every element of a list
 ( \list\
-  print: (`console.log(...context.args)` \\)
-  printAll: (\i\
-    ? i > list.length : list
-    ?? (print\list.(i) printAll\(i + 1))
-  )
-  printAll\1
-)
-
-; print every element of a list (version 2)
-( \list\
-  print: (`console.log(...context.args)` \\)
+  print: (`console.log(...context.args)` _)
   printAll: ? i > list.length : list ?? (print\list.(i) printAll\i:(i + 1))
   printAll\i:1
 )
+```
 
-()    ; group
-[]    ; pipe
-{}    ; scope
-\...\ ; dereference
-\\    ; incoming scope ref
-\     ; pass
+```javascript
+pipe(
+  {
+    Bucket: BUCKET_NAME,
+    Key: $`${_.name}@${_.version}`,
+  },
+  s3.getObject,
+  _.Body,
+  parse,
+  { ..._, isDeprecated: true },
+  {
+    Bucket: BUCKET_NAME,
+    Key: $`${_.name}@${_.version}`,
+    Body: stringify,
+  },
+  s3.putObject,
+)
+```
+
+```
+(
+  params: {
+    Bucket: BUCKET_NAME
+    Key: ${name'@'version}
+  }
+  existing: fromJson\ (s3.getObject\ (params + Body:toJson)).Body
+  new: existing + isDeprecated:true
+  s3.putObject\ (params + Body:toJson\new)
+)
+```
+
+```javascript
+const api = ({
+  handlers,
+}) => {
+  const apiDataFunc = async (event) => {
+    const handler = handlers[event.action]
+    if (!handler) {
+      throw new Error(`Action "${event.action}" not found`)
+    }
+    return handler(event)
+  }
+
+  return apiDataFunc
+}
+```
+
+```
+api: (\event\
+  {action}: event
+  handler: handlers.(action) !! ${'Action 'action' not found'}
+  handler\event
+)
+```
+
+```javascript
+const withKeys = pipe(
+  { baseKey, data: _.data },
+  reduce(
+    {
+      state: [],
+      reducer: [..._.state, { key, message: _.value }],
+    },
+    _.data,
+  ),
+)
+
+const log = pipe(
+  { ..._, id },
+  { context: _.context, id: _.id, data: stringifiedMessages },
+  withKeys,
+  (messages) => {
+    // allow flush
+    lastLog = sendMessages(messages).catch((err) => {
+      console.log(err)
+      throw err
+    })
+    // synchronously return undefined from a log operation
+    return undefined
+  },
+)
+```
+
+```
+log: (
+  ; todo
+  _ ; return the original argument, not undefined!
+)
 ```
