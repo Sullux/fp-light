@@ -55,25 +55,45 @@ todo
 # Core Operators
 
 ```
-; function call
-\fn value1 value2\
-[{value1 value2} fn]
+; group: a private scope that returns the last element
+(foo + (bar - baz))
+foo.(bar) ; as in js foo[bar]
+(foo bar baz) ; returns baz
 
-; function declaration
-\{arg1 arg2} statement1 statement2 returnValue\
+; pipe: like a scope except each element is passed to the next
+[bar foo] ; as in js foo(bar)
 
-; scope context
-_ ; current scope
-_.foo ; foo from current scope
-_.1 ; the first argument passed to the current scope
+; scope: a list of indexed and optionally named parameters
+{ 42 foo bar baz: biz } ; as in js { 1: 42, foo, bar, baz: biz }
+{ foo bar }: baz ; as in js destructuring: const { foo bar } = baz
+
+; dereference: assign ordered and labeled values from the passed context
+[\foo bar\ baz] ; as in js (foo, bar) => baz(foo, bar)
+(\foo\ print\foo) ; as in js (foo) => print(foo)
+(\foo: 2\ print\foo) ; as in js (ignore, foo) => print(foo)
+(foo \\) ; as in js (...args) => { foo(); return args }
 
 ; print every element of a list
-print: (tap ({...args} `console.log(...context[args])`))
-i: 0
-printAll: ? i > list.length : list ?? [ \print list.(i)\ \printAll i + 1\ ]
+( \list\
+  print: (`console.log(...context.args)` \\)
+  printAll: (\i\
+    ? i > list.length : list
+    ?? (print\list.(i) printAll\(i + 1))
+  )
+  printAll\1
+)
+
+; print every element of a list (version 2)
+( \list\
+  print: (`console.log(...context.args)` \\)
+  printAll: ? i > list.length : list ?? (print\list.(i) printAll\i:(i + 1))
+  printAll\i:1
+)
 
 ()    ; group
 []    ; pipe
 {}    ; scope
-\ \   ; call/declare
+\...\ ; dereference
+\\    ; incoming scope ref
+\     ; pass
 ```
