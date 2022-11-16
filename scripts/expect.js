@@ -17,7 +17,7 @@ export const expect = (v1) => ({
     actual: v1,
     expected: v2,
     operator: '>',
-  })
+  }),
 })
 
 global.expect = expect
