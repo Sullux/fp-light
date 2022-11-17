@@ -55,37 +55,49 @@ todo
 # Core Operators
 
 ```
-()    ; group
-[]    ; pipe
+()    ; call/function/resolution
+[]    ; list
 {}    ; scope
-\...\ ; dereference
-\     ; pass
+\     ; pass back
+|     ; pipe forward
 _     ; incoming scope ref
 
-; group: a private scope that returns the last element
-(foo + (bar - baz))
-foo.(bar) ; as in js foo[bar]
-(foo bar baz) ; returns baz
+; call: a private scope that passes elements to the first element (a function)
+(print foo bar) ; as in js print(foo, bar)
 
-; pipe: like a scope except each element is passed to the next
-[bar foo] ; as in js foo(bar)
+; function: a private scope that accepts a scope and returns the final element
+([] print) ; as in js print()
+([foo] (+ foo 1)) ; as in js (foo) => foo + 1
+([foo _.bar] (+ foo bar)) ; no equivalent in js
+({ foo bar } (+ foo bar)) ; no equivalent in js
+
+; resolution: forces a function to resolve to a value
+foo.(bar) ; as in js foo[bar]
+(+ a (rng)) ; as in js a + rng()
 
 ; scope: a list of indexed and optionally named parameters
 { 42 foo bar baz: biz } ; as in js { 1: 42, foo, bar, baz: biz }
 { foo bar }: baz ; as in js destructuring: const { foo bar } = baz
 
-; dereference: assign ordered and labeled values from the passed context
-[\foo bar\ baz] ; as in js (foo, bar) => baz(foo, bar)
-(\foo\ print\foo) ; as in js (foo) => print(foo)
-(\foo: 2\ print\foo) ; as in js (ignore, foo) => print(foo)
-(foo \\) ; as in js (...args) => { foo(); return args }
+; list: assign ordered and labeled values from the passed context
+([foo bar] baz) ; as in js (foo, bar) => baz(foo, bar)
+([foo x:bar] print) ; as in js (foo, { x: bar }) => print(foo, bar)
+([..2] print) ; as in js (x, y) => print(x, y)
+[x y]: foo ; as in js const [x, y] = foo
 
 ; print every element of a list
-( \list\
-  print: (`console.log(...context.args)` _)
-  printAll: ? i > list.length : list ?? (print\list.(i) printAll\i:(i + 1))
-  printAll\i:1
+
+printList: ([list i]
+  (?
+    (> i list.length) list
+    (printList (`console.log(..._) || _` list.(i)) (+ i 1))
+  )
 )
+printList: ([list] (printList list 1))
+
+; alternately
+
+printList: (_ (map `console.log(..._)` _) _)
 ```
 
 ```javascript
@@ -108,14 +120,14 @@ pipe(
 ```
 
 ```
-(
+(_
   params: {
     Bucket: BUCKET_NAME
-    Key: ${name'@'version}
+    Key: ($ name'@'version)
   }
-  existing: fromJson\ (s3.getObject\ (params + Body:toJson)).Body
-  new: existing + isDeprecated:true
-  s3.putObject\ (params + Body:toJson\new)
+  existing: (fromJson (s3.getObject (+ params Body:toJson)).Body)
+  new: (+ existing isDeprecated:true)
+  (s3.putObject (+ params Body:(toJson new)))
 )
 ```
 
@@ -136,10 +148,10 @@ const api = ({
 ```
 
 ```
-api: (\event\
+api: ([event]
   {action}: event
-  handler: handlers.(action) !! ${'Action 'action' not found'}
-  handler\event
+  handler: (!! handlers.(action) ($ 'Action 'action' not found'))
+  (handler event)
 )
 ```
 
@@ -155,25 +167,29 @@ const withKeys = pipe(
   ),
 )
 
-const log = pipe(
+const log = tap(pipe(
   { ..._, id },
   { context: _.context, id: _.id, data: stringifiedMessages },
   withKeys,
   (messages) => {
     // allow flush
     lastLog = sendMessages(messages).catch((err) => {
-      console.log(err)
+      console.log('failed to send messages:', err.message)
       throw err
     })
-    // synchronously return undefined from a log operation
+    // return synchronously from a log operation
     return undefined
   },
-)
+))
 ```
 
 ```
-log: (
-  ; todo
-  _ ; return the original argument, not undefined!
-)
+log: (_
+  messages:withKeys\({..._ id}|{_.context _.id data:stringifiedMessages})
+  result:(!!
+    sendMessages
+    ({message} (console.log 'failed to send messages:' message) (! _))
+  )
+  (mutate lastLog &result) ; the & causes this to pass a promise to the result
+_)
 ```
