@@ -56,12 +56,130 @@ todo
 
 ```
 ()    ; call/function/resolution
-[]    ; list
-{}    ; scope
+[]    ; scope
+{}    ; inline
 \     ; pass back
 |     ; pipe forward
 _     ; incoming scope ref
+.     ; dereference
+:     ; assign
+..    ; range
+...   ; spread
+```
 
+## ()
+
+### call
+
+FWS:
+
+```
+(foo)
+
+(foo bar baz)
+
+(foo (bar baz))
+
+(foo ...bar)
+```
+
+JS:
+
+```javascript
+foo()
+
+foo(bar, baz)
+
+foo(bar(baz))
+
+foo(...bar)
+```
+
+### function
+
+FWS:
+
+```
+([] random: (rng) (* random 100))
+
+([foo ...bar] log(foo) (+ ...bar))
+
+([foo (bar baz)] (* (+ foo bar) baz))
+```
+
+JS:
+
+```javascript
+() => {
+  const random = rng()
+  return random * 100
+}
+
+(foo, ...bar) => {
+  log(foo)
+  return bar.reduce((s, v) => s + v, 0)
+}
+
+// closest approximation
+({ 0:foo bar baz }) => (foo + bar) * baz
+```
+
+### resolution
+
+FWS:
+
+```
+foo.(bar)
+
+(+ foo (bar))
+```
+
+JS:
+
+```javascript
+foo[bar]
+
+foo + (await bar) // or foo + bar()
+```
+
+## []
+
+### scope
+
+FWS:
+
+```
+[ foo 42 bar ]
+```
+
+JS:
+
+```javascript
+// approximation
+{ foo, 2: 42, bar }
+// alternate approximation
+[ { toValue: foo, label: 'foo' }, 42, { toValue: bar, label: 'bar' } ]
+```
+
+## {}
+
+## \
+
+## |
+
+## _
+
+## .
+
+## :
+
+## ..
+
+## ...
+
+
+
+```
 ; call: a private scope that passes elements to the first element (a function)
 (print foo bar) ; as in js print(foo, bar)
 
