@@ -6,6 +6,92 @@ This is the full set of FP functionality. All definitions are described in terms
 
 This is the core set of FP functionality underlying the rest of the library.
 
+* `Function`: _iIn => iOut_
+* `Literal`: _void => iOut_
+  * `'foo'`
+  * `42`
+  * `(bar)`
+* `Sequence`: _iKey => iValue_
+* `Interface`: todo...
+
+```
+;; Declaration
+
+(decl 'foo' 42)
+
+('foo' 42) ; only works when key is a string
+
+;; Sequence
+
+(seq ('foo' 42))
+
+[ foo:42 ]
+
+[ foo:42
+  bar:'baz' ]
+
+[ foo:42 'baz' 'biz' ]
+
+[ 42 'baz' 'biz' ]
+
+;; Expression
+
+(add 1)
+
+(add 1 _)
+
+(add x y z)
+
+(get 'foo' x) ; x.foo
+(from x 'foo') ; x.foo
+(from x 'foo' 'bar') ; [x.foo, x.bar]
+(with x (add foo bar)) ; x.foo + x.bar
+(with [x y] (add foo bar)) ; x.foo + y.bar
+
+x.foo
+
+;; Scope
+
+(scope
+  ('x' (add 1))
+  (mul 2 x)
+)
+
+(scope
+  ('x' 'y' _)
+  (mul x y)
+)
+
+(scope
+  ('x' 'y' ((i (seq Int Int)) _))
+  (mul x y)
+)
+
+{ x:(add 1)
+  (mul 2 x) }
+
+;; Literal
+
+'foo'         ; String
+42            ; Number
+`() => 'bar'` ; Ecma
+
+;; Interface
+
+(i 'Foobar' [
+  foo:Number
+  bar:String
+])
+
+{ f (ecma.Object (Foobar _))
+  foobar++ (
+    Foobar
+    (ecma.args f
+      `({ foo, bar }) => ({ foo: foo + 1, bar: \`${bar}+1\` })`)
+  )
+}
+```
+
 ### Ecma
 
 A native Javascript function.
