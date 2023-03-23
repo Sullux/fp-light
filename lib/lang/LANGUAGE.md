@@ -1,36 +1,39 @@
 # Built-In Language Elements
 
-* [`data`](#data)
+* [`dat`](#dat)
 * [`seq`](#seq)
 * [`range`](#range)
 * [`from`](#from)
 * [`with`](#with)
 * [`without`](#without)
 * [`fn`](#fn)
+* [`impure`](#impure)
+* [`arg`](#arg)
+* [`ctx`](#ctx)
 * [`pipe`](#pipe)
 * [`spec`](#spec)
 * [`invoke`](#invoke)
 
-## `data`
+## `dat`
 
-Declare a data object.
+Declare a dat object.
 
 ```
 ; named
-(data foo 42)
+(dat foo 42)
 
 ; named with spaces
-(data "foo bar" 42)
+(dat "foo bar" 42)
 
 ; multiple values
-(data
+(dat
   foo 42
   bar 'baz')
 
-; nested data
-(data
+; nested dat
+(dat
   foo 42
-  bar (data baz 'biz'))
+  bar (dat baz 'biz'))
 
 ; unnamed
 42
@@ -53,7 +56,7 @@ _Indexed values_
 _Indexed data objects_
 
 ```
-(seq (data x 'foo') (data y 'bar'))
+(seq (dat x 'foo') (dat y 'bar'))
 ```
 
 ```javascript
@@ -69,7 +72,7 @@ Create a progressive sequence of values.
 _Computed sequence:_
 
 ```
-(data x (range 1 3))
+(dat x (range 1 3))
 ```
 
 ```javascript
@@ -83,8 +86,8 @@ Get one or more values from a sequence or data object.
 _Named_
 
 ```
-(data foo (data x 'foo' y 'bar'))
-(data values (from foo x y))
+(dat foo (dat x 'foo' y 'bar'))
+(dat values (from foo x y))
 ```
 
 ```javascript
@@ -95,8 +98,8 @@ const values = { x: foo.x, y: foo.y }
 _Renamed_
 
 ```
-(data foo (data x 'foo' y 'bar'))
-(data values (from foo (data x a y b)))
+(dat foo (dat x 'foo' y 'bar'))
+(dat values (from foo (dat x a y b)))
 ```
 
 ```javascript
@@ -107,8 +110,8 @@ const values = { a: foo.x, b: foo.y }
 _Unnamed_
 
 ```
-(data foo (data x 'foo' y 'bar'))
-(data values (from foo (seq x y)))
+(dat foo (dat x 'foo' y 'bar'))
+(dat values (from foo (seq x y)))
 ```
 
 ```javascript
@@ -121,8 +124,8 @@ const values = [foo.x, foo.y]
 Spread a sequence or data object into the current scope.
 
 ```
-(data foo (data x 'foo' y 'bar'))
-(data bar (data
+(dat foo (dat x 'foo' y 'bar'))
+(dat bar (dat
   (with foo)
   z 'baz'
 ))
@@ -138,8 +141,8 @@ const bar = { ...foo, z: 'baz' }
 Exclude a key from the current scope.
 
 ```
-(data foo (data x 'foo' y 'bar'))
-(data bar (data
+(dat foo (dat x 'foo' y 'bar'))
+(dat bar (dat
   (with foo)
   (without x)
   z 'baz'
@@ -154,14 +157,14 @@ const bar = { ...foo, x: undefined, z: 'baz' }
 
 ## `fn`
 
-Create a function as a sequence of expressions where the last expression is the return value from the function.
+Create a function as a sequence of key/value expressions (as in a data object) but where the last expression is the return value from the function.
 
 _Simple function_
 
 ```
 (fn
-  (data x 20)
-  (data y (add 1 x))
+  x 20
+  y (add 1 x)
   (mul y 2)
 )
 ```
@@ -174,12 +177,72 @@ _Simple function_
 }
 ```
 
-## `pipe`
+## `impure`
 
-Create a function as a sequence of expressions where the first expression receives the function argument, the result of the first expression is passed to the next expression, and so on. The result of the final expression is the return value of the pipe.
+Create an impure function out of an existing function. This will indicate to the compiler that the function may produce different outputs give the same inputs.
 
 ```
-(data incrementAndDouble (pipe
+(fn
+  nextCounterRaw (int `let i = 0; return () => i++;`)
+  nextCounter (impure nextCounterRaw)
+  (spec
+    (equal (seq (nextCounterRaw) (nextCounterRaw)) (seq 0 0))
+    (equal (seq (nextCounter) (nextCounter)) (seq 0 1))
+  )
+  nextCounter
+)
+```
+
+## `arg`
+
+A reference to the current function argument.
+
+```
+(fn
+  (with (from arg x y))
+  (add x y)
+)
+```
+
+```javascript
+(arg) => {
+  const { x, y } = arg
+  return x + y
+}
+```
+
+## `ctx`
+
+An explicit reference to the current context.
+
+```
+(fn
+  (with (from ctx x y) (from (from ctx ctx) z))
+  (add x y z)
+)
+```
+
+There is no equivalent in Javascript because context is implicit. If we use a made up `context` object in Javascript as a stand-in, the above might look like:
+
+```javascript
+const context = {
+  context: parentContext,
+  x: 40,
+  y: 2,
+}
+
+() => {
+  const { x, y context: { z } } = context
+  return x + y + z
+}
+```
+
+## `pipe`
+
+Create a function as a sequence of expressions where the first expression receives the argument, the result of the first expression is passed as the argument to the next expression, and so on. The result of the final expression is the return value of the pipe.
+
+```
+(dat incrementAndDouble (pipe
   (add 1)
   (mul 2)
 ))
@@ -202,9 +265,9 @@ Create a specification. A specification is like an interface but can include com
 _A simple specification_
 
 ```
-(data Point (spec
-  (data
-    name (String (data maxLength 64 minLength 1))
+(dat Point (spec
+  (dat
+    name (String (dat maxLength 64 minLength 1))
     x Int
     y Int
   )
@@ -228,9 +291,9 @@ const Point = ({ name, x, y }) => {
 _A specification that extends another specification_
 
 ```
-(data ZPoint (spec
+(dat ZPoint (spec
   (with Point)
-  (data z Int)
+  (dat z Int)
   (fn (lt 1000 (add x y z)))
 ))
 ```
@@ -250,7 +313,7 @@ const ZPoint = ({ ...point, z }) => {
 Creates specification information for a function.
 
 ```
-(data PointHandler (spec
+(dat PointHandler (spec
   (invoke Point Point)
 ))
 ```
@@ -287,11 +350,11 @@ Define a compile-time macro.
 
 _Create a `compose` language element that is the reverse of a pipe_
 ```
-(data compose (define
+(dat compose (define
   (pipe (with reverse))
 ))
 
-(data incrementAndDouble (compose
+(dat incrementAndDouble (compose
   (mul 2)
   (add 1)
 ))
