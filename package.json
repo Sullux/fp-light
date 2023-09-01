@@ -44,5 +44,8 @@
       "node",
       "es2021"
     ]
+  },
+  "dependencies": {
+    "wabt": "^1.0.32"
   }
 }
