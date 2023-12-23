@@ -4,3 +4,4 @@ coverage
 npm-debug.log
 dist
 play
+.testlog.json
