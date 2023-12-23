@@ -4,3513 +4,1549 @@
 
 # API
 
-NOTE: we are in the process of overhauling the API docs. This overhaul is almost finished; in the meantime, please refer to the [tutorial](https://github.com/Sullux/fp-light/blob/master/TUTORIAL.md) to help get you started.
-
-* [...](#---)
-  * [$](#-)
-  * [_](#-)
-  * [__esModule](#--esmodule)
-  * [_base](#-base)
-  * [_this](#-this)
-
 * [A](#a)
-  * [Any](#any)
-  * [add](#add)
-  * [always](#always)
-  * [and](#and)
-  * [any](#any)
-  * [anyOf](#anyof)
-  * [appendedName](#appendedname)
-  * [argument](#argument)
-  * [arity](#arity)
-  * [arraySpreadFrom](#arrayspreadfrom)
   * [asPromise](#aspromise)
-  * [aside](#aside)
-  * [assertValid](#assertvalid)
-  * [awaitAll](#awaitall)
-  * [awaitAny](#awaitany)
   * [awaitArray](#awaitarray)
   * [awaitDelay](#awaitdelay)
   * [awaitObject](#awaitobject)
 
-* [B](#b)
-  * [band](#band)
-  * [baseArgument](#baseargument)
-  * [baseIdentity](#baseidentity)
-  * [binary](#binary)
-  * [bit](#bit)
-  * [bitand](#bitand)
-  * [bitnot](#bitnot)
-  * [bitor](#bitor)
-  * [bitwise](#bitwise)
-  * [bitxor](#bitxor)
-  * [bnot](#bnot)
-  * [bor](#bor)
-  * [bxor](#bxor)
-
 * [C](#c)
-  * [call](#call)
-  * [charAt](#charat)
-  * [charCodeAt](#charcodeat)
-  * [charPointAt](#charpointat)
-  * [compare](#compare)
-  * [compareTypes](#comparetypes)
-  * [comparer](#comparer)
-  * [comparing](#comparing)
   * [compilable](#compilable)
-  * [compose](#compose)
-  * [concat](#concat)
-  * [concurrent](#concurrent)
-  * [conditional](#conditional)
-  * [constant](#constant)
-  * [construct](#construct)
-  * [constructed](#constructed)
-  * [constructor](#constructor)
-  * [curry](#curry)
 
 * [D](#d)
   * [deepAwait](#deepawait)
-  * [deepEqual](#deepequal)
-  * [default](#default)
-  * [defaultHashToStringOutputChars](#defaulthashtostringoutputchars)
-  * [defineError](#defineerror)
-  * [delay](#delay)
-  * [dispatch](#dispatch)
-  * [div](#div)
-  * [divide](#divide)
-  * [dotAll](#dotall)
-
-* [E](#e)
-  * [endsWith](#endswith)
-  * [eq](#eq)
-  * [equal](#equal)
-  * [equalTo](#equalto)
-  * [every](#every)
-  * [exists](#exists)
-  * [exp](#exp)
-  * [exponent](#exponent)
-
-* [F](#f)
-  * [f](#f)
-  * [fail](#fail)
-  * [failWith](#failwith)
-  * [fallback](#fallback)
-  * [falsy](#falsy)
-  * [filter](#filter)
-  * [flat](#flat)
-  * [fromBase](#frombase)
-  * [fromCharCode](#fromcharcode)
-  * [fromCodePoint](#fromcodepoint)
-  * [functionName](#functionname)
-
-* [G](#g)
-  * [gather](#gather)
-  * [get](#get)
-  * [getArraySpread](#getarrayspread)
-  * [getObjectSpread](#getobjectspread)
-  * [getSpreadable](#getspreadable)
-  * [globalMatch](#globalmatch)
-  * [greater](#greater)
-  * [greaterThan](#greaterthan)
-  * [groupBy](#groupby)
-  * [gt](#gt)
-
-* [H](#h)
-  * [hash](#hash)
-  * [hashAny](#hashany)
-  * [hashFrom](#hashfrom)
-  * [hashToDouble](#hashtodouble)
-  * [hashToInt](#hashtoint)
-  * [hashToString](#hashtostring)
 
 * [I](#i)
-  * [I](#i)
-  * [InvalidTrapTargetError](#invalidtraptargeterror)
   * [identity](#identity)
-  * [ignoreCase](#ignorecase)
-  * [includes](#includes)
-  * [indexOf](#indexof)
-  * [is](#is)
-  * [isArray](#isarray)
-  * [isAsync](#isasync)
-  * [isBoolean](#isboolean)
-  * [isCompiled](#iscompiled)
-  * [isDate](#isdate)
-  * [isDefined](#isdefined)
-  * [isError](#iserror)
-  * [isErrorOf](#iserrorof)
-  * [isExactType](#isexacttype)
-  * [isExactly](#isexactly)
-  * [isExtendedFrom](#isextendedfrom)
-  * [isFalsy](#isfalsy)
-  * [isFunction](#isfunction)
-  * [isIdentity](#isidentity)
-  * [isInteger](#isinteger)
-  * [isIterable](#isiterable)
-  * [isMap](#ismap)
-  * [isMissing](#ismissing)
-  * [isNull](#isnull)
-  * [isNumber](#isnumber)
-  * [isObject](#isobject)
-  * [isPromise](#ispromise)
-  * [isRegex](#isregex)
-  * [isResolve](#isresolve)
-  * [isSet](#isset)
-  * [isSpreadable](#isspreadable)
-  * [isSpreadableSymbol](#isspreadablesymbol)
-  * [isString](#isstring)
-  * [isSymbol](#issymbol)
-  * [isSync](#issync)
-  * [isThennable](#isthennable)
-  * [isTruthy](#istruthy)
-  * [isType](#istype)
-  * [isUndefined](#isundefined)
-  * [isValid](#isvalid)
 
 * [J](#j)
   * [join](#join)
-  * [just](#just)
-
-* [L](#l)
-  * [lastIndexOf](#lastindexof)
-  * [left](#left)
-  * [leftShift](#leftshift)
-  * [less](#less)
-  * [lessThan](#lessthan)
-  * [literal](#literal)
-  * [lshift](#lshift)
-  * [lt](#lt)
 
 * [M](#m)
-  * [MissingPipeArgumentError](#missingpipeargumenterror)
   * [map](#map)
-  * [mod](#mod)
-  * [modulo](#modulo)
-  * [mul](#mul)
-  * [multiline](#multiline)
-  * [multiply](#multiply)
-
-* [N](#n)
-  * [Null](#null)
-  * [named](#named)
-  * [nary](#nary)
-  * [not](#not)
-  * [notExists](#notexists)
-  * [nullary](#nullary)
-
-* [O](#o)
-  * [or](#or)
-  * [override](#override)
 
 * [P](#p)
-  * [Primitive](#primitive)
-  * [padEnd](#padend)
-  * [padStart](#padstart)
   * [parallel](#parallel)
-  * [parse](#parse)
-  * [pipe](#pipe)
-  * [pow](#pow)
-  * [product](#product)
-  * [propertyValue](#propertyvalue)
-  * [proxy](#proxy)
 
 * [R](#r)
-  * [race](#race)
-  * [reduce](#reduce)
-  * [regex](#regex)
-  * [reject](#reject)
-  * [rem](#rem)
-  * [remainder](#remainder)
-  * [required](#required)
   * [resolve](#resolve)
-  * [rest](#rest)
-  * [reverse](#reverse)
-  * [right](#right)
-  * [rightShift](#rightshift)
-  * [round](#round)
-  * [rshift](#rshift)
 
 * [S](#s)
-  * [same](#same)
-  * [sameType](#sametype)
-  * [scalar](#scalar)
-  * [select](#select)
-  * [selectCase](#selectcase)
-  * [shallowResolve](#shallowresolve)
-  * [shift](#shift)
-  * [some](#some)
-  * [sort](#sort)
-  * [spread](#spread)
-  * [spreadableSymbol](#spreadablesymbol)
-  * [sqr](#sqr)
-  * [sqrt](#sqrt)
-  * [square](#square)
-  * [squareRoot](#squareroot)
-  * [startsWith](#startswith)
-  * [sticky](#sticky)
-  * [strictEqual](#strictequal)
-  * [strictEqualType](#strictequaltype)
-  * [stringify](#stringify)
-  * [sub](#sub)
-  * [subtract](#subtract)
   * [sync](#sync)
-  * [syncSymbol](#syncsymbol)
 
 * [T](#t)
-  * [tag](#tag)
-  * [tap](#tap)
-  * [template](#template)
-  * [ternary](#ternary)
-  * [thisArgument](#thisargument)
-  * [thisIdentity](#thisidentity)
-  * [toArray](#toarray)
-  * [toAsync](#toasync)
-  * [toIdentity](#toidentity)
-  * [toObject](#toobject)
   * [toPrimitiveFunction](#toprimitivefunction)
-  * [toPromise](#topromise)
-  * [toRegex](#toregex)
-  * [toSpreadable](#tospreadable)
-  * [toThennable](#tothennable)
-  * [trace](#trace)
-  * [trap](#trap)
-  * [trapAsync](#trapasync)
-  * [truthy](#truthy)
-  * [typeName](#typename)
-  * [typeOf](#typeof)
-
-* [U](#u)
-  * [Undefined](#undefined)
-  * [unary](#unary)
-  * [uncurry](#uncurry)
-  * [unicode](#unicode)
 
 * [V](#v)
-  * [ValidationError](#validationerror)
   * [validate](#validate)
 
-* [W](#w)
-  * [when](#when)
-  * [without](#without)
-
-* [X](#x)
-  * [xor](#xor)
-
-
-## ...
-
-### $
-
-_features_
-
-**`$()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### _
-
-_features_
-
-**`_()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### __esModule
-
-_features_
-
-**`__esModule()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### _base
-
-_features_
-
-**`_base()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### _this
-
-_features_
-
-**`_this()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## A
 
-### Any
+  ### asPromise
 
-_features_
 
-**`Any()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### add
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`add()`**
 
-* args
-* returns
+#### TEST: should return the original promise
 
 ```javascript
-// example
+() => {
+  const input = Promise.resolve(42)
+  expect(asPromise(input)).toBe(input)
+}
 ```
 
-### always
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`always()`**
 
-* args
-* returns
+
+
+#### TEST: should wrap and resolve a non-standard promise
 
 ```javascript
-// example
+async () => {
+  const input = {
+    then: (resolve, reject) => Promise.resolve(42).then(resolve, reject)
+  }
+  const promise = asPromise(input)
+  expect(promise.constructor).toBe(Promise)
+  expect(await promise).toBe(42)
+}
 ```
 
-### and
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`and()`**
 
-* args
-* returns
+
+
+#### TEST: should wrap and rejrect a non-standard promise
 
 ```javascript
-// example
+async () => {
+  const error = new Error('reasons')
+  const input = {
+    then: (resolve, reject) => Promise.reject(error).then(resolve, reject)
+  }
+  const promise = asPromise(input)
+  expect(promise.constructor).toBe(Promise)
+  expect(await promise.catch(err => err)).toBe(error)
+}
 ```
 
-### any
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`any()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### anyOf
-
-_features_
-
-**`anyOf()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### appendedName
-
-_features_
-
-**`appendedName()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### argument
-
-_features_
-
-**`argument()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### arity
-
-_features_
-
-**`arity()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### arraySpreadFrom
-
-_features_
-
-**`arraySpreadFrom()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### asPromise
-
-_features_
-
-**`asPromise()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### aside
-
-_features_
-
-**`aside()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### assertValid
-
-_features_
-
-**`assertValid()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### awaitAll
-
-_features_
-
-**`awaitAll()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### awaitAny
-
-_features_
-
-**`awaitAny()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ### awaitArray
 
-_features_
 
-**`awaitArray()`**
+**`() => void`**
 
-* args
-* returns
+
+
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
+
+
+#### TEST: should return sync output on sync input including an object
 
 ```javascript
-// example
+() => {
+  const input = [42, { foo: 42 }]
+  const output = [42, { foo: 42 }]
+  expect(awaitArray(input)).toEqual(output)
+}
 ```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should return the input when all elements are sync
+
+```javascript
+() => {
+  const input = [42, { foo: 42 }]
+  expect(awaitArray(input)).toBe(input)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should return async output on async input
+
+```javascript
+async () => {
+  const input = [Promise.resolve(42), { foo: 42 }]
+  const output = [42, { foo: 42 }]
+  expect(await awaitArray(input)).toEqual(output)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should return async output on nested async input
+
+```javascript
+async () => {
+  const input = [42, { foo: Promise.resolve(42) }]
+  const output = [42, { foo: 42 }]
+  expect(await awaitArray(input)).toEqual(output)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
 
 ### awaitDelay
 
-_features_
 
-**`awaitDelay()`**
+**`() => void`**
 
-* args
-* returns
+
+
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
+
+
+#### TEST: should return a promise
 
 ```javascript
-// example
+async () => {
+  const start = Date.now()
+  const promise = awaitDelay(100)
+  const result = await promise.then(() => 42)
+  expect(Date.now() - start).toBeGreaterThan(90)
+  expect(result).toBe(42)
+}
 ```
+
+v 1.2.36 -- 102 ms --
+✅ **Pass**
+
+
+
+
 
 ### awaitObject
 
-_features_
 
-**`awaitObject()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-## B
 
-### band
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-_features_
 
-**`band()`**
-
-* args
-* returns
+#### TEST: should return sync output on sync input
 
 ```javascript
-// example
+() => {
+  const input = { foo: 42, bar: 42 }
+  const output = { foo: 42, bar: 42 }
+  expect(awaitObject(input)).toEqual(output)
+}
 ```
 
-### baseArgument
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-_features_
 
-**`baseArgument()`**
 
-* args
-* returns
+
+
+#### TEST: should return async output on async input
 
 ```javascript
-// example
+async () => {
+  const input = { foo: 42, bar: Promise.resolve(42) }
+  const output = { foo: 42, bar: 42 }
+  expect(await awaitObject(input)).toEqual(output)
+}
 ```
 
-### baseIdentity
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`baseIdentity()`**
 
-* args
-* returns
+
+
+#### TEST: should return original object if nothing to await
 
 ```javascript
-// example
+() => {
+  const input = { foo: 42, bar: 42 }
+  expect(awaitObject(input)).toBe(input)
+}
 ```
 
-### binary
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`binary()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### bit
-
-_features_
-
-**`bit()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### bitand
-
-_features_
-
-**`bitand()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### bitnot
-
-_features_
-
-**`bitnot()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### bitor
-
-_features_
-
-**`bitor()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### bitwise
-
-_features_
-
-**`bitwise()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### bitxor
-
-_features_
-
-**`bitxor()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### bnot
-
-_features_
-
-**`bnot()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### bor
-
-_features_
-
-**`bor()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### bxor
-
-_features_
-
-**`bxor()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## C
 
-### call
+  ### compilable
 
-_features_
 
-**`call()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### charAt
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`charAt()`**
 
-* args
-* returns
+#### TEST: should compile zero args
 
 ```javascript
-// example
+() => {
+  const add = compilable(() => 1 + 2)
+  expect(add()()).toBe(3)
+}
 ```
 
-### charCodeAt
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`charCodeAt()`**
 
-* args
-* returns
+
+
+#### TEST: should compile single arg
 
 ```javascript
-// example
+() => {
+  const add = compilable((x) => x + 2)
+  expect(add(1)()).toBe(3)
+}
 ```
 
-### charPointAt
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`charPointAt()`**
 
-* args
-* returns
+
+
+#### TEST: should compile 2 args
 
 ```javascript
-// example
+() => {
+  const add = compilable((x, y) => x + y)
+  expect(add(1)(2)).toBe(3)
+}
 ```
 
-### compare
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`compare()`**
 
-* args
-* returns
+
+
+#### TEST: should settle a compilable arg
 
 ```javascript
-// example
+() => {
+  const double = compilable((x) => x * 2)
+  expect(pipe(double, double)(2)).toBe(8)
+}
 ```
 
-### compareTypes
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`compareTypes()`**
 
-* args
-* returns
+
+
+#### TEST: should compile to an identity proxy
 
 ```javascript
-// example
+() => {
+  const coords = compilable((x, y) => ({ x, y }))
+  const from2 = coords(2)
+  expect(from2.x(3)).toBe(2)
+}
 ```
 
-### comparer
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`comparer()`**
 
-* args
-* returns
+
+
+#### TEST: should pass through the compiled function
 
 ```javascript
-// example
+() => {
+  const add = compilable((x, y) => x + y)
+  expect(add.$(1, 2)).toBe(3)
+}
 ```
 
-### comparing
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`comparing()`**
 
-* args
-* returns
+
+
+#### TEST: should handle async values
 
 ```javascript
-// example
+async () => {
+  const add = compilable((x, y) => x + y)
+  const add1 = add(1)
+  const result = await add1(Promise.resolve(2))
+  expect(result).toBe(3)
+}
 ```
 
-### compilable
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-_features_
 
-**`compilable()`**
 
-* args
-* returns
+
+
+#### TEST: should compile tap
 
 ```javascript
-// example
+() => {
+  let sideEffect
+  const fn = compilable(tap(v => sideEffect = v + 1))
+  expect(fn(_)(42)).toBe(42)
+  expect(sideEffect).toBe(43)
+}
 ```
 
-### compose
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`compose()`**
 
-* args
-* returns
+
+
+#### TEST: should compile trap
 
 ```javascript
-// example
+() => {
+  const add = compilable(trap(({ a, b }) => a + b))
+  const fn = add({ a: _, b: _ })
+  const [err, result] = fn(21)
+  expect(result).toBe(42)
+  expect(err).toBe(undefined)
+}
 ```
 
-### concat
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`concat()`**
 
-* args
-* returns
+
+
+#### TEST: should spread compiled function with an identity param
 
 ```javascript
-// example
+async () => {
+  const inc = compilable((v) => ({ inc: v + 1 }))
+  const input = { foo: (41) }
+  const fn = pipe(
+    { ...inc(_.foo) },
+  )
+  expect(await fn(input)).toEqual({ inc: 42 })
+}
 ```
 
-### concurrent
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`concurrent()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### conditional
-
-_features_
-
-**`conditional()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### constant
-
-_features_
-
-**`constant()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### construct
-
-_features_
-
-**`construct()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### constructed
-
-_features_
-
-**`constructed()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### constructor
-
-_features_
-
-**`constructor()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### curry
-
-_features_
-
-**`curry()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## D
 
-### deepAwait
+  ### deepAwait
 
-_features_
 
-**`deepAwait()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### deepEqual
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`deepEqual()`**
 
-* args
-* returns
+#### TEST: should await async input
 
 ```javascript
-// example
+async () => {
+  const input = Promise.resolve({ foo: 42, bar: [Promise.resolve(42)] })
+  const output = { foo: 42, bar: [42] }
+  expect(await deepAwait(input)).toEqual(output)
+}
 ```
 
-### default
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`default()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### defaultHashToStringOutputChars
-
-_features_
-
-**`defaultHashToStringOutputChars()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### defineError
-
-_features_
-
-**`defineError()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### delay
-
-_features_
-
-**`delay()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### dispatch
-
-_features_
-
-**`dispatch()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### div
-
-_features_
-
-**`div()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### divide
-
-_features_
-
-**`divide()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### dotAll
-
-_features_
-
-**`dotAll()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-## E
-
-### endsWith
-
-_features_
-
-**`endsWith()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### eq
-
-_features_
-
-**`eq()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### equal
-
-_features_
-
-**`equal()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### equalTo
-
-_features_
-
-**`equalTo()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### every
-
-_features_
-
-**`every()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### exists
-
-_features_
-
-**`exists()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### exp
-
-_features_
-
-**`exp()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### exponent
-
-_features_
-
-**`exponent()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-## F
-
-### f
-
-_features_
-
-**`f()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### fail
-
-_features_
-
-**`fail()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### failWith
-
-_features_
-
-**`failWith()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### fallback
-
-_features_
-
-**`fallback()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### falsy
-
-_features_
-
-**`falsy()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### filter
-
-_features_
-
-**`filter()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### flat
-
-_features_
-
-**`flat()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### fromBase
-
-_features_
-
-**`fromBase()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### fromCharCode
-
-_features_
-
-**`fromCharCode()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### fromCodePoint
-
-_features_
-
-**`fromCodePoint()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### functionName
-
-_features_
-
-**`functionName()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-## G
-
-### gather
-
-_features_
-
-**`gather()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### get
-
-_features_
-
-**`get()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### getArraySpread
-
-_features_
-
-**`getArraySpread()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### getObjectSpread
-
-_features_
-
-**`getObjectSpread()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### getSpreadable
-
-_features_
-
-**`getSpreadable()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### globalMatch
-
-_features_
-
-**`globalMatch()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### greater
-
-_features_
-
-**`greater()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### greaterThan
-
-_features_
-
-**`greaterThan()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### groupBy
-
-_features_
-
-**`groupBy()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### gt
-
-_features_
-
-**`gt()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-## H
-
-### hash
-
-_features_
-
-**`hash()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### hashAny
-
-_features_
-
-**`hashAny()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### hashFrom
-
-_features_
-
-**`hashFrom()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### hashToDouble
-
-_features_
-
-**`hashToDouble()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### hashToInt
-
-_features_
-
-**`hashToInt()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### hashToString
-
-_features_
-
-**`hashToString()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## I
 
-### I
+  ### identity
 
-_features_
 
-**`I()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### InvalidTrapTargetError
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`InvalidTrapTargetError()`**
 
-* args
-* returns
+#### TEST: should return the original argument
 
 ```javascript
-// example
+() => {
+  expect(_(42)).toBe(42)
+  const input = { foo: 42 }
+  expect(_(input)).toBe(input)
+}
 ```
 
-### identity
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`identity()`**
 
-* args
-* returns
+
+
+#### TEST: should return property
 
 ```javascript
-// example
+() => {
+  const input = { foo: 42 }
+  expect(_.foo(input)).toBe(42)
+}
 ```
 
-### ignoreCase
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`ignoreCase()`**
 
-* args
-* returns
+
+
+#### TEST: should return element
 
 ```javascript
-// example
+() => {
+  const input = [41, 42, 43]
+  expect(_[1](input)).toBe(42)
+}
 ```
 
-### includes
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`includes()`**
 
-* args
-* returns
+
+
+#### TEST: should be spreadable
 
 ```javascript
-// example
+() => {
+  const input = { foo: 42 }
+  const output = pipe(
+    { ..._, bar: 3 },
+    _.foo,
+  )(input)
+  expect(output).toBe(42)
+}
 ```
 
-### indexOf
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`indexOf()`**
 
-* args
-* returns
+
+
+#### TEST: should be spreadable as a derived identity
 
 ```javascript
-// example
+() => {
+  const input = { value: { foo: 42 } }
+  const output = pipe(
+    { ..._.value, bar: 3 },
+    _.foo,
+  )(input)
+  expect(output).toBe(42)
+}
 ```
 
-### is
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`is()`**
 
-* args
-* returns
+
+
+#### TEST: should be spreadable in array
 
 ```javascript
-// example
+() => {
+  const input = ['foo']
+  const output = resolve([..._, 42])(input)
+  expect(output).toEqual(['foo', 42])
+}
 ```
 
-### isArray
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`isArray()`**
 
-* args
-* returns
+
+
+#### TEST: should not resolve the "then" property
 
 ```javascript
-// example
+() => {
+  expect(_.then).toBe(undefined)
+}
 ```
 
-### isAsync
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`isAsync()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### isBoolean
-
-_features_
-
-**`isBoolean()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isCompiled
-
-_features_
-
-**`isCompiled()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isDate
-
-_features_
-
-**`isDate()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isDefined
-
-_features_
-
-**`isDefined()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isError
-
-_features_
-
-**`isError()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isErrorOf
-
-_features_
-
-**`isErrorOf()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isExactType
-
-_features_
-
-**`isExactType()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isExactly
-
-_features_
-
-**`isExactly()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isExtendedFrom
-
-_features_
-
-**`isExtendedFrom()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isFalsy
-
-_features_
-
-**`isFalsy()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isFunction
-
-_features_
-
-**`isFunction()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isIdentity
-
-_features_
-
-**`isIdentity()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isInteger
-
-_features_
-
-**`isInteger()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isIterable
-
-_features_
-
-**`isIterable()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isMap
-
-_features_
-
-**`isMap()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isMissing
-
-_features_
-
-**`isMissing()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isNull
-
-_features_
-
-**`isNull()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isNumber
-
-_features_
-
-**`isNumber()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isObject
-
-_features_
-
-**`isObject()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isPromise
-
-_features_
-
-**`isPromise()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isRegex
-
-_features_
-
-**`isRegex()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isResolve
-
-_features_
-
-**`isResolve()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isSet
-
-_features_
-
-**`isSet()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isSpreadable
-
-_features_
-
-**`isSpreadable()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isSpreadableSymbol
-
-_features_
-
-**`isSpreadableSymbol()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isString
-
-_features_
-
-**`isString()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isSymbol
-
-_features_
-
-**`isSymbol()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isSync
-
-_features_
-
-**`isSync()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isThennable
-
-_features_
-
-**`isThennable()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isTruthy
-
-_features_
-
-**`isTruthy()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isType
-
-_features_
-
-**`isType()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isUndefined
-
-_features_
-
-**`isUndefined()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### isValid
-
-_features_
-
-**`isValid()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## J
 
-### join
+  ### join
 
-_features_
 
-**`join()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### just
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`just()`**
 
-* args
-* returns
+#### TEST: should join
 
 ```javascript
-// example
+() => {
+  const input = Array(1000).fill().map((v, i) => ({ i }))
+  const fn = join({
+    left: _,
+    right: [2, 3],
+    on: ({ left, right }) => (left.i % right) === 0,
+    map: ({ left, right }) => `${left.i} / ${right}`,
+  })
+  const startTime = Date.now()
+  fn(input)
+  const endTime = Date.now()
+  log('*** join took', endTime - startTime, 'ms')
+}
 ```
 
-## L
+v 1.2.36 -- 9 ms --
+✅ **Pass**
 
-### lastIndexOf
 
-_features_
 
-**`lastIndexOf()`**
 
-* args
-* returns
+
+#### TEST: should cross join
 
 ```javascript
-// example
+() => {
+  const input = Array(3).fill().map((v, i) => i)
+  const fn = join({
+    left: _,
+    right: [1, 2],
+    map: ({ left, right }) => left * right,
+  })
+  expect(fn(input)).toEqual([0, 0, 1, 2, 2, 4])
+}
 ```
 
-### left
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`left()`**
 
-* args
-* returns
+
+
+#### TEST: should join with predicate
 
 ```javascript
-// example
+() => {
+  const input = Array(3).fill().map((v, i) => i)
+  const fn = join({
+    left: _,
+    right: [1, 2],
+    map: ({ left, right }) => left * right,
+    on: ({ left, right }) => (left % 2) === 0,
+  })
+  expect(fn(input)).toEqual([0, 0, 2, 4])
+}
 ```
 
-### leftShift
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`leftShift()`**
 
-* args
-* returns
+
+
+#### TEST: should join literal with predicate
 
 ```javascript
-// example
+() => {
+  const input = Array(3).fill().map((v, i) => i)
+  const result = join.$({
+    left: input,
+    right: [1, 2],
+    map: ({ left, right }) => left * right,
+    on: ({ left, right }) => (left % 2) === 0,
+  })
+  expect(result).toEqual([0, 0, 2, 4])
+}
 ```
 
-### less
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`less()`**
 
-* args
-* returns
+
+
+#### TEST: should convert join arguments to arrays
 
 ```javascript
-// example
+() => {
+  const input = {
+    name: 'BlackBox2-Schemas-dev',
+    pk: 'tag',
+    indexes: {
+      typeOrderGsi: { name: 'idxName', pk: 'name', sk: 'version' },
+    },
+  }
+  const fn = join({
+    left: _.indexes,
+    right: [_],
+    map: { pk: _.right.pk, indexName: _.left[1].name },
+  })
+  const result = fn(input)
+  expect(result).toEqual([{ pk: 'tag', indexName: 'idxName' }])
+}
 ```
 
-### lessThan
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`lessThan()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### literal
-
-_features_
-
-**`literal()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### lshift
-
-_features_
-
-**`lshift()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### lt
-
-_features_
-
-**`lt()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## M
 
-### MissingPipeArgumentError
+  ### map
 
-_features_
 
-**`MissingPipeArgumentError()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### map
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`map()`**
 
-* args
-* returns
+#### TEST: should reduce
 
 ```javascript
-// example
+() => {
+  const input = Array(1000).fill().map((v, i) => ({ i }))
+  const fn = reduce({
+    reducer: ({ value, state }) => state + value.i,
+    state: 0,
+  })
+  const startTime = Date.now()
+  fn(input)
+  const endTime = Date.now()
+  log('*** reduce took', endTime - startTime, 'ms')
+}
 ```
 
-### mod
+v 1.2.36 -- 66 ms --
+✅ **Pass**
 
-_features_
 
-**`mod()`**
 
-* args
-* returns
+
+
+#### TEST: should reduce async elements
 
 ```javascript
-// example
+async () => {
+  const input = [Promise.resolve(1), Promise.resolve(2), 3]
+  const fn = reduce({
+    reducer: ({ value, state }) => state + value,
+    state: 0,
+  })
+  expect(await fn(input)).toBe(6)
+}
 ```
 
-### modulo
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`modulo()`**
 
-* args
-* returns
+
+
+#### TEST: should reduce async input
 
 ```javascript
-// example
+async () => {
+  const input = Promise.resolve([Promise.resolve(1), Promise.resolve(2), 3])
+  const fn = reduce({
+    reducer: ({ value, state }) => state + value,
+    state: 0,
+  })
+  expect(await fn(input)).toBe(6)
+}
 ```
 
-### mul
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`mul()`**
 
-* args
-* returns
+
+
+#### TEST: should map
 
 ```javascript
-// example
+() => {
+  const input = Array(1000).fill().map((v, i) => ({ i }))
+  const fn = map(({ i }) => ({ i2: i + 1 }))
+  const startTime = Date.now()
+  fn(input)
+  const endTime = Date.now()
+  log('*** map took', endTime - startTime, 'ms')
+}
 ```
 
-### multiline
+v 1.2.36 -- 4 ms --
+✅ **Pass**
 
-_features_
 
-**`multiline()`**
 
-* args
-* returns
+
+
+#### TEST: should map with async input
 
 ```javascript
-// example
+async () => {
+  const input = [42, Promise.resolve(43), 44]
+  const fn = map(add(1))
+  const result = await fn(input)
+  expect(result).toEqual([43, 44, 45])
+}
 ```
 
-### multiply
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`multiply()`**
 
-* args
-* returns
+
+
+#### TEST: should map with async output
 
 ```javascript
-// example
+async () => {
+  const input = [42, 43, 44]
+  const fn = map((v) => Promise.resolve(v + 1))
+  const result = await fn(input)
+  expect(result).toEqual([43, 44, 45])
+}
 ```
 
-## N
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-### Null
 
-_features_
 
-**`Null()`**
 
-* args
-* returns
+
+#### TEST: should map to a pipe
 
 ```javascript
-// example
+() => {
+  const input = [{ foo: 41 }, { foo: 42 }, { foo: 43 }]
+  const fn = map(pipe(
+    _.foo,
+    add(1),
+  ))
+  const result = fn(input)
+  expect(result).toEqual([42, 43, 44])
+}
 ```
 
-### named
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`named()`**
 
-* args
-* returns
+
+
+#### TEST: should spread a map
 
 ```javascript
-// example
+() => {
+  const input = [1, 2]
+  const fn = resolve([1, ...map(add(1))])
+  const result = fn(input)
+  expect(result).toEqual([1, 2, 3])
+}
 ```
 
-### nary
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`nary()`**
 
-* args
-* returns
+
+
+#### TEST: should spread a map result
 
 ```javascript
-// example
+() => {
+  const input = {
+    put: [{ tag: 'foo@1', name: 'foo' }],
+    delete: ['buzz@1'],
+  }
+  const name = 'foo'
+  const fn = resolve({
+    RequestItems: {
+      [name]: [
+        ...map({ DeleteRequest: { Key: { tag: 'buzz@1' } } }, _.delete),
+        ...map({ PutRequest: { Item: _ } }, _.put),
+      ],
+    },
+  })
+  const expected = {
+    RequestItems: {
+      [name]: [
+        { DeleteRequest: { Key: { tag: 'buzz@1' } } },
+        { PutRequest: { Item: { tag: 'foo@1', name: 'foo' } } },
+      ],
+    },
+  }
+  const actual = fn(input)
+  expect(actual).toEqual(expected)
+}
 ```
 
-### not
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-_features_
 
-**`not()`**
 
-* args
-* returns
+
+
+#### TEST: should preserve hidden fields
 
 ```javascript
-// example
+() => {
+  const input = [
+    { foo: 42 },
+  ]
+  Object.defineProperty(input[0], 'bar', { value: 'baz' })
+  const fn = map({ foo: _.foo, bar: _.bar })
+  const actual = fn(input)
+  expect(actual).toEqual([{ foo: 42, bar: 'baz' }])
+}
 ```
 
-### notExists
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`notExists()`**
 
-* args
-* returns
+
+
+#### TEST: should map with _base
 
 ```javascript
-// example
+() => {
+  const obj = { input: [{ foo: 41 }, { foo: 42 }, { foo: 43 }] }
+  const fn = map(
+    add(_base(_).input.length, _.foo),
+    _.input,
+  )
+  const result = fn(obj)
+  expect(result).toEqual([44, 45, 46])
+}
 ```
 
-### nullary
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`nullary()`**
 
-* args
-* returns
+
+
+#### TEST: should map with implicit _base
 
 ```javascript
-// example
+() => {
+  const obj = { input: [{ foo: 41 }, { foo: 42 }, { foo: 43 }] }
+  const fn = map(
+    add(_.input.length, _.foo),
+    _.input,
+  )
+  const result = fn(obj)
+  expect(result).toEqual([44, 45, 46])
+}
 ```
 
-## O
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-### or
 
-_features_
 
-**`or()`**
 
-* args
-* returns
+
+#### TEST: should group
 
 ```javascript
-// example
+() => {
+  const input = Array(1000).fill().map((v, i) => ({ i }))
+  const fn = groupBy(({ i }) => i % 3)
+  const startTime = Date.now()
+  fn(input)
+  const endTime = Date.now()
+  log('*** group took', endTime - startTime, 'ms')
+}
 ```
 
-### override
+v 1.2.36 -- 49 ms --
+✅ **Pass**
 
-_features_
 
-**`override()`**
 
-* args
-* returns
+
+
+#### TEST: should filter
 
 ```javascript
-// example
+() => {
+  const input = Array(1000).fill().map((v, i) => ({ i }))
+  const fn = filter(({ i }) => (i % 3) === 0)
+  const startTime = Date.now()
+  fn(input)
+  const endTime = Date.now()
+  log('*** filter took', endTime - startTime, 'ms')
+}
 ```
+
+v 1.2.36 -- 3 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should filter with async output
+
+```javascript
+async () => {
+  const input = [42, 43, 44]
+  const fn = filter((v) => Promise.resolve(v % 2))
+  const result = await fn(input)
+  expect(result).toEqual([43])
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should return boolean some
+
+```javascript
+() => {
+  const input = Array(1000).fill().map((v, i) => ({ i }))
+  const fn = some(({ i }) => i > 998)
+  const startTime = Date.now()
+  fn(input)
+  const endTime = Date.now()
+  log('*** some took', endTime - startTime, 'ms')
+}
+```
+
+v 1.2.36 -- 3 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should return boolean every
+
+```javascript
+() => {
+  const input = Array(1000).fill().map((v, i) => ({ i }))
+  const fn = every(({ i }) => i > -1)
+  const startTime = Date.now()
+  fn(input)
+  const endTime = Date.now()
+  log('*** every took', endTime - startTime, 'ms')
+}
+```
+
+v 1.2.36 -- 3 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should flatten
+
+```javascript
+() => {
+  const input = Array(500).fill().map((v, i) => ({ i }))
+    .reduce(
+      (state, value) => ([...state, [value, value]]),
+      [],
+    )
+  const startTime = Date.now()
+  const result = flat.$(input)
+  const endTime = Date.now()
+  expect(result).toEqual(input.flat())
+  log('*** flatten took', endTime - startTime, 'ms')
+}
+```
+
+v 1.2.36 -- 2 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should reduce with a derived identity
+
+```javascript
+() => {
+  const input = [1, 2, 3]
+  const fn = reduce({
+    reducer: [..._.state, _.value],
+    state: [],
+  })
+  expect(fn(input)).toEqual([1, 2, 3])
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should filter out null
+
+```javascript
+() => {
+  const input = [null, 43, 44]
+  const result = pipe(filter(_))
+  expect(result(input)).toEqual([43,44])
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should settle compilables
+
+```javascript
+() => {
+  const keys = [1, 2, 3]
+  const double = compilable((x) => x * 2)
+  const result = map(double)(keys)
+  expect(result).toEqual([2, 4, 6])
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
 
 ## P
 
-### Primitive
+  ### parallel
 
-_features_
 
-**`Primitive()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### padEnd
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`padEnd()`**
 
-* args
-* returns
+#### TEST: should execute the mapper in parallel
 
 ```javascript
-// example
+async () => {
+  const input = [500, 100]
+  const order = []
+  const fn = pipe(
+    parallel(tap(pipe(
+      delay(_, _),
+      v => order.push(v),
+    ))),
+    output => ({ order, output }),
+  )
+  const output = await fn(input)
+  const expected = { order: [100, 500], output: [500, 100] }
+  expect(output).toEqual(expected)
+}
 ```
 
-### padStart
+v 1.2.36 -- 501 ms --
+✅ **Pass**
 
-_features_
 
-**`padStart()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### parallel
-
-_features_
-
-**`parallel()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### parse
-
-_features_
-
-**`parse()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### pipe
-
-_features_
-
-**`pipe()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### pow
-
-_features_
-
-**`pow()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### product
-
-_features_
-
-**`product()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### propertyValue
-
-_features_
-
-**`propertyValue()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### proxy
-
-_features_
-
-**`proxy()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## R
 
-### race
+  ### resolve
 
-_features_
 
-**`race()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### reduce
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`reduce()`**
 
-* args
-* returns
+#### TEST: should deep await
 
 ```javascript
-// example
+async () => {
+  const fn = resolve({
+      foo: [Promise.resolve(42)],
+      bar: Promise.resolve('baz'),
+      value: _,
+    })
+  const result = await fn('biz')
+  expect(result).toEqual({ foo: [42], bar: 'baz', value: 'biz' })
+}
 ```
 
-### regex
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-_features_
 
-**`regex()`**
 
-* args
-* returns
+
+
+#### TEST: should spread compiled pipe
 
 ```javascript
-// example
+async () => {
+  const inc = compilable(pipe(
+    _.foo,
+    foo => ({ inc: foo + 1}),
+  ))
+  const input = { foo: (41) }
+  const fn = pipe(
+    { ...inc({ ..._ }) },
+  )
+  expect(await fn(input)).toEqual({ inc: 42 })
+}
 ```
 
-### reject
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-_features_
 
-**`reject()`**
 
-* args
-* returns
+
+
+#### TEST: should equal
 
 ```javascript
-// example
+() => {
+  const extra = { test: 1, foo: true, bar: false}
+  const justEnough = { foo: true, bar: false}
+  const output = pipe(
+    equal(({ extra: { test, ...rest } }) => rest, _.justEnough),
+  )({
+    extra,
+    justEnough,
+  })
+  expect(output).toEqual(true)
+}
 ```
 
-### rem
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-_features_
 
-**`rem()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### remainder
-
-_features_
-
-**`remainder()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### required
-
-_features_
-
-**`required()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### resolve
-
-_features_
-
-**`resolve()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### rest
-
-_features_
-
-**`rest()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### reverse
-
-_features_
-
-**`reverse()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### right
-
-_features_
-
-**`right()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### rightShift
-
-_features_
-
-**`rightShift()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### round
-
-_features_
-
-**`round()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### rshift
-
-_features_
-
-**`rshift()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## S
 
-### same
+  ### sync
 
-_features_
 
-**`same()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### sameType
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`sameType()`**
 
-* args
-* returns
+#### TEST: should sync an object
 
 ```javascript
-// example
+() => {
+  const input = { foo: 42, bar: 'baz' }
+  const syncInput = sync(input)
+  expect(isSync(syncInput)).toBe(true)
+}
 ```
 
-### scalar
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`scalar()`**
 
-* args
-* returns
+
+
+#### TEST: should sync a frozen object
 
 ```javascript
-// example
+() => {
+  const input = Object.freeze({ foo: 42, bar: 'baz' })
+  const syncInput = sync(input)
+  expect(isSync(syncInput)).toBe(true)
+}
 ```
 
-### select
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`select()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### selectCase
-
-_features_
-
-**`selectCase()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### shallowResolve
-
-_features_
-
-**`shallowResolve()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### shift
-
-_features_
-
-**`shift()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### some
-
-_features_
-
-**`some()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### sort
-
-_features_
-
-**`sort()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### spread
-
-_features_
-
-**`spread()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### spreadableSymbol
-
-_features_
-
-**`spreadableSymbol()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### sqr
-
-_features_
-
-**`sqr()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### sqrt
-
-_features_
-
-**`sqrt()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### square
-
-_features_
-
-**`square()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### squareRoot
-
-_features_
-
-**`squareRoot()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### startsWith
-
-_features_
-
-**`startsWith()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### sticky
-
-_features_
-
-**`sticky()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### strictEqual
-
-_features_
-
-**`strictEqual()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### strictEqualType
-
-_features_
-
-**`strictEqualType()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### stringify
-
-_features_
-
-**`stringify()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### sub
-
-_features_
-
-**`sub()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### subtract
-
-_features_
-
-**`subtract()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### sync
-
-_features_
-
-**`sync()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### syncSymbol
-
-_features_
-
-**`syncSymbol()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## T
 
-### tag
+  ### toPrimitiveFunction
 
-_features_
 
-**`tag()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### tap
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`tap()`**
 
-* args
-* returns
+#### TEST: should be implemented on identity
 
 ```javascript
-// example
+() => {
+  const input = {
+    values: [1, 2, 3],
+    offset: 1,
+  }
+  expect(_.values[_.offset](input)).toBe(2)
+}
 ```
 
-### template
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-_features_
 
-**`template()`**
 
-* args
-* returns
+
+
+#### TEST: should allow primitive conversion of a custom function
 
 ```javascript
-// example
+() => {
+  const input = [1, 2, 3]
+  const last = toPrimitiveFunction((v) => v.length - 1)
+  expect(_[last](input)).toBe(3)
+}
 ```
 
-### ternary
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`ternary()`**
 
-* args
-* returns
 
-```javascript
-// example
-```
-
-### thisArgument
-
-_features_
-
-**`thisArgument()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### thisIdentity
-
-_features_
-
-**`thisIdentity()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### toArray
-
-_features_
-
-**`toArray()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### toAsync
-
-_features_
-
-**`toAsync()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### toIdentity
-
-_features_
-
-**`toIdentity()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### toObject
-
-_features_
-
-**`toObject()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### toPrimitiveFunction
-
-_features_
-
-**`toPrimitiveFunction()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### toPromise
-
-_features_
-
-**`toPromise()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### toRegex
-
-_features_
-
-**`toRegex()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### toSpreadable
-
-_features_
-
-**`toSpreadable()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### toThennable
-
-_features_
-
-**`toThennable()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### trace
-
-_features_
-
-**`trace()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### trap
-
-_features_
-
-**`trap()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### trapAsync
-
-_features_
-
-**`trapAsync()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### truthy
-
-_features_
-
-**`truthy()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### typeName
-
-_features_
-
-**`typeName()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### typeOf
-
-_features_
-
-**`typeOf()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-## U
-
-### Undefined
-
-_features_
-
-**`Undefined()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### unary
-
-_features_
-
-**`unary()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### uncurry
-
-_features_
-
-**`uncurry()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
-
-### unicode
-
-_features_
-
-**`unicode()`**
-
-* args
-* returns
-
-```javascript
-// example
-```
 
 ## V
 
-### ValidationError
+  ### validate
 
-_features_
 
-**`ValidationError()`**
+**`() => void`**
 
-* args
-* returns
 
-```javascript
-// example
-```
 
-### validate
 
-_features_
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** | todo... |
 
-**`validate()`**
 
-* args
-* returns
+#### TEST: should validate an object
 
 ```javascript
-// example
+() => {
+  const fn = validate({
+    foo: 'bar',
+    baz: isString,
+  })
+  const input = sync({
+    foo: 'bar',
+    baz: 'biz',
+  })
+  expect(fn(input)).toEqual([])
+}
 ```
 
-## W
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-### when
 
-_features_
 
-**`when()`**
 
-* args
-* returns
+
+#### TEST: should validate an array
 
 ```javascript
-// example
+() => {
+  const fn = validate([any, ...any])
+  const input = [42]
+  const output = fn(input)
+  expect(output).toEqual([])
+}
 ```
 
-### without
+v 1.2.36 -- 0 ms --
+✅ **Pass**
 
-_features_
 
-**`without()`**
 
-* args
-* returns
+
+
+#### TEST: should validate a complex object
 
 ```javascript
-// example
+() => {
+  const fn = validate({
+    name: anyOf(isString, isMissing),
+    setup: anyOf(isObject, isMissing),
+    tests: [any, ...any],
+  })
+  const input = {
+    name: 'toAsync',
+    tests: [{ input: [42] }],
+  }
+  fn(input)
+  const output = fn(input)
+  expect(output).toEqual([])
+}
 ```
 
-## X
+v 1.2.36 -- 1 ms --
+✅ **Pass**
 
-### xor
 
-_features_
 
-**`xor()`**
 
-* args
-* returns
+
+#### TEST: should validate any
 
 ```javascript
-// example
+() => {
+  const fn = validate(any)
+  expect(fn({})).toEqual([])
+  expect(fn([])).toEqual([])
+  expect(fn(42)).toEqual([])
+  expect(fn()).toEqual([])
+}
 ```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+

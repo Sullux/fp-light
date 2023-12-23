@@ -104,6 +104,7 @@ const globString = flags.files[0] // `+(${flags.files.join('|')})`
 const globOptions = {
   ignore: flags.ignore[0] // `+(${(flags.ignore || []).join('|')})`,
 }
+console.log('-'.repeat(process.stdout.columns))
 console.log('searching', globString, globOptions)
 const files = glob(globString, globOptions)
   .map((file) => `../${file}`) // file.substring(file.indexOf('/') + 1)
@@ -117,8 +118,12 @@ const fileImports = files
   .map((file) => `import '${file}'`)
   .join('\n')
 
-const testRun = readFileSync('scripts/testRun.js').toString()
+const testRun = readFileSync('scripts/specRun.js').toString()
 const testRunWithFiles = testRun.replace('/* IMPORTS */', fileImports)
 writeFileSync('scripts/.testRun_instance.js', testRunWithFiles)
-execSync('node scripts/.testRun_instance.js', { stdio: 'inherit' })
+try {
+  execSync('node scripts/.testRun_instance.js', { stdio: 'inherit' })
+} catch (err) {
+  process.exitCode = 1
+}
 execSync('rm scripts/.testRun_instance.js')
