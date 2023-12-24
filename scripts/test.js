@@ -114,12 +114,13 @@ const files = glob(globString, globOptions)
 console.log('found test files:')
 files.forEach((file) => console.log(' -', file))
 
-const fileImports = files
-  .map((file) => `import '${file}'`)
-  .join('\n')
+const allImports = [
+  ...files.map((file) => `import '${file}'`),
+  `import * as fp from '../lib/index.js'`,
+].join('\n')
 
 const testRun = readFileSync('scripts/specRun.js').toString()
-const testRunWithFiles = testRun.replace('/* IMPORTS */', fileImports)
+const testRunWithFiles = testRun.replace('/* IMPORTS */', allImports)
 writeFileSync('scripts/.testRun_instance.js', testRunWithFiles)
 try {
   execSync('node scripts/.testRun_instance.js', { stdio: 'inherit' })

@@ -1,11 +1,18 @@
 import pkg from '../package.json' assert { type: 'json' }
 
+const nonAlpha = /[^a-zA-Z]/g
+const bookmarkFormatted = (name) => name.toLowerCase().replace(nonAlpha, '-')
+const bookmark = (text, name) => `[${text}](#${name})`
+const nameToBookmark = (name) => bookmark(name, bookmarkFormatted(name))
+
 const toSignature = ({ args, returns }) =>
   `(${Object.values(args).map(({ name, type }) => `${name} ${type}`).join(', ')}) => ${returns.type}`
 
 const testsBySignature = (tests) => tests.reduce(
   (result, test) => {
-    const signature = toSignature(test.details)
+    const signature = test.type === 'alias'
+      ? 'void => void'
+      : toSignature(test.details)
     const tests = result[signature] || []
     return {
       ...result,
@@ -28,7 +35,7 @@ const functionsByName = (tests) => tests.reduce(
 )
 
 const argumentEntry = ({ name = '=>', type, description }) =>
-  `| _\`${name}\`_ | **\`${type}\`** | ${description || 'todo...'} |`
+  `| _\`${name}\`_ | **\`${type}\`** | ${description || ' '} |`
 
 const testEntry = ({
   description,
@@ -55,24 +62,34 @@ ${usage}
 
 ${features.length ? `\n_${features.join(', ')}_\n` : ''}
 | Arg | Type | Description |
-| --- | ---- | ----------- |${args.length ? `\n${Object.entries(args).map(argumentEntry).join('\n')}` : ''}
+| --- | ---- | ----------- |${args.length ? `\n${args.map(argumentEntry).join('\n')}` : ''}
 ${argumentEntry(returns)}
 `
 
-const signatureEntry = ([
-  signature,
-  tests,
-]) => `
+const testSignatureEntry = (signature, tests) => `
 **\`${signature}\`**
 ${signatureDescriptionEntry(tests[0])}\n${tests.map(testEntry).join('\n')}`
 
-const entry = (name, signatures) => `### ${name}
+const aliasSignatureEntry = ({ details: { alias } }) =>
+  `_${bookmark(`alias for ${alias}`, bookmarkFormatted(alias))}_`
 
-${Object.entries(signatures).map(signatureEntry).join('\n')}
+const signatureEntry = ([signature, tests]) =>
+  tests[0].details.alias ? aliasSignatureEntry(tests[0]) : testSignatureEntry(signature, tests)
+
+const entry = (name, signatures) => {
+  const entries = Object.entries(signatures)
+  const aliases = entries[0][1][0].aliases
+  const aliasEntry = aliases?.length
+    ? `\nAliases: ${aliases.map(nameToBookmark).join(' | ')}\n`
+    : ''
+  return `### ${name}\n${aliasEntry}
+${entries.map(signatureEntry).join('\n')}
 `
+}
 
 export const buildApi = (testLog) => {
-  const tests = testLog.filter(({ type }) => type === 'test')
+  // const tests = testLog.filter(({ type }) => type === 'test')
+  const tests = testLog.filter(({ type }) => ((type === 'test') || type === 'alias'))
   const functions = functionsByName(tests)
   for (const name of Object.keys(functions)) {
     functions[name] = testsBySignature(functions[name])
@@ -81,21 +98,18 @@ export const buildApi = (testLog) => {
   const firstLetterCap = ([c]) => ((c === '_') || (c === '$')) ? '...' : c.toUpperCase()
   const groups = Object.fromEntries(groupBy.$(firstLetterCap, keys))
   const sectionNames = Object.keys(groups).sort()
-
-  const nonAlpha = /[^a-zA-Z]/g
-  const formattedName = (name) => `[${name}](#${name.toLowerCase().replace(nonAlpha, '-')})`
-
   const sectionRow = ([section, names]) =>
-    `* ${formattedName(section)}\n  * ${names.map(formattedName).join('\n  * ')}\n` // todo
+    `* ${nameToBookmark(section)}\n  * ${names.map(nameToBookmark).join('\n  * ')}\n` // todo
 
   const sectionIndex = sectionNames.map((name) =>
     ([name, groups[name].sort()])).map(sectionRow).join('\n')
 
   const functionEntry = (name) => entry(name, functions[name])
+  const section = (name) => groups[name].sort().map(functionEntry).join('\n')
 
   const sections = sectionNames.map((name) => `## ${name}
 
-  ${groups[name].sort().map(functionEntry).join('\n')}`).join('\n')
+  ${section(name)}`).join('\n')
 
   return `[Home](https://github.com/Sullux/fp-light/blob/master/README.md) | **Full API**
 | [Tutorial](https://github.com/Sullux/fp-light/blob/master/TUTORIAL.md)

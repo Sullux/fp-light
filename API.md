@@ -4,7 +4,11 @@
 
 # API
 
+* [...](#---)
+  * [_](#-)
+
 * [A](#a)
+  * [argument](#argument)
   * [asPromise](#aspromise)
   * [awaitArray](#awaitarray)
   * [awaitDelay](#awaitdelay)
@@ -12,6 +16,7 @@
 
 * [C](#c)
   * [compilable](#compilable)
+  * [concurrent](#concurrent)
 
 * [D](#d)
   * [deepAwait](#deepawait)
@@ -41,9 +46,19 @@
   * [validate](#validate)
 
 
+## ...
+
+  ### _
+
+_[alias for identity](#identity)_
+
 ## A
 
-  ### asPromise
+  ### argument
+
+_[alias for identity](#identity)_
+
+### asPromise
 
 
 **`() => void`**
@@ -53,7 +68,7 @@
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should return the original promise
@@ -116,38 +131,22 @@ v 1.2.36 -- 0 ms --
 ### awaitArray
 
 
-**`() => void`**
+**`(value Array[...DeepSync]) => Array`**
 
-
+Deep awaits every element in an array and returns a promise to a fully-resolved array. If no elements are async, return the original array.
 
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
-
-
-#### TEST: should return sync output on sync input including an object
-
-```javascript
-() => {
-  const input = [42, { foo: 42 }]
-  const output = [42, { foo: 42 }]
-  expect(awaitArray(input)).toEqual(output)
-}
-```
-
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
+| _`value`_ | **`Array[...DeepSync]`** | an array of non-async elements and with no nested promises |
+| _`=>`_ | **`Array`** | the original array |
 
 
 #### TEST: should return the input when all elements are sync
 
 ```javascript
 () => {
-  const input = [42, { foo: 42 }]
+  const input = [42, { foo: 'bar' }]
   expect(awaitArray(input)).toBe(input)
 }
 ```
@@ -159,17 +158,29 @@ v 1.2.36 -- 0 ms --
 
 
 
+**`(value Array[...DeepAsync]) => *Array`**
+
+Deep awaits every element in an array and returns a promise to a fully-resolved array. If no elements are async, return the original array.
+
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`Array[...DeepAsync]`** | An array that may contain promises or elements with nested promises. |
+| _`=>`_ | **`*Array`** | a promise to an array matching the original array but with all elements deep awaited |
+
+
 #### TEST: should return async output on async input
 
 ```javascript
 async () => {
   const input = [Promise.resolve(42), { foo: 42 }]
-  const output = [42, { foo: 42 }]
-  expect(await awaitArray(input)).toEqual(output)
+  const output = await awaitArray(input)
+  const expected = [42, { foo: 42 }]
+  expect(output).toEqual(expected)
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -181,8 +192,9 @@ v 1.2.36 -- 0 ms --
 ```javascript
 async () => {
   const input = [42, { foo: Promise.resolve(42) }]
-  const output = [42, { foo: 42 }]
-  expect(await awaitArray(input)).toEqual(output)
+  const output = await awaitArray(input)
+  const expected = [42, { foo: 42 }]
+  expect(output).toEqual(expected)
 }
 ```
 
@@ -203,7 +215,7 @@ v 1.2.36 -- 0 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should return a promise
@@ -211,14 +223,14 @@ v 1.2.36 -- 0 ms --
 ```javascript
 async () => {
   const start = Date.now()
-  const promise = awaitDelay(100)
+  const promise = awaitDelay(10)
   const result = await promise.then(() => 42)
-  expect(Date.now() - start).toBeGreaterThan(90)
+  expect(Date.now() - start).toBeGreaterThan(5)
   expect(result).toBe(42)
 }
 ```
 
-v 1.2.36 -- 102 ms --
+v 1.2.36 -- 10 ms --
 ✅ **Pass**
 
 
@@ -228,40 +240,23 @@ v 1.2.36 -- 102 ms --
 ### awaitObject
 
 
-**`() => void`**
+**`(value Object[String, ...DeepSync]) => Object`**
 
-
+Deep awaits every iterable value of an object and returns a full-resolved object. If no values are async, return the original object.
 
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`value`_ | **`Object[String, ...DeepSync]`** | an object of non-async values with no nested promises |
+| _`=>`_ | **`Object`** | the original object |
 
 
-#### TEST: should return sync output on sync input
+#### TEST: should return original object if nothing to await
 
 ```javascript
 () => {
-  const input = { foo: 42, bar: 42 }
-  const output = { foo: 42, bar: 42 }
-  expect(awaitObject(input)).toEqual(output)
-}
-```
-
-v 1.2.36 -- 1 ms --
-✅ **Pass**
-
-
-
-
-
-#### TEST: should return async output on async input
-
-```javascript
-async () => {
-  const input = { foo: 42, bar: Promise.resolve(42) }
-  const output = { foo: 42, bar: 42 }
-  expect(await awaitObject(input)).toEqual(output)
+  const input = { foo: 42, bar: [40, 2] }
+  expect(awaitObject(input)).toBe(input)
 }
 ```
 
@@ -272,12 +267,43 @@ v 1.2.36 -- 0 ms --
 
 
 
-#### TEST: should return original object if nothing to await
+**`(value Object[String, ...DeepAsync]) => Object`**
+
+Deep awaits every iterable value of an object and returns a full-resolved object. If no values are async, return the original object.
+
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`Object[String, ...DeepAsync]`** | an object that may contain promises or values with nested promises |
+| _`=>`_ | **`Object`** | a promise to an object matching the original object but with all values deep awaited |
+
+
+#### TEST: should return async output on async values
 
 ```javascript
-() => {
-  const input = { foo: 42, bar: 42 }
-  expect(awaitObject(input)).toBe(input)
+async () => {
+  const input = { foo: 42, bar: Promise.resolve(42) }
+  const output = await awaitObject(input)
+  const expected = { foo: 42, bar: 42 }
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should return async output on nested async input
+
+```javascript
+async () => {
+  const input = { foo: 42, bar: [40, Promise.resolve(2)] }
+  const output = await awaitObject(input)
+  const expected = { foo: 42, bar: [40, 2] }
+  expect(output).toEqual(expected)
 }
 ```
 
@@ -300,7 +326,7 @@ v 1.2.36 -- 0 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should compile zero args
@@ -411,7 +437,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -429,7 +455,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -475,6 +501,10 @@ v 1.2.36 -- 0 ms --
 
 
 
+### concurrent
+
+_[alias for parallel](#parallel)_
+
 ## D
 
   ### deepAwait
@@ -487,7 +517,7 @@ v 1.2.36 -- 0 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should await async input
@@ -511,6 +541,8 @@ v 1.2.36 -- 0 ms --
 
   ### identity
 
+Aliases: [_](#-) | [argument](#argument)
+
 
 **`() => void`**
 
@@ -519,7 +551,7 @@ v 1.2.36 -- 0 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should return the original argument
@@ -604,7 +636,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -655,7 +687,7 @@ v 1.2.36 -- 0 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should join
@@ -676,7 +708,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 9 ms --
+v 1.2.36 -- 17 ms --
 ✅ **Pass**
 
 
@@ -788,7 +820,7 @@ v 1.2.36 -- 0 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should reduce
@@ -807,7 +839,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 66 ms --
+v 1.2.36 -- 272 ms --
 ✅ **Pass**
 
 
@@ -867,7 +899,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 4 ms --
+v 1.2.36 -- 3 ms --
 ✅ **Pass**
 
 
@@ -903,7 +935,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -924,7 +956,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -979,7 +1011,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1062,7 +1094,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 49 ms --
+v 1.2.36 -- 272 ms --
 ✅ **Pass**
 
 
@@ -1184,7 +1216,7 @@ v 1.2.36 -- 2 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1230,6 +1262,8 @@ v 1.2.36 -- 0 ms --
 
   ### parallel
 
+Aliases: [concurrent](#concurrent)
+
 
 **`() => void`**
 
@@ -1238,7 +1272,7 @@ v 1.2.36 -- 0 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should execute the mapper in parallel
@@ -1279,7 +1313,7 @@ v 1.2.36 -- 501 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should deep await
@@ -1319,7 +1353,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 2 ms --
 ✅ **Pass**
 
 
@@ -1361,7 +1395,7 @@ v 1.2.36 -- 1 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should sync an object
@@ -1410,7 +1444,7 @@ v 1.2.36 -- 0 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should be implemented on identity
@@ -1425,7 +1459,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1442,7 +1476,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1461,7 +1495,7 @@ v 1.2.36 -- 0 ms --
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** | todo... |
+| _`=>`_ | **`void`** |   |
 
 
 #### TEST: should validate an object
@@ -1480,7 +1514,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 2 ms --
 ✅ **Pass**
 
 
@@ -1498,7 +1532,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1524,7 +1558,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 2 ms --
 ✅ **Pass**
 
 

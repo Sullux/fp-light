@@ -6,7 +6,8 @@ const indent = '  '
 
 /* IMPORTS */
 
-const byName = ({name: n1}, {name: n2}) => (n1 || '').localeCompare((n2 || ''))
+const byName = ({ details: {name: n1} }, { details: {name: n2} }) =>
+  (n1 || '').localeCompare((n2 || ''))
 
 const beforesAndAfters = (allTests) => {
   const [beforeAllSet, afterAllSet] = allTests.reduce(
@@ -19,15 +20,39 @@ const beforesAndAfters = (allTests) => {
   return [[...beforeAllSet], [...afterAllSet]]
 }
 
+const aliasTests = ({ details: { name } }) => {
+  const currentExport = fp[name]
+  const aliases = Object.keys(fp).filter((key) =>
+    ((key !== name) && fp[key] === currentExport) )
+  return aliases.map((alias) => ({
+    type: 'alias',
+    details: { name: alias, alias: name },
+    beforeEach: [],
+    afterEach: [],
+  }))
+}
+
+const testWithAliases = (tests) =>
+  tests.map((test) => {
+    const aliases = aliasTests(test)
+    return aliases.length
+      ? [
+        {...test, aliases: aliases.map(({ details: { name } }) => name) },
+        aliases,
+      ]
+      : test
+  }).flat(999)
+
 const testsToRun = (allTests) => {
   const onlyTests = allTests.filter(({ settings: { only } }) => only)
-  const unsortedTests = onlyTests.length ? onlyTests : allTests
+  const unsortedTests = onlyTests.length ? onlyTests : testWithAliases(allTests)
   const sortedTests = [...unsortedTests].sort(byName)
   return sortedTests.map((test) => ([...test.beforeEach, test, ...test.afterEach]))
     .flat()
 }
 
 const runTest = async (test) => {
+  if (test.details.alias) { return { test } }
   const start = Date.now()
   try {
     await test.impl()
@@ -70,6 +95,7 @@ const firstValidLine = (lines) => {
 }
 
 const loggableImplementation = (impl) => {
+  if (!impl) { return '' }
   const lines = impl.toString().trim().split('\n')
   const validLine = lines[firstValidLine(lines)]
   if (!validLine) { return impl }
@@ -87,6 +113,7 @@ const toLoggableTest = ({
   settings,
   testFile,
   impl,
+  aliases,
 }) => ({
   description,
   type,
@@ -94,6 +121,7 @@ const toLoggableTest = ({
   settings,
   testFile,
   impl: loggableImplementation(impl),
+  aliases,
 })
 
 const toLoggableError = ({ name, message, stack }) => ({
@@ -124,9 +152,10 @@ const logResults = async (results) => {
   }
   await writeFile('./.testlog.json', JSON.stringify(results, null, 2))
   console.log('  ✓ ALL', testCount, 'TESTS PASSING\n')
-  console.log('WRITING API DOCS')
-  await writeFile('./API.md', buildApi(results))
+  return results
 }
+
+const msToS = (v) => (Math.round(v / 10)) / 100
 
 const execute = async (tests) => {
   console.log('\nFOUND', tests.length, 'TESTS')
@@ -136,9 +165,20 @@ const execute = async (tests) => {
     return logResults(beforeResults)
   }
   const includedTests = testsToRun(tests)
-  console.log('RUNNING', includedTests.length, 'TESTS\n')
+  const testCount = includedTests.filter(({ type }) => type === 'test').length
+  console.log('RUNNING', testCount, 'TESTS\n')
+  let start = Date.now()
   const results = await runTests([...includedTests, ...afterAll])
-  await logResults([...beforeResults, ...results])
+  const loggedResults = await logResults([...beforeResults, ...results])
+  console.log('  Done in', msToS(Date.now() - start), 's\n')
+  if (tests.length === testCount) {
+    start = Date.now()
+    console.log('WRITING API DOCS')
+    await writeFile('./API.md', buildApi(results))
+    console.log('  Done in', Date.now() - start, 'ms')
+  } else {
+    console.log('PARTIAL TEST RUN -- SKIPPING API DOCS BUILD')
+  }
   console.log('-'.repeat(process.stdout.columns))
 }
 
