@@ -4,10 +4,25 @@
 
 # API
 
+This API is set up for easy cross referencing. It is divided into sections
+alphabetically and each section contains reference sections for each function
+and alias. Additionally, each function reference contains links to aliases and
+also links to related functions.
+
+## Stats
+
+* total functions: 18
+* passing tests: 72
+* failing tests: 0
+* module size: 75.4k
+
+## Index
+
 * [...](#---)
   * [_](#-)
 
 * [A](#a)
+  * [Async](#async)
   * [argument](#argument)
   * [asPromise](#aspromise)
   * [awaitArray](#awaitarray)
@@ -54,7 +69,88 @@ _[alias for identity](#identity)_
 
 ## A
 
-  ### argument
+  ### Async
+
+_Related: Factory, Type, [`isAsync`](#isasync), [`toAsync`](#toasync)_
+
+
+**`value:Any instanceof Async`**
+
+As a type, passes the `instanceof` operand to [`isAsync`](#isasync). As a factory, passes through to [`toAsync`](#toasync).
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`Any`** | `value instanceof Async` is equivalent to [`isAsync(value)`](#isasync) |
+| _`=>`_ | **`Boolean`** | the result of [`isAsync(value)`](#isasync) |
+
+
+#### TEST: should pass through to isAsync
+
+```javascript
+() => {
+  const input = [
+    undefined,
+    null,
+    42,
+    'foo',
+    true,
+    { foo: 42 },
+    [ 'foo' ],
+    Promise.resolve(42),
+    { then: (res) => res(42) },
+    { foo: Promise.resolve(42) },
+  ]
+  const output = input.map((value) => value instanceof Async)
+  const expected = input.map(isAsync)
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+**`(value:Any) => Promise`**
+
+As a type, passes the `instanceof` operand to [`isAsync`](#isasync). As a factory, passes through to [`toAsync`](#toasync).
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`Any`** | `Async(value)` is equivalent to `[`toAsync(value)`](#toasync)` |
+| _`=>`_ | **`Promise`** | the result of [`toAsync(value)`](#toasync) |
+
+
+#### TEST: should pass through to toAsync
+
+```javascript
+async () => {
+  const input = [
+    undefined,
+    null,
+    42,
+    'foo',
+    true,
+    { foo: 42 },
+    [ 'foo' ],
+    Promise.resolve(42),
+  ]
+  const output = await Promise.all(input.map(Async))
+  const expected = await Promise.all(input.map(toAsync))
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+### argument
 
 _[alias for identity](#identity)_
 
@@ -62,7 +158,6 @@ _[alias for identity](#identity)_
 
 
 **`() => void`**
-
 
 
 
@@ -121,7 +216,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -131,14 +226,13 @@ v 1.2.36 -- 0 ms --
 ### awaitArray
 
 
-**`(value Array[...DeepSync]) => Array`**
+**`(value:Array(...DeepSync)) => Array`**
 
 Deep awaits every element in an array and returns a promise to a fully-resolved array. If no elements are async, return the original array.
 
-
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`value`_ | **`Array[...DeepSync]`** | an array of non-async elements and with no nested promises |
+| _`value`_ | **`Array(...DeepSync)`** | an array of non-async elements and with no nested promises |
 | _`=>`_ | **`Array`** | the original array |
 
 
@@ -158,14 +252,13 @@ v 1.2.36 -- 0 ms --
 
 
 
-**`(value Array[...DeepAsync]) => *Array`**
+**`(value:Array(...DeepAsync)) => *Array`**
 
 Deep awaits every element in an array and returns a promise to a fully-resolved array. If no elements are async, return the original array.
 
-
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`value`_ | **`Array[...DeepAsync]`** | An array that may contain promises or elements with nested promises. |
+| _`value`_ | **`Array(...DeepAsync)`** | An array that may contain promises or elements with nested promises. |
 | _`=>`_ | **`*Array`** | a promise to an array matching the original array but with all elements deep awaited |
 
 
@@ -180,7 +273,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -212,7 +305,6 @@ v 1.2.36 -- 0 ms --
 
 
 
-
 | Arg | Type | Description |
 | --- | ---- | ----------- |
 | _`=>`_ | **`void`** |   |
@@ -230,7 +322,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 10 ms --
+v 1.2.36 -- 11 ms --
 ✅ **Pass**
 
 
@@ -240,14 +332,13 @@ v 1.2.36 -- 10 ms --
 ### awaitObject
 
 
-**`(value Object[String, ...DeepSync]) => Object`**
+**`(value:Object(String, ...DeepSync)) => Object`**
 
 Deep awaits every iterable value of an object and returns a full-resolved object. If no values are async, return the original object.
 
-
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`value`_ | **`Object[String, ...DeepSync]`** | an object of non-async values with no nested promises |
+| _`value`_ | **`Object(String, ...DeepSync)`** | an object of non-async values with no nested promises |
 | _`=>`_ | **`Object`** | the original object |
 
 
@@ -267,14 +358,13 @@ v 1.2.36 -- 0 ms --
 
 
 
-**`(value Object[String, ...DeepAsync]) => Object`**
+**`(value:Object(String, ...DeepAsync)) => Object`**
 
 Deep awaits every iterable value of an object and returns a full-resolved object. If no values are async, return the original object.
 
-
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`value`_ | **`Object[String, ...DeepAsync]`** | an object that may contain promises or values with nested promises |
+| _`value`_ | **`Object(String, ...DeepAsync)`** | an object that may contain promises or values with nested promises |
 | _`=>`_ | **`Object`** | a promise to an object matching the original object but with all values deep awaited |
 
 
@@ -320,7 +410,6 @@ v 1.2.36 -- 0 ms --
 
 
 **`() => void`**
-
 
 
 
@@ -455,7 +544,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -494,7 +583,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -510,23 +599,117 @@ _[alias for parallel](#parallel)_
   ### deepAwait
 
 
-**`() => void`**
+**`(value:DeepSync) => DeepSync`**
 
-
-
+Returns the original primitive or already deeply-synchronous value _or_ returns a promise to a primitive or deeply-synchronous value, following this logic:
+    * If primitive or falsy, return the original value.
+    * If async, await the result and then deep await that result.
+    * If an array, [`awaitArray`](#awaitarray).
+    * If an object, [`awaitObject`](#awaitobject).
+    * Otherwise, return the original value.
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`=>`_ | **`void`** |   |
+| _`value`_ | **`DeepSync`** | a deeply-synchronous value |
+| _`=>`_ | **`DeepSync`** | the original value |
 
 
-#### TEST: should await async input
+#### TEST: should return a primitive or falsy value unchanged
+
+```javascript
+() => {
+  expect(deepAwait(null)).toBe(null)
+  expect(deepAwait(undefined)).toBe(undefined)
+  expect(deepAwait(42)).toBe(42)
+  expect(deepAwait('foo')).toBe('foo')
+  expect(deepAwait(true)).toBe(true)
+  const fn = () => {}
+  expect(deepAwait(fn)).toBe(fn)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should return a deeply synchronous object unchanged
+
+```javascript
+() => {
+  const input = { foo: 42, bar: ['baz', 'biz'] }
+  const output = deepAwait(input)
+  expect(output).toBe(input)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should return a deeply synchronous array unchanged
+
+```javascript
+() => {
+  const input = ['foo', { bar: 42 }]
+  const output = deepAwait(input)
+  expect(output).toBe(input)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+**`(value:DeepAsync) => *DeepSync`**
+
+Returns the original primitive or already deeply-synchronous value _or_ returns a promise to a primitive or deeply-synchronous value, following this logic:
+    * If primitive or falsy, return the original value.
+    * If async, await the result and then deep await that result.
+    * If an array, [`awaitArray`](#awaitarray).
+    * If an object, [`awaitObject`](#awaitobject).
+    * Otherwise, return the original value.
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`DeepAsync`** | a deeply-synchronous value |
+| _`=>`_ | **`*DeepSync`** | a promise to the original value but with all object properties and array elements deeply resolved |
+
+
+#### TEST: should deep await an object
 
 ```javascript
 async () => {
-  const input = Promise.resolve({ foo: 42, bar: [Promise.resolve(42)] })
-  const output = { foo: 42, bar: [42] }
-  expect(await deepAwait(input)).toEqual(output)
+  const input = { foo: Async(42), bar: ['baz', Async('biz')] }
+  const output = await deepAwait(input)
+  const expected = { foo: 42, bar: ['baz', 'biz'] }
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should deep await an array
+
+```javascript
+async () => {
+  const input = [Async('foo'), { bar: Async(42) }]
+  const output = await deepAwait(input)
+  const expected = ['foo', { bar: 42 }]
+  expect(output).toEqual(expected)
 }
 ```
 
@@ -545,7 +728,6 @@ Aliases: [_](#-) | [argument](#argument)
 
 
 **`() => void`**
-
 
 
 
@@ -636,7 +818,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -684,7 +866,6 @@ v 1.2.36 -- 0 ms --
 
 
 
-
 | Arg | Type | Description |
 | --- | ---- | ----------- |
 | _`=>`_ | **`void`** |   |
@@ -708,7 +889,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 17 ms --
+v 1.2.36 -- 23 ms --
 ✅ **Pass**
 
 
@@ -751,7 +932,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -817,7 +998,6 @@ v 1.2.36 -- 0 ms --
 
 
 
-
 | Arg | Type | Description |
 | --- | ---- | ----------- |
 | _`=>`_ | **`void`** |   |
@@ -839,7 +1019,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 272 ms --
+v 1.2.36 -- 281 ms --
 ✅ **Pass**
 
 
@@ -1011,7 +1191,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1094,7 +1274,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 272 ms --
+v 1.2.36 -- 278 ms --
 ✅ **Pass**
 
 
@@ -1152,7 +1332,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 3 ms --
+v 1.2.36 -- 4 ms --
 ✅ **Pass**
 
 
@@ -1196,7 +1376,7 @@ v 1.2.36 -- 3 ms --
 }
 ```
 
-v 1.2.36 -- 2 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1216,7 +1396,7 @@ v 1.2.36 -- 2 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1269,7 +1449,6 @@ Aliases: [concurrent](#concurrent)
 
 
 
-
 | Arg | Type | Description |
 | --- | ---- | ----------- |
 | _`=>`_ | **`void`** |   |
@@ -1294,7 +1473,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 501 ms --
+v 1.2.36 -- 502 ms --
 ✅ **Pass**
 
 
@@ -1307,7 +1486,6 @@ v 1.2.36 -- 501 ms --
 
 
 **`() => void`**
-
 
 
 
@@ -1330,7 +1508,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1353,7 +1531,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 2 ms --
+v 1.2.36 -- 5 ms --
 ✅ **Pass**
 
 
@@ -1389,7 +1567,6 @@ v 1.2.36 -- 1 ms --
 
 
 **`() => void`**
-
 
 
 
@@ -1441,7 +1618,6 @@ v 1.2.36 -- 0 ms --
 
 
 
-
 | Arg | Type | Description |
 | --- | ---- | ----------- |
 | _`=>`_ | **`void`** |   |
@@ -1476,7 +1652,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1489,7 +1665,6 @@ v 1.2.36 -- 1 ms --
 
 
 **`() => void`**
-
 
 
 
@@ -1514,7 +1689,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 2 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1558,7 +1733,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 2 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 

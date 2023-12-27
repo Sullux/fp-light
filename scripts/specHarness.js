@@ -43,7 +43,7 @@ const assertFunction = (name, v) => {
   return v
 }
 
-const distinct = (array) => ([...(new Set(...array))])
+const distinct = (array) => ([...(new Set(array))])
 
 const mergeContexts = (c1, c2) => ({
   ...c1,

@@ -136,6 +136,24 @@ const toLoggableObject = ({ test, error, result }) => ({
   ...result,
 })
 
+const c = {
+  end: '\x1b[0m',
+  bold: '\x1b[1m',
+  underline: '\x1b[4m',
+  dim: '\x1b[2m',
+  fgRed: '\x1b[31m',
+  bgWhite: '\x1b[47m',
+}
+
+const indentLines = (description) => description.split('\n')
+  .map((line, i) => (i === 0) ? line : `      ${line}`)
+  .join('\n')
+
+const prettifyError = ({ error: { name, message }, testFile, description }) => console.log({ message }) ||
+  `    ${c.dim}${testFile}${c.end}
+    ${c.underline}${description}${c.end}
+    ${c.bold}${c.fgRed}${c.bgWhite}${name}${c.end} ${indentLines(message)}`
+
 const logResults = async (results) => {
   const isTest = ({ type }) => type === 'test'
   const tests = results.filter(isTest)
@@ -143,7 +161,10 @@ const logResults = async (results) => {
   const errors = results.filter(({ error }) => error)
   if (errors.length) {
     await writeFile('./.testlog.json', JSON.stringify(results, null, 2))
-    errors.map((e) => console.log(e)) // todo: prettify
+    console.log('  --- ERRORS ---\n')
+    const errorsText = errors.map(prettifyError).join('\n\n  ---\n\n')
+    console.log(errorsText)
+    console.log('\n  --- END ERRORS ---\n')
     const passingCount = tests.filter(({ error }) => !error).length
     console.log('  ✓', passingCount, 'TESTS PASSING')
     console.log('  X', testCount - passingCount, 'TESTS FAILING')
