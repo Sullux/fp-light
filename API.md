@@ -11,8 +11,8 @@ also links to related functions.
 
 ## Stats
 
-* total functions: 18
-* passing tests: 72
+* total functions: 19
+* passing tests: 73
 * failing tests: 0
 * module size: 75.4k
 
@@ -24,16 +24,17 @@ also links to related functions.
 * [A](#a)
   * [Async](#async)
   * [argument](#argument)
-  * [asPromise](#aspromise)
-  * [awaitArray](#awaitarray)
   * [awaitDelay](#awaitdelay)
-  * [awaitObject](#awaitobject)
 
 * [C](#c)
   * [compilable](#compilable)
   * [concurrent](#concurrent)
+  * [context](#context)
+  * [context.await](#context-await)
 
 * [D](#d)
+  * [DeepAsync](#deepasync)
+  * [DeepSync](#deepsync)
   * [deepAwait](#deepawait)
 
 * [I](#i)
@@ -113,14 +114,14 @@ v 1.2.36 -- 0 ms --
 
 
 
-**`(value:Any) => Promise`**
+**`(value:T) => *T`**
 
 As a type, passes the `instanceof` operand to [`isAsync`](#isasync). As a factory, passes through to [`toAsync`](#toasync).
 
 | Arg | Type | Description |
 | --- | ---- | ----------- |
-| _`value`_ | **`Any`** | `Async(value)` is equivalent to `[`toAsync(value)`](#toasync)` |
-| _`=>`_ | **`Promise`** | the result of [`toAsync(value)`](#toasync) |
+| _`value`_ | **`T`** | `Async(value)` is equivalent to `[`toAsync(value)`](#toasync)` |
+| _`=>`_ | **`*T`** | the result of [`toAsync(value)`](#toasync) |
 
 
 #### TEST: should pass through to toAsync
@@ -154,150 +155,6 @@ v 1.2.36 -- 0 ms --
 
 _[alias for identity](#identity)_
 
-### asPromise
-
-
-**`() => void`**
-
-
-
-| Arg | Type | Description |
-| --- | ---- | ----------- |
-| _`=>`_ | **`void`** |   |
-
-
-#### TEST: should return the original promise
-
-```javascript
-() => {
-  const input = Promise.resolve(42)
-  expect(asPromise(input)).toBe(input)
-}
-```
-
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
-
-
-#### TEST: should wrap and resolve a non-standard promise
-
-```javascript
-async () => {
-  const input = {
-    then: (resolve, reject) => Promise.resolve(42).then(resolve, reject)
-  }
-  const promise = asPromise(input)
-  expect(promise.constructor).toBe(Promise)
-  expect(await promise).toBe(42)
-}
-```
-
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
-
-
-#### TEST: should wrap and rejrect a non-standard promise
-
-```javascript
-async () => {
-  const error = new Error('reasons')
-  const input = {
-    then: (resolve, reject) => Promise.reject(error).then(resolve, reject)
-  }
-  const promise = asPromise(input)
-  expect(promise.constructor).toBe(Promise)
-  expect(await promise.catch(err => err)).toBe(error)
-}
-```
-
-v 1.2.36 -- 1 ms --
-✅ **Pass**
-
-
-
-
-
-### awaitArray
-
-
-**`(value:Array(...DeepSync)) => Array`**
-
-Deep awaits every element in an array and returns a promise to a fully-resolved array. If no elements are async, return the original array.
-
-| Arg | Type | Description |
-| --- | ---- | ----------- |
-| _`value`_ | **`Array(...DeepSync)`** | an array of non-async elements and with no nested promises |
-| _`=>`_ | **`Array`** | the original array |
-
-
-#### TEST: should return the input when all elements are sync
-
-```javascript
-() => {
-  const input = [42, { foo: 'bar' }]
-  expect(awaitArray(input)).toBe(input)
-}
-```
-
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
-
-
-**`(value:Array(...DeepAsync)) => *Array`**
-
-Deep awaits every element in an array and returns a promise to a fully-resolved array. If no elements are async, return the original array.
-
-| Arg | Type | Description |
-| --- | ---- | ----------- |
-| _`value`_ | **`Array(...DeepAsync)`** | An array that may contain promises or elements with nested promises. |
-| _`=>`_ | **`*Array`** | a promise to an array matching the original array but with all elements deep awaited |
-
-
-#### TEST: should return async output on async input
-
-```javascript
-async () => {
-  const input = [Promise.resolve(42), { foo: 42 }]
-  const output = await awaitArray(input)
-  const expected = [42, { foo: 42 }]
-  expect(output).toEqual(expected)
-}
-```
-
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
-
-
-#### TEST: should return async output on nested async input
-
-```javascript
-async () => {
-  const input = [42, { foo: Promise.resolve(42) }]
-  const output = await awaitArray(input)
-  const expected = [42, { foo: 42 }]
-  expect(output).toEqual(expected)
-}
-```
-
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
-
-
 ### awaitDelay
 
 
@@ -329,81 +186,6 @@ v 1.2.36 -- 11 ms --
 
 
 
-### awaitObject
-
-
-**`(value:Object(String, ...DeepSync)) => Object`**
-
-Deep awaits every iterable value of an object and returns a full-resolved object. If no values are async, return the original object.
-
-| Arg | Type | Description |
-| --- | ---- | ----------- |
-| _`value`_ | **`Object(String, ...DeepSync)`** | an object of non-async values with no nested promises |
-| _`=>`_ | **`Object`** | the original object |
-
-
-#### TEST: should return original object if nothing to await
-
-```javascript
-() => {
-  const input = { foo: 42, bar: [40, 2] }
-  expect(awaitObject(input)).toBe(input)
-}
-```
-
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
-
-
-**`(value:Object(String, ...DeepAsync)) => Object`**
-
-Deep awaits every iterable value of an object and returns a full-resolved object. If no values are async, return the original object.
-
-| Arg | Type | Description |
-| --- | ---- | ----------- |
-| _`value`_ | **`Object(String, ...DeepAsync)`** | an object that may contain promises or values with nested promises |
-| _`=>`_ | **`Object`** | a promise to an object matching the original object but with all values deep awaited |
-
-
-#### TEST: should return async output on async values
-
-```javascript
-async () => {
-  const input = { foo: 42, bar: Promise.resolve(42) }
-  const output = await awaitObject(input)
-  const expected = { foo: 42, bar: 42 }
-  expect(output).toEqual(expected)
-}
-```
-
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
-
-
-#### TEST: should return async output on nested async input
-
-```javascript
-async () => {
-  const input = { foo: 42, bar: [40, Promise.resolve(2)] }
-  const output = await awaitObject(input)
-  const expected = { foo: 42, bar: [40, 2] }
-  expect(output).toEqual(expected)
-}
-```
-
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
-
-
 ## C
 
   ### compilable
@@ -427,7 +209,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -475,7 +257,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -563,7 +345,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -583,7 +365,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -594,18 +376,249 @@ v 1.2.36 -- 1 ms --
 
 _[alias for parallel](#parallel)_
 
+### context
+
+**`Object`**
+
+The context module supports tracking context and debug tracing across
+asynchronous invocations. It is mostly used as an internal tool within the
+FP Light library, but it is available for use by 3rd-party developers. The
+context module has the following properties:
+
+* [`context.await`](#context-await) used to restore the current context in a `then` handler
+* [`context.enter`](#context-enter) used to push a new value into the context stack
+* [`context.trace`](#context-trace) gets the current context stack trace
+* [`context.value`](#context-value) gets a context value (either current or at specified depth)
+* [`context.get`](#context-get) recursively walks the context stack to find the requested property value
+* [`context.defaultStackTraceLimit`](#context-defaultstacktracelimit) the default max number of lines of a stack trace
+
+### context.await
+
+
+**`(value:*TIn, resolve:(TIn=>TOut), reject:?(TErr=>TOut)) => *TOut`**
+
+Given a [`DeepAsync`](#deepasync) value, a `resolve` function, and optionally a
+    `reject` function, resolves the [`DeepSync(value)`](#deepsync) Promise with the
+    `resolve` or `reject` function invoked in the original context in which
+    `awaitContext` was called.
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`*TIn`** | any [`DeepAsync`](#deepasync) value |
+| _`resolve`_ | **`(TIn=>TOut)`** | a function that accepts the awaited [`DeepSync(value)`](#deepsync) |
+| _`reject`_ | **`?(TErr=>TOut)`** | a function that accepts the rejected error from the [`DeepSync(value)`](#deepsync) |
+| _`=>`_ | **`*TOut`** | a Promise resolving to the output of the `resolve` or `reject` function. |
+
+
+#### TEST: should resolve the async value in its original context
+
+```javascript
+async () => {
+  const asyncValue = Promise.resolve(40)
+  const addToContext = (value) => value + (context.value() || 0)
+  const [withoutContext, withContext] = context.enter(2, () => ([
+    asyncValue.then(addToContext),
+    context.await(asyncValue, addToContext), // capture the 2
+  ]))
+  expect(await withoutContext).toBe(40)
+  expect(await withContext).toBe(42)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
 ## D
 
-  ### deepAwait
+  ### DeepAsync
+
+_Related: Factory, Type, [`isDeepAsync`](#isdeepasync), [`toAsync`](#toasync)_
+
+
+**`value:Any instanceof DeepAsync`**
+
+As a type, passes the `instanceof` operand to [`isDeepAsync`](#isdeepasync). As a factory, passes through to [`toAsync`](#toasync).
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`Any`** | `value instanceof DeepAsync` is equivalent to [`isDeepAsync(value)`](#isdeepasync) |
+| _`=>`_ | **`Boolean`** | the result of [`isDeepAsync(value)`](#isdeepasync) |
+
+
+#### TEST: should pass through to isDeepAsync
+
+```javascript
+async () => {
+  const input = [
+    undefined,
+    null,
+    42,
+    'foo',
+    true,
+    { foo: 42 },
+    [ 'foo' ],
+    Promise.resolve(42),
+    { then: (res) => res(42) },
+    { foo: Promise.resolve(42) },
+    { foo: [40, 2] },
+    { foo: [40, Promise.resolve(2)] },
+    [Promise.resolve('foo')],
+    [ 'foo', { bar: 42 }],
+    [ 'foo', { bar: Promise.resolve(42) }],
+  ]
+  const output = input.map((value) => value instanceof DeepAsync)
+  const expected = input.map(isDeepAsync)
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+**`(value:T) => *T`**
+
+As a type, passes the `instanceof` operand to [`isDeepAsync`](#isdeepasync). As a factory, passes through to [`toAsync`](#toasync).
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`T`** | DeepAsync(value) is equivalent to [`toAsync(value)`](#toasync) |
+| _`=>`_ | **`*T`** | the result of [`toAsync(value)`](#toasync) |
+
+
+#### TEST: should pass through to toAsync
+
+```javascript
+async () => {
+  const input = [
+    undefined,
+    null,
+    42,
+    'foo',
+    true,
+    { foo: 42 },
+    [ 'foo' ],
+    Promise.resolve(42),
+  ]
+  const output = await Promise.all(input.map(DeepAsync))
+  const expected = await Promise.all(input.map(toAsync))
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+### DeepSync
+
+_Related: Factory, Type, [`isDeepSync`](#isdeepsync), [`deepAwait`](#deepawait)_
+
+
+**`value:Any instanceof DeepSync`**
+
+As a type, passes the `instanceof` operand to [`isDeepSync`](#isdeepsync). As a factory, passes through to [`deepAwait`](#deepawait).
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`Any`** | `value instanceof DeepSync` is equivalent to [`isDeepSync(value)`](#isdeepsync) |
+| _`=>`_ | **`Boolean`** | the result of [`isDeepSync(value)`](#isdeepsync) |
+
+
+#### TEST: should pass through to isDeepSync
+
+```javascript
+() => {
+  const input = [
+    undefined,
+    null,
+    42,
+    'foo',
+    true,
+    { foo: 42 },
+    [ 'foo' ],
+    Promise.resolve(42),
+    { then: (res) => res(42) },
+    { foo: Promise.resolve(42) },
+    { foo: [40, 2] },
+    { foo: [40, Promise.resolve(2)] },
+    [Promise.resolve('foo')],
+    [ 'foo', { bar: 42 }],
+    [ 'foo', { bar: Promise.resolve(42) }],
+  ]
+  const output = input.map((value) => value instanceof DeepSync)
+  const expected = input.map(isDeepSync)
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+**`(value:T) => *T`**
+
+As a type, passes the `instanceof` operand to [`isDeepSync`](#isdeepsync). As a factory, passes through to [`deepAwait`](#deepawait).
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`value`_ | **`T`** | DeepSync(value) is equivalent to [`deepAwait(value)`](#deepawait) |
+| _`=>`_ | **`*T`** | the result of [`deepAwait(value)`](#deepawait) |
+
+
+#### TEST: should pass through to deepAwait
+
+```javascript
+async () => {
+  const input = [
+    null,
+    undefined,
+    42,
+    'foo',
+    true,
+    { foo: 42, bar: ['baz', 'biz'] },
+    ['foo', { bar: 42 }],
+    { foo: Async(42), bar: ['baz', Async('biz')] },
+    [Async('foo'), { bar: Async(42) }],
+  ]
+  const output = await input.map(DeepSync)
+  const expected = await input.map(deepAwait)
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+### deepAwait
 
 
 **`(value:DeepSync) => DeepSync`**
 
 Returns the original primitive or already deeply-synchronous value _or_ returns a promise to a primitive or deeply-synchronous value, following this logic:
     * If primitive or falsy, return the original value.
-    * If async, await the result and then deep await that result.
-    * If an array, [`awaitArray`](#awaitarray).
-    * If an object, [`awaitObject`](#awaitobject).
+    * If async, deep await the resolved value.
+    * If an array with async elements, return a Promise to a [`DeepSync`](#deepsync) array.
+    * If an iterable (e.g. Set, Map) with async elements, return a Promise to a new [`DeepSync`](#deepsync) iterable.
+    * If matching a custom deep await (see [`onDeepAwait`](#ondeepawait)), return the result of the custom deep await.
+    * If an object with async properties, return a Promise to a [`DeepSync`](#deepsync) object.
     * Otherwise, return the original value.
 
 | Arg | Type | Description |
@@ -628,7 +641,7 @@ Returns the original primitive or already deeply-synchronous value _or_ returns 
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -669,13 +682,49 @@ v 1.2.36 -- 0 ms --
 
 
 
+#### TEST: should return a deeply synchronous Set unchanged
+
+```javascript
+() => {
+  const input = new Set(['foo', { bar: 42 }])
+  const output = deepAwait(input)
+  expect(output).toBe(input)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should return a deeply synchronous Map unchanged
+
+```javascript
+() => {
+  const input = new Map([['foo', { bar: 42 }], ['baz', { biz: 42 }]])
+  const output = deepAwait(input)
+  expect(output).toBe(input)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
 **`(value:DeepAsync) => *DeepSync`**
 
 Returns the original primitive or already deeply-synchronous value _or_ returns a promise to a primitive or deeply-synchronous value, following this logic:
     * If primitive or falsy, return the original value.
-    * If async, await the result and then deep await that result.
-    * If an array, [`awaitArray`](#awaitarray).
-    * If an object, [`awaitObject`](#awaitobject).
+    * If async, deep await the resolved value.
+    * If an array with async elements, return a Promise to a [`DeepSync`](#deepsync) array.
+    * If an iterable (e.g. Set, Map) with async elements, return a Promise to a new [`DeepSync`](#deepsync) iterable.
+    * If matching a custom deep await (see [`onDeepAwait`](#ondeepawait)), return the result of the custom deep await.
+    * If an object with async properties, return a Promise to a [`DeepSync`](#deepsync) object.
     * Otherwise, return the original value.
 
 | Arg | Type | Description |
@@ -709,6 +758,48 @@ async () => {
   const input = [Async('foo'), { bar: Async(42) }]
   const output = await deepAwait(input)
   const expected = ['foo', { bar: 42 }]
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should deep await a Set
+
+```javascript
+async () => {
+  const input = new Set([Async('foo'), { bar: Async(42) }])
+  const output = await deepAwait(input)
+  const expected = new Set(['foo', { bar: 42 }])
+  expect(output).toEqual(expected)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should deep await a Set
+
+```javascript
+async () => {
+  const input = new Set([
+    [Async('foo'), { bar: 42 }],
+    ['baz', { biz: Async(42) }],
+  ])
+  const output = await deepAwait(input)
+  const expected = new Set([
+    ['foo', { bar: 42 }],
+    ['baz', { biz: 42 }],
+  ])
   expect(output).toEqual(expected)
 }
 ```
@@ -818,7 +909,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -889,7 +980,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 23 ms --
+v 1.2.36 -- 11 ms --
 ✅ **Pass**
 
 
@@ -932,7 +1023,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1019,7 +1110,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 281 ms --
+v 1.2.36 -- 5 ms --
 ✅ **Pass**
 
 
@@ -1079,7 +1170,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 3 ms --
+v 1.2.36 -- 2 ms --
 ✅ **Pass**
 
 
@@ -1097,7 +1188,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1136,7 +1227,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1212,28 +1303,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
-✅ **Pass**
-
-
-
-
-
-#### TEST: should map with _base
-
-```javascript
-() => {
-  const obj = { input: [{ foo: 41 }, { foo: 42 }, { foo: 43 }] }
-  const fn = map(
-    add(_base(_).input.length, _.foo),
-    _.input,
-  )
-  const result = fn(obj)
-  expect(result).toEqual([44, 45, 46])
-}
-```
-
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1261,6 +1331,27 @@ v 1.2.36 -- 0 ms --
 
 
 
+#### TEST: should map strings with implicit _base
+
+```javascript
+() => {
+  const obj = { input: ['foo', 'bar', 'baz'] }
+  const fn = map(
+    $`${_.input.length} - ${_}`,
+    _.input,
+  )
+  const result = fn(obj)
+  expect(result).toEqual(['3 - foo', '3 - bar', '3 - baz'])
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
 #### TEST: should group
 
 ```javascript
@@ -1274,7 +1365,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 278 ms --
+v 1.2.36 -- 9 ms --
 ✅ **Pass**
 
 
@@ -1332,7 +1423,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 4 ms --
+v 1.2.36 -- 2 ms --
 ✅ **Pass**
 
 
@@ -1376,7 +1467,7 @@ v 1.2.36 -- 3 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 2 ms --
 ✅ **Pass**
 
 
@@ -1396,7 +1487,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1473,7 +1564,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 502 ms --
+v 1.2.36 -- 501 ms --
 ✅ **Pass**
 
 
@@ -1508,7 +1599,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1531,7 +1622,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 5 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1580,7 +1671,7 @@ v 1.2.36 -- 1 ms --
 ```javascript
 () => {
   const input = { foo: 42, bar: 'baz' }
-  const syncInput = sync(input)
+  const syncInput = Sync(input)
   expect(isSync(syncInput)).toBe(true)
 }
 ```
@@ -1597,7 +1688,7 @@ v 1.2.36 -- 0 ms --
 ```javascript
 () => {
   const input = Object.freeze({ foo: 42, bar: 'baz' })
-  const syncInput = sync(input)
+  const syncInput = Sync(input)
   expect(isSync(syncInput)).toBe(true)
 }
 ```
@@ -1681,7 +1772,7 @@ v 1.2.36 -- 0 ms --
     foo: 'bar',
     baz: isString,
   })
-  const input = sync({
+  const input = Sync({
     foo: 'bar',
     baz: 'biz',
   })
@@ -1707,7 +1798,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 

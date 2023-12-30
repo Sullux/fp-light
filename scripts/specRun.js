@@ -149,10 +149,19 @@ const indentLines = (description) => description.split('\n')
   .map((line, i) => (i === 0) ? line : `      ${line}`)
   .join('\n')
 
-const prettifyError = ({ error: { name, message }, testFile, description }) => console.log({ message }) ||
-  `    ${c.dim}${testFile}${c.end}
+const cwd = `file://${process.cwd()}`
+const stackLine = (line) => `      ${line.replace(cwd, '')}`
+
+const prettyStack = Boolean(process.env.FP_STACK_TRACE)
+  ? (stack) => {
+    return `\n${c.dim}${stack.split('\n').map(stackLine).join('\n')}${c.end}`
+  } // todo
+  : () => ''
+
+const prettifyError = ({ error: { name, message, stack }, testFile, description }) =>
+  `    ${c.dim}${testFile.replace(cwd, '')}${c.end}
     ${c.underline}${description}${c.end}
-    ${c.bold}${c.fgRed}${c.bgWhite}${name}${c.end} ${indentLines(message)}`
+    ${c.bold}${c.fgRed}${c.bgWhite}${name}${c.end} ${indentLines(message)}${prettyStack(stack)}`
 
 const logResults = async (results) => {
   const isTest = ({ type }) => type === 'test'
@@ -166,13 +175,13 @@ const logResults = async (results) => {
     console.log(errorsText)
     console.log('\n  --- END ERRORS ---\n')
     const passingCount = tests.filter(({ error }) => !error).length
-    console.log('  ✓', passingCount, 'TESTS PASSING')
-    console.log('  X', testCount - passingCount, 'TESTS FAILING')
+    console.log('✓', passingCount, 'TESTS PASSING')
+    console.log('X', testCount - passingCount, 'TESTS FAILING')
     process.exitCode = 1
     return
   }
   await writeFile('./.testlog.json', JSON.stringify(results, null, 2))
-  console.log('  ✓ ALL', testCount, 'TESTS PASSING\n')
+  console.log('✓ ALL', testCount, 'TESTS PASSING\n')
   return results
 }
 
@@ -196,7 +205,7 @@ const execute = async (tests) => {
     start = Date.now()
     console.log('WRITING API DOCS')
     await writeFile('./API.md', buildApi(results))
-    console.log('  Done in', Date.now() - start, 'ms')
+    console.log('Done in', Date.now() - start, 'ms')
   } else {
     console.log('PARTIAL TEST RUN -- SKIPPING API DOCS BUILD')
   }

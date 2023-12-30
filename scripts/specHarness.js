@@ -75,7 +75,11 @@ describe.only = (description, impl, settings = {}) =>
 
 const test = (description, impl, settings = {}) => {
   const err = new Error('foo')
-  testFile = err.stack.split('\n')[2].substring(7)
+  const stackLine = err.stack
+    .split('\n')
+    .slice(1)
+    .find((line) => !line.includes('/scripts/specHarness.js'))
+  testFile = stackLine.substring(stackLine.indexOf('file://'))
   tests.push({
     description,
     type: 'test',

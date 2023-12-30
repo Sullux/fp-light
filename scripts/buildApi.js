@@ -1,6 +1,6 @@
-import { statSync } from 'node:fs'
-import pkg from '../package.json' assert { type: 'json' }
+import { readFileSync, statSync } from 'node:fs'
 
+const pkg = JSON.parse(readFileSync('./package.json').toString())
 const consoleEscapeRegex = new RegExp('\x1B\\[[0-9]*m', 'g')
 const fromConsole = (text) => text.replace(consoleEscapeRegex, '')
 
@@ -78,8 +78,15 @@ ${signatureDescriptionEntry(tests[0])}\n${tests.map(testEntry).join('\n')}`
 const aliasSignatureEntry = ({ details: { alias } }) =>
   `_${bookmark(`alias for ${alias}`, bookmarkFormatted(alias))}_`
 
+const literalSignatureEntry = ({ type, usage }) =>
+  `**\`${type}\`**\n\n${usage}`
+
 const signatureEntry = ([signature, tests]) =>
-  tests[0].details.alias ? aliasSignatureEntry(tests[0]) : testSignatureEntry(signature, tests)
+  tests[0].details.alias
+    ? aliasSignatureEntry(tests[0])
+    : tests[0].details.type
+      ? literalSignatureEntry(tests[0].details)
+      : testSignatureEntry(signature, tests)
 
 const entry = (name, signatures) => {
   const entries = Object.entries(signatures)
@@ -97,7 +104,7 @@ ${entries.map(signatureEntry).join('\n')}
 const toRef = (value) => {
   const argsStart = value.indexOf('(')
   const name = (argsStart === -1) ? value : value.substring(0, argsStart)
-  return name.toLowerCase()
+  return bookmarkFormatted(name)
 }
 
 const fileSize = (file) => {
