@@ -12,28 +12,28 @@ const named = (context) => ({
   ...context,
   tests: context.tests.map((test) => ({
     ...test,
-    sortBy: context.sortBy
+    sortBy: context.sortBy,
   })),
   beforeEach: context.beforeEach.map((beforeEach) => ({
     ...beforeEach,
-    sortBy: context.sortBy
+    sortBy: context.sortBy,
   })),
   afterEach: context.afterEach.map((afterEach) => ({
     ...afterEach,
-    sortBy: context.sortBy
+    sortBy: context.sortBy,
   })),
   beforeAll: context.beforeAll.map((beforeAll) => ({
     ...beforeAll,
-    sortBy: context.sortBy
+    sortBy: context.sortBy,
   })),
   afterAll: context.afterAll.map((afterAll) => ({
     ...afterAll,
-    sortBy: context.sortBy
+    sortBy: context.sortBy,
   })),
   describes: context.describes.map((describe) => named({
     ...describe,
-    sortBy: `${sortByPrefix(context)}${describe.description}`
-  }))
+    sortBy: `${sortByPrefix(context)}${describe.description}`,
+  })),
 })
 
 const relevantTestFields = (type) =>
@@ -42,14 +42,14 @@ const relevantTestFields = (type) =>
     impl,
     testFile,
     description,
-    sortBy
+    sortBy,
   }) => ({
     settings,
     impl,
     testFile,
     description,
     sortBy,
-    type
+    type,
   })
 
 const normalized = (parentBeforeEach = [], parentAfterEach = []) =>
@@ -57,12 +57,12 @@ const normalized = (parentBeforeEach = [], parentAfterEach = []) =>
     ...rest,
     beforeEach: [
       ...parentBeforeEach,
-      ...beforeEach.map(relevantTestFields('beforeEach'))
+      ...beforeEach.map(relevantTestFields('beforeEach')),
     ],
     afterEach: [
       ...parentAfterEach,
-      ...afterEach.map(relevantTestFields('afterEach'))
-    ]
+      ...afterEach.map(relevantTestFields('afterEach')),
+    ],
   })
 
 const testsProp = Symbol('tests')
@@ -75,12 +75,12 @@ const flattened = ({
   beforeEach,
   afterEach,
   beforeAll,
-  afterAll
+  afterAll,
 }) => ([
   ...beforeAll.map(relevantTestFields('beforeAll')),
   ...tests.map(relevantTestFields('test')),
   ...describes.map(normalized(beforeEach, afterEach)).map(flattened),
-  ...afterAll.map(relevantTestFields('afterAll'))
+  ...afterAll.map(relevantTestFields('afterAll')),
 ].flat())
 
 const execute = async (context, report) => {
@@ -92,7 +92,7 @@ const execute = async (context, report) => {
       ...rest,
       groups: sortBy.split('/'),
       description,
-      sortBy
+      sortBy,
     }))
     .filter(({ settings: { only } }) => !hasOnlyBlocks || only)
     .reduce(
@@ -104,8 +104,8 @@ const execute = async (context, report) => {
           description,
           groups,
           type,
-          impl
-        }
+          impl,
+        },
       ) => {
         const finalResults = await state
         let result
@@ -126,18 +126,18 @@ const execute = async (context, report) => {
           error,
           result,
           start,
-          end
+          end,
         }
         report(result)
         const defaultStates = {
           [testsProp]: [],
           [setupProp]: [],
-          [teardownProp]: []
+          [teardownProp]: [],
         }
         const group = groups.reduce(
           (resultState, name) =>
             resultState[name] || (resultState[name] = { ...defaultStates }),
-          finalResults
+          finalResults,
         )
         if (type === 'test') {
           group[testsProp].push(result)
@@ -150,7 +150,7 @@ const execute = async (context, report) => {
         group[teardownProp].push(result)
         return finalResults
       },
-      Promise.resolve({})
+      Promise.resolve({}),
     )
 }
 
@@ -172,8 +172,8 @@ const simpleReporter = () => {
       error,
       result,
       start,
-      end
-    }
+      end,
+    },
   ) => {
     if (!(error || result)) {
       return

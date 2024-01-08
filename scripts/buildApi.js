@@ -57,7 +57,7 @@ ${impl}
 \`\`\`
 
 v ${pkg.version} -- ${duration} ms --
-${error ? `❌ **${error.name}**: \n\n\`\`\`\n${fromConsole(error.message)}\n\`\`\`` : '✅ **Pass**' }
+${error ? `❌ **${error.name}**: \n\n\`\`\`\n${fromConsole(error.message)}\n\`\`\`` : '✅ **Pass**'}
 ${notes ? `\n${notes}\n` : ''}
 `
 
@@ -110,7 +110,7 @@ const toRef = (value) => {
 const fileSize = (file) => {
   try {
     return `${Math.round(statSync(file).size / 10) / 100}k`
-  } catch(err) {
+  } catch (err) {
     return '_[build the distributable module to get this value]_'
   }
 }

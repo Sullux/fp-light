@@ -12,34 +12,34 @@ const N = Number.MAX_SAFE_INTEGER
 
 const assertFlag = {
   name: 'assert',
-  switches: ['-a', '--assert']
+  switches: ['-a', '--assert'],
 }
 
 const fileFlag = {
   name: 'files',
   switches: ['-f', '--files'],
-  maxValues: 1
+  maxValues: 1,
 }
 
 const ignoreFlag = {
   name: 'ignore',
   switches: ['-i', '--ignore'],
-  maxValues: 1
+  maxValues: 1,
 }
 
 const flagMap = [
   assertFlag,
   fileFlag,
-  ignoreFlag
+  ignoreFlag,
 ].reduce(
   (state, value) => ({
     ...state,
     ...value.switches.reduce(
       (all, current) => ({ ...all, [current]: value }),
-      {}
-    )
+      {},
+    ),
   }),
-  {}
+  {},
 )
 
 const [, , ...switches] = process.argv
@@ -49,7 +49,7 @@ const allSwitches = switches.reduce(
   (state, value) => value[0] === '-' && value[1] !== '-'
     ? [...state, ...[...value.substring(1)].map((char) => `-${char}`)]
     : [...state, value],
-  []
+  [],
 )
 // -a, -b, --foo, bar, baz
 
@@ -62,24 +62,24 @@ const flagsAndValues = allSwitches.map((value) => value.startsWith('-')
 const addValue = (flags, flag, values, value) =>
   flag && (flag.values.length < flag.maxValues)
     ? {
-      flags: [
-        ...flags.slice(0, flags.length - 1),
-        { ...flag, values: [...flag.values, value] }],
-      values
-    }
+        flags: [
+          ...flags.slice(0, flags.length - 1),
+          { ...flag, values: [...flag.values, value] }],
+        values,
+      }
     : { flags, values: [...values, value] }
 const addFlag = (flags, values, value) => {
   const flag = { ...value, values: [] }
   return {
     flags: [...flags, flag],
-    values
+    values,
   }
 }
 const { flags: populatedFlags, values } = flagsAndValues.reduce(
   ({ flags, values }, value) => ((typeof value) === 'string')
     ? addValue(flags, flags[flags.length - 1], values, value)
     : addFlag(flags, values, value),
-  { flags: [], values: [] }
+  { flags: [], values: [] },
 )
 // flags: { name: 'a' }, { name: 'b' }, { name: 'foo', values: [bar] }
 // values: baz
@@ -89,9 +89,9 @@ const flags = populatedFlags.reduce(
     ...state,
     [value.name]: value.values.length
       ? value.values
-      : true
+      : true,
   }),
-  {}
+  {},
 )
 // { a: true, b: true, foo: [bar] }
 // values: baz
@@ -102,7 +102,7 @@ This section of code generates the test harness.
 
 const globString = flags.files[0] // `+(${flags.files.join('|')})`
 const globOptions = {
-  ignore: flags.ignore[0] // `+(${(flags.ignore || []).join('|')})`,
+  ignore: flags.ignore[0], // `+(${(flags.ignore || []).join('|')})`,
 }
 console.log('-'.repeat(process.stdout.columns))
 console.log('searching', globString, globOptions)
@@ -116,7 +116,7 @@ files.forEach((file) => console.log(' -', file))
 
 const allImports = [
   ...files.map((file) => `import '${file}'`),
-  `import * as fp from '../lib/index.js'`,
+  'import * as fp from \'../lib/index.js\'',
 ].join('\n')
 
 const testRun = readFileSync('scripts/specRun.js').toString()

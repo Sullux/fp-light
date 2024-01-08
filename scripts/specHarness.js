@@ -27,7 +27,7 @@ const topLevelContext = {
   beforeAll: [],
   afterAll: [],
   settings: {
-    timeout: 2000
+    timeout: 2000,
   },
 }
 
@@ -99,7 +99,7 @@ const beforeEach = (impl, settings = {}) => {
     type: 'setup',
     impl,
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   })
 }
 
@@ -109,7 +109,7 @@ const afterEach = (impl, settings = {}) => {
     type: 'teardown',
     impl,
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   })
 }
 
@@ -119,7 +119,7 @@ const beforeAll = (impl, settings = {}) => {
     type: 'setup',
     impl,
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   })
 }
 
@@ -129,7 +129,7 @@ const afterAll = (impl, settings = {}) => {
     type: 'teardown',
     impl,
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   })
 }
 
@@ -142,7 +142,7 @@ Object.assign(globalThis, {
   beforeEach,
   afterEach,
   beforeAll,
-  afterAll
+  afterAll,
 })
 
 export const getTests = () => tests

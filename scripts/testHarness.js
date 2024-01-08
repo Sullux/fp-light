@@ -10,7 +10,7 @@ const topLevelContext = {
   beforeAll: [],
   afterAll: [],
   settings: {
-    timeout: 2000
+    timeout: 2000,
   },
   testFile,
   hasOnlyBlocks: false,
@@ -30,7 +30,7 @@ const describe = (description, impl, settings = {}) => {
     beforeAll: [],
     afterAll: [],
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   }
   context.describes.push(thisBlock)
   const previousContext = context
@@ -62,7 +62,7 @@ const test = (description, impl, settings = {}) => {
     description,
     impl,
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   })
 }
 
@@ -75,7 +75,7 @@ const beforeEach = (impl, settings = {}) => {
   context.beforeEach.push({
     impl,
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   })
 }
 
@@ -83,7 +83,7 @@ const afterEach = (impl, settings = {}) => {
   context.afterEach.push({
     impl,
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   })
 }
 
@@ -91,7 +91,7 @@ const beforeAll = (impl, settings = {}) => {
   context.beforeAll.push({
     impl,
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   })
 }
 
@@ -99,7 +99,7 @@ const afterAll = (impl, settings = {}) => {
   context.afterAll.push({
     impl,
     settings: { ...context.settings, ...settings },
-    testFile
+    testFile,
   })
 }
 
@@ -112,7 +112,7 @@ Object.assign(globalThis, {
   beforeEach,
   afterEach,
   beforeAll,
-  afterAll
+  afterAll,
 })
 
 export const getContext = () => context

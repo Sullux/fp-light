@@ -6,7 +6,7 @@ const indent = '  '
 
 /* IMPORTS */
 
-const byName = ({ details: {name: n1} }, { details: {name: n2} }) =>
+const byName = ({ details: { name: n1 } }, { details: { name: n2 } }) =>
   (n1 || '').localeCompare((n2 || ''))
 
 const beforesAndAfters = (allTests) => {
@@ -23,7 +23,7 @@ const beforesAndAfters = (allTests) => {
 const aliasTests = ({ details: { name } }) => {
   const currentExport = fp[name]
   const aliases = Object.keys(fp).filter((key) =>
-    ((key !== name) && fp[key] === currentExport) )
+    ((key !== name) && fp[key] === currentExport))
   return aliases.map((alias) => ({
     type: 'alias',
     details: { name: alias, alias: name },
@@ -37,9 +37,9 @@ const testWithAliases = (tests) =>
     const aliases = aliasTests(test)
     return aliases.length
       ? [
-        {...test, aliases: aliases.map(({ details: { name } }) => name) },
-        aliases,
-      ]
+          { ...test, aliases: aliases.map(({ details: { name } }) => name) },
+          aliases,
+        ]
       : test
   }).flat(999)
 
@@ -61,7 +61,7 @@ const runTest = async (test) => {
       duration: end - start,
     }
     return { test, result } // todo: settings, etc.
-  } catch(error) {
+  } catch (error) {
     const end = Date.now()
     const result = {
       duration: end - start,
@@ -79,8 +79,8 @@ const runTests = (tests) => tests.reduce(
 )
 
 const firstNonSpace = (line) => {
-  for(let i = 0, l = line.length; i < l; i++) {
-    if (line[i] !== ' ') { return i}
+  for (let i = 0, l = line.length; i < l; i++) {
+    if (line[i] !== ' ') { return i }
   }
   return line.length
 }
@@ -152,10 +152,10 @@ const indentLines = (description) => description.split('\n')
 const cwd = `file://${process.cwd()}`
 const stackLine = (line) => `      ${line.replace(cwd, '')}`
 
-const prettyStack = Boolean(process.env.FP_STACK_TRACE)
+const prettyStack = process.env.FP_STACK_TRACE
   ? (stack) => {
-    return `\n${c.dim}${stack.split('\n').map(stackLine).join('\n')}${c.end}`
-  } // todo
+      return `\n${c.dim}${stack.split('\n').map(stackLine).join('\n')}${c.end}`
+    } // todo
   : () => ''
 
 const prettifyError = ({ error: { name, message, stack }, testFile, description }) =>

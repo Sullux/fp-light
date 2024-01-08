@@ -11,8 +11,8 @@ also links to related functions.
 
 ## Stats
 
-* total functions: 19
-* passing tests: 73
+* total functions: 21
+* passing tests: 77
 * failing tests: 0
 * module size: 75.4k
 
@@ -28,6 +28,7 @@ also links to related functions.
 
 * [C](#c)
   * [compilable](#compilable)
+  * [compose](#compose)
   * [concurrent](#concurrent)
   * [context](#context)
   * [context.await](#context-await)
@@ -48,6 +49,7 @@ also links to related functions.
 
 * [P](#p)
   * [parallel](#parallel)
+  * [pipe](#pipe)
 
 * [R](#r)
   * [resolve](#resolve)
@@ -326,7 +328,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -345,7 +347,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -366,6 +368,36 @@ async () => {
 ```
 
 v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+### compose
+
+
+**`() => void`**
+
+
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** |   |
+
+
+#### TEST: should compose synchronous values
+
+```javascript
+() => {
+  const fn = compose(add(_[0], _[1]), _.x)
+  const input = { x: [40, 2] }
+  const output = fn(input)
+  expect(output).toBe(42)
+}
+```
+
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -641,7 +673,7 @@ Returns the original primitive or already deeply-synchronous value _or_ returns 
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -744,7 +776,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -837,7 +869,7 @@ Aliases: [_](#-) | [argument](#argument)
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -909,7 +941,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -980,7 +1012,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 11 ms --
+v 1.2.36 -- 12 ms --
 ✅ **Pass**
 
 
@@ -1073,7 +1105,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1188,7 +1220,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1227,7 +1259,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1245,7 +1277,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1282,7 +1314,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1303,7 +1335,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1345,7 +1377,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1365,7 +1397,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 9 ms --
+v 1.2.36 -- 11 ms --
 ✅ **Pass**
 
 
@@ -1385,7 +1417,7 @@ v 1.2.36 -- 9 ms --
 }
 ```
 
-v 1.2.36 -- 3 ms --
+v 1.2.36 -- 2 ms --
 ✅ **Pass**
 
 
@@ -1423,7 +1455,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 2 ms --
+v 1.2.36 -- 4 ms --
 ✅ **Pass**
 
 
@@ -1487,7 +1519,7 @@ v 1.2.36 -- 2 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1564,7 +1596,82 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 501 ms --
+v 1.2.36 -- 502 ms --
+✅ **Pass**
+
+
+
+
+
+### pipe
+
+
+**`() => void`**
+
+
+
+| Arg | Type | Description |
+| --- | ---- | ----------- |
+| _`=>`_ | **`void`** |   |
+
+
+#### TEST: should pipe synchronous values
+
+```javascript
+() => {
+  const fn = pipe(
+    _.x,
+    add(_[0], _[1]),
+  )
+  const input = { x: [40, 2] }
+  const output = fn(input)
+  expect(output).toBe(42)
+}
+```
+
+v 1.2.36 -- 1 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should pipe an async initial value
+
+```javascript
+async () => {
+  const fn = pipe(
+    _.x,
+    add(_[0], _[1]),
+  )
+  const input = Promise.resolve({ x: [40, 2] })
+  const output = await fn(input)
+  expect(output).toBe(42)
+}
+```
+
+v 1.2.36 -- 0 ms --
+✅ **Pass**
+
+
+
+
+
+#### TEST: should pipe an async intermediate value
+
+```javascript
+async () => {
+  const fn = pipe(
+    _.x,
+    add(_[0], _[1]),
+  )
+  const input = { x: Promise.resolve([40, 2]) }
+  const output = await fn(input)
+  expect(output).toBe(42)
+}
+```
+
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1622,7 +1729,7 @@ async () => {
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1645,7 +1752,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 1 ms --
+v 1.2.36 -- 0 ms --
 ✅ **Pass**
 
 
@@ -1693,7 +1800,7 @@ v 1.2.36 -- 0 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
@@ -1843,7 +1950,7 @@ v 1.2.36 -- 1 ms --
 }
 ```
 
-v 1.2.36 -- 0 ms --
+v 1.2.36 -- 1 ms --
 ✅ **Pass**
 
 
