@@ -1,6 +1,9 @@
 import { writeFile } from 'node:fs/promises'
 import { getTests } from './specHarness.js'
 import { buildApi } from './buildApi.js'
+import { inspect } from 'node:util'
+
+inspect.defaultOptions.depth = null
 
 const indent = '  '
 

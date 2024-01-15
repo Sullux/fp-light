@@ -1,7 +1,8 @@
-import { fail } from 'assert'
+import { fail } from 'node:assert'
 import { readFileSync, writeFileSync } from 'fs'
 import { execSync } from 'child_process'
 import globPackage from 'glob'
+
 const { sync: glob } = globPackage
 
 /* Parse Params
